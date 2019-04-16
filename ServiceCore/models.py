@@ -40,15 +40,15 @@ class Tag(models.Model):
 
 class Post(models.Model):
     postID = models.AutoField(primary_key=True)
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     postField = models.CharField(max_length=2048)
-    tags = models.ManyToManyField(Tag, on_delete=models.PROTECT)
+    tags = models.ManyToManyField(Tag)
     viewsCount = models.IntegerField() # liczba wyswietlen
 
 class Comment(models.Model):
     commentID = models.AutoField(primary_key=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     commentField = models.CharField(max_length=2048)
 
 # Klasa trzymajaca info czy dany uzytkownik ocenil dany komentarz
