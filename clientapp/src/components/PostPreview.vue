@@ -11,7 +11,7 @@
                 </div>
             </b-card-text>
             <b-card-text>
-                <b-badge class="mr-1" v-for="tag in tags">{{ tag }}</b-badge>
+                <b-badge class="mr-1" :key="tagName" v-for="tagName in tags">{{ tagName }}</b-badge>
             </b-card-text>
             <div slot="footer"><small>{{ creationDate }}</small></div>
         </b-card>

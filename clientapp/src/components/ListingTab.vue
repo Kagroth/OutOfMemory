@@ -2,7 +2,7 @@
   <div>
     <b-tabs>
       <b-tab title="Posty">
-        <post-preview 
+        <post-preview :key="post_preview"
             v-for="post_preview in post_previews"
             v-bind:author="post_preview.author"
             v-bind:creationDate="post_preview.creationDate"    

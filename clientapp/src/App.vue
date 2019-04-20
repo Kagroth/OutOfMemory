@@ -3,7 +3,7 @@
     <main-nav></main-nav>
     <b-container fluid class="content">
       <b-row>
-        <b-col cols="auto">
+        <b-col>
           <router-view v-bind:post_previews="post_previews"></router-view>
           <!--<listing-tab v-bind:post_previews="post_previews"></listing-tab>-->
         </b-col>
