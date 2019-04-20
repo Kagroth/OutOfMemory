@@ -1,7 +1,9 @@
 <template>
   <div>
     <b-navbar variant="primary" fixed="top">
-      <b-navbar-brand href="#">OutOfMemory</b-navbar-brand>
+      <b-navbar-brand href="#">
+        <router-link to="/">OutOfMemory</router-link>
+      </b-navbar-brand>
       <b-navbar-nav>
         <b-nav-form class="ml-5">
           <b-form-input size="sm" placeholder="Wprowadz szukana fraze"></b-form-input>
@@ -9,7 +11,7 @@
         </b-nav-form>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
-        <b-nav-item href="#" class="menuLink">Logowanie</b-nav-item>
+        <b-nav-item to="/login" href="#" class="menuLink">Logowanie</b-nav-item>
         <b-nav-item href="#" class="menuLink">Rejestracja</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
@@ -62,6 +64,11 @@ export default {
 
 <style scoped>
 .navbar .navbar-nav .menuLink a {
+    color: white;
+}
+
+.navbar .navbar-brand a {
+    text-decoration: none;
     color: white;
 }
 </style>

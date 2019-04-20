@@ -4,7 +4,8 @@
     <b-container fluid class="content">
       <b-row>
         <b-col cols="auto">
-          <listing-tab v-bind:post_previews="post_previews"></listing-tab>
+          <router-view v-bind:post_previews="post_previews"></router-view>
+          <!--<listing-tab v-bind:post_previews="post_previews"></listing-tab>-->
         </b-col>
       </b-row>
     </b-container>
