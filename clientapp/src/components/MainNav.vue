@@ -12,7 +12,7 @@
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-item to="/login" href="#" class="menuLink">Logowanie</b-nav-item>
-        <b-nav-item href="#" class="menuLink">Rejestracja</b-nav-item>
+        <b-nav-item to="/register" href="#" class="menuLink">Rejestracja</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
   </div>
