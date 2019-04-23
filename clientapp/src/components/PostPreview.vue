@@ -6,7 +6,7 @@
                     <span>Autor: {{ author }} </span>
                 </div>
                 <div class="cardBadges w-25">
-                    <span class="mr-5">Wyswietlen: {{ viewsCount}} </span>
+                    <span class="mr-5">Wyswietlen: {{ viewsCount}} </span><br>
                     <span class="mr-5">Odpowiedzi: {{ answersCount }} </span>
                 </div>
             </b-card-text>
