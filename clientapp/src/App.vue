@@ -3,7 +3,7 @@
     <main-nav></main-nav>
     <b-container fluid class="content">
       <b-row>
-        <b-col>
+        <b-col cols=8 offset=2>
           <router-view v-bind:post_previews="post_previews"></router-view>
           <!--<listing-tab v-bind:post_previews="post_previews"></listing-tab>-->
         </b-col>
@@ -19,7 +19,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 // Layout components
 import BContainer from 'bootstrap-vue/es/components/layout/container';
 import BRow from 'bootstrap-vue/es/components/layout/row';
-import BCol from 'bootstrap-vue/es/components/layout/container';
+import BCol from 'bootstrap-vue/es/components/layout/col';
 
 // custom components
 import MainNav from './components/MainNav.vue';
