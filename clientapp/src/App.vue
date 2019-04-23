@@ -55,6 +55,15 @@ export default {
           answersCount: 7,
           title: "Nie dzialaja mi props w Vue.js",
           tags: ["Javascript", "Vue", "Frontend"]
+        },
+
+        {
+          author: "mariusz",
+          creationDate: "16.04.2019",
+          viewsCount: 17,
+          answersCount: 3,
+          title: "Jak zrobic czary mary w Springu",
+          tags: ["Java", "Spring"]
         }
       ]
     }
