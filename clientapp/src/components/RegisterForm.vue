@@ -35,7 +35,7 @@
                       >                          
                       </b-form-input>
                   </b-form-group>
-                  <b-form-group label="Powtóz hasło:" label-for="passwordRepeatInput">
+                  <b-form-group label="Powtórz hasło:" label-for="passwordRepeatInput">
                       <b-form-input
                         id="passwordRepeatInput"
                         type="password"
