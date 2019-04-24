@@ -32,7 +32,7 @@ class JobOffer(models.Model):
 class Application(models.Model):
     applicationID = models.AutoField(primary_key=True)
     job = models.ForeignKey(JobOffer, on_delete=models.CASCADE)
-    cv = models.OneToOneField(CV, on_delete=models.CASCADE)
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
 
 class Tag(models.Model):
     tagID = models.AutoField(primary_key=True)
