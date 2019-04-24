@@ -41,6 +41,7 @@ class Tag(models.Model):
 class Post(models.Model):
     postID = models.AutoField(primary_key=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=64)
     postField = models.CharField(max_length=2048)
     tags = models.ManyToManyField(Tag)
     viewsCount = models.IntegerField() # liczba wyswietlen
