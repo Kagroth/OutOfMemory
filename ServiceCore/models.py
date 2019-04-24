@@ -45,6 +45,8 @@ class Post(models.Model):
     postField = models.CharField(max_length=2048)
     tags = models.ManyToManyField(Tag)
     viewsCount = models.IntegerField() # liczba wyswietlen
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
 class Comment(models.Model):
     commentID = models.AutoField(primary_key=True)
