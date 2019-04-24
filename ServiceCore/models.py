@@ -52,7 +52,9 @@ class Comment(models.Model):
     commentID = models.AutoField(primary_key=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    commentField = models.CharField(max_length=2048)
+    commentField = models.CharField(max_length=2048)    
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
 # Klasa trzymajaca info czy dany uzytkownik ocenil dany komentarz
 class Rating(models.Model):
