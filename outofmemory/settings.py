@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ServiceCore',
     'rest_framework'
-    'rest_framework.authentication.BasicAuthentication',
-    'rest_framework.authentication.SessionAuthentication',
 
 ]
 
