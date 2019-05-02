@@ -6,6 +6,6 @@ import PostCreator from './components/PostCreator.vue'
 export default [
     {path: '/', component: ListingTab},
     {path: '/login', name: 'Login', component: LoginForm},
-    {path: '/register', name: 'Register', component:RegisterForm},
+    {path: '/register', name: 'Register', component: RegisterForm},
     {path: '/post/new', name: 'NewPost', component: PostCreator}
 ]
