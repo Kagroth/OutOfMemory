@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .serializers import User, UserSerializer
 
 
 # Create your views here.
@@ -10,10 +12,16 @@ from rest_framework.permissions import IsAuthenticated
 def index(request):
     return HttpResponse("Hello world")
 
-
+"""
 class ViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
+"""
 
+#@api_view(['POST']):
 
+"""
 class CreateUserView(CreateAPIView):
-    model = USer
+    model = User
+    permission_classes = (AllowAny)
+    serializer_class = UserSerializer
+"""
