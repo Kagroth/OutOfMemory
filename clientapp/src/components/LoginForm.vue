@@ -20,7 +20,7 @@
               placeholder="Haslo"
             ></b-form-input>
           </b-form-group>
-          <b-button variant="primary">Zaloguj</b-button>
+          <b-button variant="primary" @click="sendLoginForm">Zaloguj</b-button>
         </b-form>
       </b-col>
     </b-row>
@@ -65,6 +65,17 @@ export default {
         password: ""
       }
     };
+  },
+
+  methods: {
+    sendLoginForm(event) {
+      event.preventDefault();
+
+      this.$http.post("http://localhost:8000/test/", {myForm: this.form}).then(
+        (data) => { alert(data.body.content.myForm.email) ;}, // on success
+        (data) => { alert(data.body.content) ;} // on fail
+      );
+    }
   },
 
   computed: {
