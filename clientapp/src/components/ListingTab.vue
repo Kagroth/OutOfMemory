@@ -2,7 +2,12 @@
   <div>
     <b-tabs>
       <b-tab title="Posty">
-        <b-row>
+        <b-row class="mt-2" align-h="start">
+          <b-col cols=1>
+            <b-button variant="success" to="/post/new">Dodaj</b-button>
+          </b-col>
+        </b-row>
+        <b-row class="mt-2">
           <b-col cols=12>
             <post-preview :key="post_preview"
               v-for="post_preview in post_previews"
@@ -32,13 +37,17 @@ import BTab from "bootstrap-vue/es/components/tabs/tab";
 import BRow from 'bootstrap-vue/es/components/layout/row';
 import BCol from 'bootstrap-vue/es/components/layout/col';
 
+// Button component
+import BButton from 'bootstrap-vue/es/components/button/button';
+
 export default {
   components: {
     "post-preview": PostPreview,
     "b-tabs": BTabs,
     "b-tab": BTab,
     'b-row': BRow,
-    'b-col': BCol
+    'b-col': BCol,
+    'b-button': BButton
   },
 
   props: ['post_previews'],
