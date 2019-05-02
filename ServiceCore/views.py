@@ -12,16 +12,8 @@ from .serializers import User, UserSerializer
 def index(request):
     return HttpResponse("Hello world")
 
-"""
-class ViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-"""
 
-#@api_view(['POST']):
-
-"""
 class CreateUserView(CreateAPIView):
     model = User
     permission_classes = (AllowAny)
     serializer_class = UserSerializer
-"""
