@@ -18,5 +18,5 @@ python manage.py runserver
 ```
 ## Python libraries
 
-# django-rest-framework
-# django-cors-headers
+* django-rest-framework
+* django-cors-headers
