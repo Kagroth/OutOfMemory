@@ -3,3 +3,10 @@
 ################################################################################
 
 /.vs/OutOfMemory/v15
+/outofmemory/__pycache__
+/ServiceCore/migrations/__pycache__
+/ServiceCore/__pycache__
+/OutOfMemory.pyproj
+/OutOfMemory.pyproj.user
+/OutOfMemory.sln
+/.vs
