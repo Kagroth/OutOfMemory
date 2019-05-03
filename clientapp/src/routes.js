@@ -1,3 +1,6 @@
+/*
+    Plik reprezentuje tablice ze sciezkami do widokow     
+*/
 import ListingTab from './components/ListingTab.vue'
 import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
