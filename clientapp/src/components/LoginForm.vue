@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import api from "../api.js";
+
 // Form components
 import BForm from "bootstrap-vue/es/components/form/form";
 import BFormGroup from "bootstrap-vue/es/components/form-group/form-group";
@@ -71,7 +73,7 @@ export default {
     sendLoginForm(event) {
       event.preventDefault();
 
-      this.$http.post("http://localhost:8000/test/", {myForm: this.form}).then(
+      this.$http.post(api.getLoginEndpoint(), {myForm: this.form}).then(
         (data) => { alert(data.body.content.myForm.email) ;}, // on success
         (data) => { alert(data.body.content) ;} // on fail
       );
