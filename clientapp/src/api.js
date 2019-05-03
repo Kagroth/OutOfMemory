@@ -1,0 +1,3 @@
+/*
+    Plik zawiera obiekt zawierajacy URL do API
+*/
