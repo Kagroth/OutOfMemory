@@ -8,6 +8,7 @@
                         id="firstNameInput"
                         type="text"
                         placeholder="Jan"
+                        v-model="form.firstName"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -16,6 +17,7 @@
                         id="lastNameInput"
                         type="text"
                         placeholder="Kowalski"
+                        v-model="form.lastName"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -24,6 +26,7 @@
                         id="emailInput"
                         type="email"
                         placeholder="jankowalski@domena.pl"
+                        v-model="form.email"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -32,6 +35,7 @@
                         id="passwordInput"
                         type="password"
                         placeholder=""
+                        v-model="form.password"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -40,10 +44,11 @@
                         id="passwordRepeatInput"
                         type="password"
                         placeholder=""
+                        v-model="form.passwordRepeat"
                       >                          
                       </b-form-input>
                   </b-form-group>
-                  <b-button variant="primary"> Załóż konto</b-button>
+                  <b-button variant="primary" @click="sendRegisterForm"> Załóż konto</b-button>
               </b-form>
           </b-col>
       </b-row>
@@ -51,6 +56,8 @@
 </template>
 
 <script>
+import api from "../api.js";
+
 // Form components
 import BForm from "bootstrap-vue/es/components/form/form";
 import BFormGroup from "bootstrap-vue/es/components/form-group/form-group";
@@ -75,8 +82,23 @@ export default {
 
   data() {
       return {
-
+        form: {
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          passwordRepeat: "",
+        }
       }
+  },
+
+  methods: {
+    sendRegisterForm(event) {
+      this.$http.post(api.getRegisterEndpoint(), {myForm: this.form}).then(
+        (data) => { console.log("sukces"); }, // on success
+        (data) => { console.log("blad przy wysylaniu") } // on fail
+      );
+    }
   }
 }
 </script>
