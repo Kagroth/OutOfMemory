@@ -16,3 +16,7 @@ a następnie polecenia run dev.
 ```
 python manage.py runserver
 ```
+## Python libraries
+
+django-rest-framework
+django-corsheaders
