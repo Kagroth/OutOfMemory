@@ -13,7 +13,7 @@ from pygments.styles import get_all_styles
 # pola first_name, last_name domyslnie nie sa required - ale sa wymagane przez nasz ERD
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    description = models.CharField(max_length=500)
+    description = models.CharField(name='description', max_length=500)
 
 # Klasa CV reprezentujaca CV usera
 class CV(models.Model):

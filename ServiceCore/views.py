@@ -5,8 +5,13 @@ from django.views.decorators.cache import never_cache
 import json
 
 from rest_framework.parsers import JSONParser
-from ServiceCore.models import Snippet
-from ServiceCore.serializers import SnippetSerializer
+
+
+from ServiceCore.serializers import *
+from ServiceCore.models import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 # Create your views here.
 
@@ -69,3 +74,24 @@ def snippet_detail(request, pk):
         return HttpResponse(status=204)
 
 
+
+class ProfileRecordView(APIView):
+    
+    def get(self, format=None):
+        """
+        Get all the profile records
+        """
+        users = Profile.objects.all()
+        serializer = ProfileSerializer(users, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        """
+        Create a profile record
+        """
+        serializer = ProfileSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(validated_data=request.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error_messages,
+                        status=status.HTTP_400_BAD_REQUEST)

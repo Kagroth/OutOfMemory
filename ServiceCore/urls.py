@@ -1,6 +1,5 @@
 from django.urls import path
-from snippets import views
-
+from django.conf.urls import include, url
 from . import views
 
 urlpatterns = [
@@ -9,4 +8,5 @@ urlpatterns = [
     path('register/', views.testApiCall),
     path('snippetstest/', views.snippet_list),
     path('snippetstest/<int:pk>/', views.snippet_detail),
+    path('api/user/', views.ProfileRecordView.as_view()),
 ]
