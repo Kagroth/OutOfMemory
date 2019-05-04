@@ -1,5 +1,7 @@
-from rest_framework import serializers
+from rest_framework import serializers, status
 from ServiceCore.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
+from ServiceCore.models import *
+from django.contrib.auth.models import User
 
 #class SnippetSerializer(serializers.Serializer):
 #    id = serializers.IntegerField(read_only=True)
@@ -31,3 +33,27 @@ class SnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snippet
         fields = ('id', 'title', 'code', 'linenos', 'language', 'style')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')
+
+class ProfileSerializer(serializers.ModelSerializer):
+    """
+    A  profile serializer to return the user details
+    """
+    user = UserSerializer(required=True)
+
+    class Meta:
+        model = Profile
+        fields = ('user', 'description',)
+
+    def create(self, validated_data):
+        
+        user_data = validated_data.pop('user')
+        user = UserSerializer.create(UserSerializer(), validated_data=user_data)
+        profile, created = Profile.objects.update_or_create(user=user,
+                            description=validated_data.pop('description'))
+        return profile
