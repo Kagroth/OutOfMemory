@@ -2,7 +2,7 @@
     Plik zawiera obiekt zawierajacy URL do API
 */
 export default {
-    baseURL: "http://localhost:8000/",
+    baseURL: "http://localhost:56086/user/",
     endpoints: {
         login: "login/",
         register: "register/",

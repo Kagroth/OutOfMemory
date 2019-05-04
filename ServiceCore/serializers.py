@@ -2,6 +2,7 @@ from rest_framework import serializers, status
 from ServiceCore.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
 from ServiceCore.models import *
 from django.contrib.auth.models import User
+from rest_framework.validators import UniqueValidator
 
 #class SnippetSerializer(serializers.Serializer):
 #    id = serializers.IntegerField(read_only=True)
@@ -36,9 +37,27 @@ class SnippetSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+
+    first_name = serializers.CharField(
+        required=True,
+    )
+    last_name = serializers.CharField(
+        required=True,
+    )
+
+    username = serializers.EmailField(
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+
+    password = serializers.CharField(
+        style={'input_type': 'password'},
+        min_length=8
+    )
+
+
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'password')
 
 class ProfileSerializer(serializers.ModelSerializer):
     """
