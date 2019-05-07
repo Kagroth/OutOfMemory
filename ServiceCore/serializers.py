@@ -37,7 +37,7 @@ class SnippetSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-
+    '''
     first_name = serializers.CharField(
         required=True,
     )
@@ -53,11 +53,11 @@ class UserSerializer(serializers.ModelSerializer):
         style={'input_type': 'password'},
         min_length=8
     )
-
+    '''
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'password')
+        fields = ('username', 'first_name', 'last_name', 'password', 'email')
 
 class ProfileSerializer(serializers.ModelSerializer):
     """
