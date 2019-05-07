@@ -8,7 +8,7 @@
                         id="firstNameInput"
                         type="text"
                         placeholder="Jan"
-                        v-model="form.firstName"
+                        v-model="form.first_name"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -17,7 +17,7 @@
                         id="lastNameInput"
                         type="text"
                         placeholder="Kowalski"
-                        v-model="form.lastName"
+                        v-model="form.last_name"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -27,6 +27,15 @@
                         type="email"
                         placeholder="jankowalski@domena.pl"
                         v-model="form.email"
+                      >                          
+                      </b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Username:" label-for="usernameInput">
+                      <b-form-input
+                        id="usernameInput"
+                        type="text"
+                        placeholder="Twoja nazwa uzytwkonika"
+                        v-model="form.username"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -83,9 +92,10 @@ export default {
   data() {
       return {
         form: {
-          firstName: "",
-          lastName: "",
+          first_name: "",
+          last_name: "",
           email: "",
+          username: "",
           password: ""          
         },
         passwordRepeat: ""
