@@ -44,7 +44,7 @@
                         id="passwordRepeatInput"
                         type="password"
                         placeholder=""
-                        v-model="form.passwordRepeat"
+                        v-model="passwordRepeat"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -86,17 +86,17 @@ export default {
           firstName: "",
           lastName: "",
           email: "",
-          password: "",
-          passwordRepeat: "",
-        }
+          password: ""          
+        },
+        passwordRepeat: ""
       }
   },
 
   methods: {
     sendRegisterForm(event) {
-      this.$http.post(api.getRegisterEndpoint(), {myForm: this.form}).then(
-        (data) => { console.log("sukces"); }, // on success
-        (data) => { console.log("blad przy wysylaniu") } // on fail
+      this.$http.post(api.getRegisterEndpoint(), this.form).then(
+        (response) => { console.log(response.data); }, // on success
+        (response) => { console.log(response.data) } // on fail
       );
     }
   }
