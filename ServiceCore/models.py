@@ -55,13 +55,25 @@ class Post(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        if len(self.postField) > 30:
+            return self.postField[0:30] + "..."
+        else:
+            return self.postField
+
 class Comment(models.Model):
     commentID = models.AutoField(primary_key=True)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     commentField = models.CharField(max_length=2048)    
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        if len(self.commentField) > 30:
+            return self.commentField[0:30] + "..."
+        else:
+            return self.commentField
 
 # Klasa trzymajaca info czy dany uzytkownik ocenil dany komentarz
 class Rating(models.Model):
