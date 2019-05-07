@@ -9,4 +9,5 @@ urlpatterns = [
     path('snippetstest/', views.snippet_list),
     path('snippetstest/<int:pk>/', views.snippet_detail),
     path('user/', views.ProfileRecordView.as_view()),
+    path("post/", views.PostView.as_view())
 ]
