@@ -79,7 +79,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField()
     tags = serializers.StringRelatedField(many=True)
+    comments = serializers.StringRelatedField(many=True)
     class Meta:
         model = Post
-        fields = ('title', 'postField', 'viewsCount', 'tags')
+        fields = ('author', 'title', 'postField', 'viewsCount', 'tags', 'createdAt', 'comments')
