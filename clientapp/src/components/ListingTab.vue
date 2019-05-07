@@ -22,6 +22,8 @@
           -->
           <post-preview :key="post_preview"
             v-for="post_preview in posts_prevs"
+            v-bind:author="post_preview.author"
+            v-bind:creationDate="post_preview.createdAt"
             v-bind:viewsCount="post_preview.viewsCount"
             v-bind:title="post_preview.title"
             v-bind:tags="post_preview.tags">
