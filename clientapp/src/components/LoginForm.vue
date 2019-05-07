@@ -3,13 +3,13 @@
     <b-row>
       <b-col cols="4" offset="4">
         <b-form>
-          <b-form-group label="Email:" label-for="emailInput">
+          <b-form-group label="Nazwa uzytkownika:" label-for="usernameInput">
             <b-form-input
-              id="emailInput"
-              v-model="form.email"
-              type="email"
+              id="usernameInput"
+              v-model="form.username"
+              type="text"
               :state="emailState"
-              placeholder="jankowalski@domena.pl"
+              placeholder="Twoja nazwa uzytkownika"
             ></b-form-input>
           </b-form-group>
           <b-form-group label="Haslo:" label-for="passwordInput">
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       form: {
-        email: "",
+        username: "",
         password: ""
       }
     };
