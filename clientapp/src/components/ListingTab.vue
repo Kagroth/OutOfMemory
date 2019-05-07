@@ -9,6 +9,7 @@
         </b-row>
         <b-row class="mt-2">
           <b-col cols=12>
+            <!--
             <post-preview :key="post_preview"
               v-for="post_preview in post_previews"
               v-bind:author="post_preview.author"
@@ -18,6 +19,13 @@
               v-bind:title="post_preview.title"
               v-bind:tags="post_preview.tags"
           ></post-preview>
+          -->
+          <post-preview :key="post_preview"
+            v-for="post_preview in posts_prevs"
+            v-bind:viewsCount="post_preview.viewsCount"
+            v-bind:title="post_preview.title"
+            v-bind:tags="post_preview.tags">
+          </post-preview>
           </b-col>          
         </b-row>
       </b-tab>
@@ -27,6 +35,7 @@
 </template>
 <script>
 //custom components
+import api from "../api.js";
 import PostPreview from "./PostPreview.vue";
 
 // Tab components
@@ -54,8 +63,29 @@ export default {
   
   data() {
     return {
+      posts_prevs: []
     };
+  },
+
+  created() {
+    this.$http.get(api.getPostEndpoint()).then(
+      // on success
+      (response) => {
+        console.log(response.data);
+        this.posts_prevs = response.data;
+      },
+      
+      // on fail
+      (response) => {
+        console.log(response.data);
+      }
+    );
+  },
+
+  methods: {
+
   }
+
 };
 </script>
 <style scoped>
