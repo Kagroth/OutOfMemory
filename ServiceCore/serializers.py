@@ -76,3 +76,10 @@ class ProfileSerializer(serializers.ModelSerializer):
         profile, created = Profile.objects.update_or_create(user=user,
                             description=validated_data.pop('description'))
         return profile
+
+
+class PostSerializer(serializers.ModelSerializer):
+    tags = serializers.StringRelatedField(many=True)
+    class Meta:
+        model = Post
+        fields = ('title', 'postField', 'viewsCount', 'tags')
