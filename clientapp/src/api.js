@@ -4,7 +4,7 @@
 export default {
     baseURL: "http://localhost:8000/",
     endpoints: {
-        login: "login/",
+        login: "api/token/",
         register: "user/",
         posts: "post/"
     },
