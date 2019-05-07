@@ -42,6 +42,9 @@ class Tag(models.Model):
     tagID = models.AutoField(primary_key=True)
     tagName = models.CharField(max_length=32)
 
+    def __str__(self):
+        return self.tagName
+
 class Post(models.Model):
     postID = models.AutoField(primary_key=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
