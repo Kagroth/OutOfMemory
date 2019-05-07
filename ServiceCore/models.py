@@ -9,7 +9,7 @@ from pygments.styles import get_all_styles
 
 # klasa Profile polaczona 1 do 1 z klasa User 
 # aby rozszerzyc informacje dotyczace uzytkownika
-# Pola Username, password i email z klasy User sa required
+# Pola username, password i email z klasy User sa required
 # pola first_name, last_name domyslnie nie sa required - ale sa wymagane przez nasz ERD
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
