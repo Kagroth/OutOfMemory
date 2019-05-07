@@ -25,6 +25,7 @@
             v-bind:author="post_preview.author"
             v-bind:creationDate="post_preview.createdAt"
             v-bind:viewsCount="post_preview.viewsCount"
+            v-bind:answersCount="post_preview.comments.length"
             v-bind:title="post_preview.title"
             v-bind:tags="post_preview.tags">
           </post-preview>
