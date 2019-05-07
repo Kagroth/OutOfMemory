@@ -94,6 +94,13 @@ class ProfileRecordView(APIView):
         serializer = UserSerializer(data=requestedData)
         if serializer.is_valid(raise_exception=ValueError):
             serializer.create(validated_data=requestedData)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error_messages,
                         status=status.HTTP_400_BAD_REQUEST)
+
+class PostView(APIView):
+    def get(self, request):
+        posts = Post.objects.all()
+        serializedPosts = PostSerializer(posts, many=True)
+        return Response(serializedPosts.data)
