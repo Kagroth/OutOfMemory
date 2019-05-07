@@ -12,6 +12,7 @@ from ServiceCore.models import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.generics import ListAPIView 
 
 # Create your views here.
 
@@ -99,8 +100,12 @@ class ProfileRecordView(APIView):
         return Response(serializer.error_messages,
                         status=status.HTTP_400_BAD_REQUEST)
 
-class PostView(APIView):
+class PostView(ListAPIView):
+    queryset = Post.objects.all().order_by("-createdAt")
+    serializer_class = PostSerializer
+
+    '''
     def get(self, request):
         posts = Post.objects.all()
         serializedPosts = PostSerializer(posts, many=True)
-        return Response(serializedPosts.data)
+        return Response(serializedPosts.data)'''
