@@ -73,9 +73,9 @@ export default {
     sendLoginForm(event) {
       event.preventDefault();
 
-      this.$http.post(api.getLoginEndpoint(), {myForm: this.form}).then(
-        (data) => { alert(data.body.content.myForm.email) ;}, // on success
-        (data) => { alert(data.body.content) ;} // on fail
+      this.$http.post(api.getLoginEndpoint(), this.form).then(
+        (response) => { console.log(response.data) ;}, // on success
+        (response) => { console.log(response.data) ;} // on fail
       );
     }
   },
