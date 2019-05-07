@@ -89,9 +89,11 @@ class ProfileRecordView(APIView):
         """
         Create a profile record
         """
-        serializer = ProfileSerializer(data=request.data)
+        requestedData = JSONParser().parse(request)
+
+        serializer = UserSerializer(data=requestedData)
         if serializer.is_valid(raise_exception=ValueError):
-            serializer.create(validated_data=request.data)
+            serializer.create(validated_data=requestedData)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error_messages,
                         status=status.HTTP_400_BAD_REQUEST)
