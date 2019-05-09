@@ -38,28 +38,7 @@
 <script>
 import api from "../api.js";
 
-// Form components
-import BForm from "bootstrap-vue/es/components/form/form";
-import BFormGroup from "bootstrap-vue/es/components/form-group/form-group";
-import BFormInput from "bootstrap-vue/es/components/form-input/form-input";
-import BFormCheckbox from "bootstrap-vue/es/components/form-checkbox/form-checkbox";
-import BButton from "bootstrap-vue/es/components/button/button";
-
-// Layout components
-import BRow from "bootstrap-vue/es/components/layout/row";
-import BCol from "bootstrap-vue/es/components/layout/col";
-
 export default {
-  components: {
-    "b-form": BForm,
-    "b-form-group": BFormGroup,
-    "b-form-input": BFormInput,
-    "b-form-checkbox": BFormCheckbox,
-    "b-button": BButton,
-    "b-row": BRow,
-    "b-col": BCol
-  },
-
   data() {
     return {
       form: {

@@ -19,28 +19,7 @@
 </template>
 
 <script>
-// Cards components
-import BCard from 'bootstrap-vue/es/components/card/card';
-import BCardHeader from 'bootstrap-vue/es/components/card/card-header';
-import BCardFooter from 'bootstrap-vue/es/components/card/card-footer';
-import BCardBody from 'bootstrap-vue/es/components/card/card-body';
-import BCardTitle from 'bootstrap-vue/es/components/card/card-title';
-import BCardText from 'bootstrap-vue/es/components/card/card-text';
-
-// Badge components
-import BBadge from 'bootstrap-vue/es/components/badge/badge';
-
 export default {
-    components: {
-        'b-card': BCard,
-        'b-card-header': BCardHeader,
-        'b-card-footer': BCardFooter,
-        'b-card-body': BCardBody,
-        'b-card-title': BCardTitle,
-        'b-card-text': BCardText,
-        'b-badge': BBadge
-    },
-
     props: ['author', 'creationDate',
             'viewsCount', 'answersCount',
             'title', 'tags'],

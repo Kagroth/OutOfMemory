@@ -41,26 +41,7 @@
 import api from "../api.js";
 import PostPreview from "./PostPreview.vue";
 
-// Tab components
-import BTabs from "bootstrap-vue/es/components/tabs/tabs";
-import BTab from "bootstrap-vue/es/components/tabs/tab";
-
-// Layout components
-import BRow from 'bootstrap-vue/es/components/layout/row';
-import BCol from 'bootstrap-vue/es/components/layout/col';
-
-// Button component
-import BButton from 'bootstrap-vue/es/components/button/button';
-
 export default {
-  components: {
-    "post-preview": PostPreview,
-    "b-tabs": BTabs,
-    "b-tab": BTab,
-    'b-row': BRow,
-    'b-col': BCol,
-    'b-button': BButton
-  },
 
   props: ['post_previews'],
   
