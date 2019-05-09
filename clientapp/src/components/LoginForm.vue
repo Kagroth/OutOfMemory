@@ -72,13 +72,31 @@ export default {
   methods: {
     sendLoginForm(event) {
       event.preventDefault();
-
+      console.log(this.form);
       this.$http.post(api.getLoginEndpoint(), this.form).then(
-        (response) => { console.log(response.data) ;}, // on success
-        (response) => { console.log(response.data) ;} // on fail
+        (response) => { 
+          console.log(response.data.access);
+          if(response.status === 200) {
+            localStorage.setItem("token", response.data.access);
+            localStorage.setItem("refreshToken", response.data.refresh);
+            console.log("Emituje zdarzenie");
+            this.$emit('loginEvent');
+            alert("zalogowano")
+          }
+          else {
+            alert("bledne dane")
+          }
+
+        }, // on success
+        (response) => { console.log(response.data); alert("bledne dane") ;} // on fail
       );
     }
   },
+
+  /*
+  created() {
+    localStorage.setItem('token', "");
+  },*/
 
   computed: {
     emailState() {
