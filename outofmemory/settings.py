@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,6 +59,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'outofmemory.urls'
+CORS_ORIGIN_ALLOW_ANY = True
 
 TEMPLATES = [
     {
@@ -129,6 +131,7 @@ STATIC_URL = '/static/'
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
+    'localhost:8000',
 )
 
 REST_FRAMEWORK = {
@@ -139,4 +142,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
     )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
 }
