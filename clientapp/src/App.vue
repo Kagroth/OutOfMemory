@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <main-nav></main-nav>
+    <main-nav v-bind:isLogged="isLogged"></main-nav>
     <b-container fluid class="content">
       <b-row>
         <b-col cols=8 offset=2>
@@ -29,6 +29,7 @@ export default {
   name: 'app',
   data () {
     return {
+      isLogged: false,
       post_previews: [
         {
           author: "pjoterN",
@@ -68,6 +69,19 @@ export default {
       ]
     }
   },
+
+  methods: {
+    login(loginStatus) {
+      console.log("Logujeeee");
+      this.isLogged = true;
+    },
+
+    logout(){
+      console.log("Wylogowanie");
+      this.isLogged = false;
+    }
+  },
+
   components: {
     'b-container': BContainer,
     'b-row': BRow,
