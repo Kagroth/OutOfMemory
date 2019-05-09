@@ -30,7 +30,7 @@
           <b-form-row>
             <b-col cols="9" label-for="postField">Tresc posta:</b-col>
             <b-col cols="3" class="insertCodeCol">
-                <b-button id="insertCodeButton" variant="primary" size="sm" disabled>Osadź kod</b-button>
+                <b-button id="insertCodeButton" variant="primary" size="sm">Osadź kod</b-button>
                 <b-tooltip target="insertCodeButton" placement="righttop">
                     Wskaż miejsce w polu tekstowym w którym chcesz dodać kod, następnie kliknij ten przycisk
                 </b-tooltip>
