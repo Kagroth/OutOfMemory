@@ -50,38 +50,9 @@
 </template>
 
 <script>
-// Form components
-import BForm from "bootstrap-vue/es/components/form/form";
-import BFormGroup from "bootstrap-vue/es/components/form-group/form-group";
-import BFormInput from "bootstrap-vue/es/components/form-input/form-input";
-import BFormTextarea from "bootstrap-vue/es/components/form-textarea/form-textarea";
-import BFormCheckbox from "bootstrap-vue/es/components/form-checkbox/form-checkbox";
-import BFormRow from "bootstrap-vue/es/components/form/form-row";
-import BButton from "bootstrap-vue/es/components/button/button";
-
-
 import api from "../api.js";
 
-// Layout components
-import BRow from "bootstrap-vue/es/components/layout/row";
-import BCol from "bootstrap-vue/es/components/layout/col";
-
-// Tooltip component
-import BTooltip from "bootstrap-vue/es/components/tooltip/tooltip";
-
 export default {
-  components: {
-    "b-form": BForm,
-    "b-form-group": BFormGroup,
-    "b-form-input": BFormInput,
-    "b-form-textarea": BFormTextarea,
-    "b-form-checkbox": BFormCheckbox,
-    "b-button": BButton,
-    "b-row": BRow,
-    "b-col": BCol,
-    "b-tooltip": BTooltip
-  },
-
   data() {
     return {
       post: {
