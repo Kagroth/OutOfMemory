@@ -14,6 +14,16 @@ Vue.use(VueResource);
 
 const store = new Vuex.Store({
   state: {
+    username: null,    
+    isLoggedUser: (localStorage.getItem('token') === null),
+
+    posts: [
+
+    ],
+
+    posts_previews: [
+
+    ],
 
   },
 
