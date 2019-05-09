@@ -7,24 +7,24 @@
       <b-navbar-nav>
         <b-nav-form class="ml-5">
           <b-form-input v-model="filterParam" size="sm" placeholder="Wprowadz szukana fraze"></b-form-input>
-          <b-button size="sm" class="ml-1" @click="search">Szukaj</b-button>
+          <b-button size="sm" class="ml-1">Szukaj</b-button>
         </b-nav-form>
       </b-navbar-nav>
-      <b-navbar-nav v-if="!isLogged" class="ml-auto">
+      <b-navbar-nav class="ml-auto">
         <b-nav-item to="/login" href="#" class="menuLink">Logowanie</b-nav-item>
         <b-nav-item to="/register" href="#" class="menuLink">Rejestracja</b-nav-item>
       </b-navbar-nav>
-      <b-navbar-nav v-else class="ml-auto">
-        <b-nav-item to="" href="#" class="menuLink" @click="logout">Wyloguj</b-nav-item>
-      </b-navbar-nav>      
+      <!--
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item to="" href="#" class="menuLink">Wyloguj</b-nav-item>
+      </b-navbar-nav>    
+      -->  
     </b-navbar>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['isLogged'],
-
   data() {
     return {
       message: "Nawigacja",
@@ -33,14 +33,7 @@ export default {
   },
 
   methods: {
-    logout() {
-      localStorage.removeItem('token');
-      this.$emit('logout');
-    },
 
-    search() {
-      console.log("Wyszukuje!");
-    }
   }
 };
 </script>
