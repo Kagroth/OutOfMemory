@@ -6,7 +6,8 @@ export default {
     endpoints: {
         login: "token/",
         register: "user/",
-        posts: "post/"
+        posts: "post/",
+        createPost: "post/new/"
     },
 
     getLoginEndpoint() {
@@ -19,5 +20,9 @@ export default {
 
     getPostEndpoint() {
         return this.baseURL + this.endpoints.posts;
+    },
+
+    getCreatePostEndpoint() {
+        return this.baseURL + this.endpoints.createPost;
     }
 }
