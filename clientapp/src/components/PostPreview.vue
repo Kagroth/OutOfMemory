@@ -11,7 +11,7 @@
                 </div>
             </b-card-text>
             <b-card-text>
-                <b-badge variant="primary" class="mr-1" :key="tagName" v-for="tagName in tags">{{ tagName }}</b-badge>
+                <b-badge variant="primary" class="mr-1" :key="tagName" v-for="tagName in tags">{{ tagName.tagName }}</b-badge>
             </b-card-text>            <!-- tymczasowe rozwiazanie -->
             <div slot="footer"><small>{{ creationDate.slice(0, 10) }}</small></div>
         </b-card>
