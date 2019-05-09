@@ -13,8 +13,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListAPIView 
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework import generics
 
 # Create your views here.
+class HelloView(APIView):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
+    def get(self, request):
+        return Response({"message": "Hello world"})
 
 def index(request):
     return HttpResponse("Hello world")
@@ -87,9 +94,24 @@ class ProfileRecordView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        requestedData = JSONParser().parse(request)
+        user = User.objects.create_user(first_name=requestedData['first_name'],
+                                       last_name=requestedData['last_name'],
+                                       username=requestedData['username'],
+                                       email=requestedData['email'],
+                                       password=requestedData['password'])
+        
+        
+        try:
+            user.save()
+            return Response({"userData": requestedData, "message": "sukces"})
+        except Exception as e:
+            print(str(e))            
+            return Response({"userData": requestedData, "message": "error"})
+
         """
         Create a profile record
-        """
+
         requestedData = JSONParser().parse(request)
 
         serializer = UserSerializer(data=requestedData)
@@ -99,8 +121,11 @@ class ProfileRecordView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error_messages,
                         status=status.HTTP_400_BAD_REQUEST)
+        """
 
+# wszystkie posty
 class PostView(ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
     queryset = Post.objects.all().order_by("-createdAt")
     serializer_class = PostSerializer
 
@@ -109,3 +134,46 @@ class PostView(ListAPIView):
         posts = Post.objects.all()
         serializedPosts = PostSerializer(posts, many=True)
         return Response(serializedPosts.data)'''
+
+# filtrowanie/wyszukiwanie postow
+class PostViewFilter(generics.ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        titleFilter = self.request.query_params.get('title', None)
+        print(titleFilter)
+        posts = Post.objects.all()
+        print(type(posts))
+        postsFiltered = list()
+
+        for post in posts:
+            if titleFilter in post.title:
+                postsFiltered.append(post)
+
+        return postsFiltered
+
+# tworzenie posta
+class PostCreate(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def post(self, request):
+        #u = (request.user)
+        requestedData = JSONParser().parse(request)
+        print(requestedData)
+        tag = None
+        try: 
+            tag = Tag.objects.get(tagName=requestedData['tags'])
+        except: 
+            tag = Tag.objects.create(tagName=requestedData['tags'])
+            print(tag)
+            
+        try:
+            post = Post.objects.create(author=request.user, viewsCount=0, title=requestedData['title'])
+            post.tags.add(tag)
+            post.save()
+        except Exception as e:
+            print(str(e))
+            return Response({"message": "niepowodzenie"})
+
+        return Response({"message": "sukces"})
