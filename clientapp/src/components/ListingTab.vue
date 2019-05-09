@@ -71,7 +71,9 @@ export default {
   },
 
   created() {
-    this.$http.get(api.getPostEndpoint()).then(
+    console.log(); 
+
+    this.$http.get(api.getPostEndpoint(), {headers: {Authorization: "Bearer " + localStorage.getItem('token')}}).then(
       // on success
       (response) => {
         console.log(response.data);
