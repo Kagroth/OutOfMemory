@@ -10,15 +10,13 @@
           <b-button size="sm" class="ml-1">Szukaj</b-button>
         </b-nav-form>
       </b-navbar-nav>
-      <b-navbar-nav class="ml-auto">
+      <b-navbar-nav class="ml-auto" v-if="!isLogged">
         <b-nav-item to="/login" href="#" class="menuLink">Logowanie</b-nav-item>
         <b-nav-item to="/register" href="#" class="menuLink">Rejestracja</b-nav-item>
       </b-navbar-nav>
-      <!--
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item to="" href="#" class="menuLink">Wyloguj</b-nav-item>
-      </b-navbar-nav>    
-      -->  
+      <b-navbar-nav class="ml-auto" v-else>
+        <b-nav-item to="" href="#" class="menuLink" @click="logout">Wyloguj</b-nav-item>
+      </b-navbar-nav> 
     </b-navbar>
   </div>
 </template>
@@ -32,8 +30,17 @@ export default {
     };
   },
 
-  methods: {
+  computed: {
+    isLogged () {
+      return this.$store.state.isLogged;
+    }
+  },
 
+  methods: {
+    logout () {
+      this.$store.commit('logout');
+      console.log("Tu nastapi wylogowanie");
+    }
   }
 };
 </script>
