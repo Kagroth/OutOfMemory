@@ -10,7 +10,7 @@
         <b-row class="mt-2">
           <b-col cols=12>
             <post-preview :key="post_preview"
-              v-for="post_preview in posts_previews"
+              v-for="post_preview in post_previews"
               v-bind:postPreview="post_preview">
             </post-preview>
           </b-col>          
@@ -37,15 +37,19 @@ export default {
   },
 
   computed: {
-    posts_previews() {
-      return this.$store.state.posts_previews;
+    post_previews() {
+      return this.$store.state.post_previews;
     }
   },
 
   created() {
     console.log(); 
     console.log(this.$store);
+    console.log(this.$store.state.isLoggedUser);
+    console.log(this.$store.state.token);
 
+    this.$store.dispatch('getAllPostPreviews');
+  /*
     this.$http.get(api.getPostEndpoint(), {headers: {Authorization: "Bearer " + localStorage.getItem('token')}}).then(
       // on success
       (response) => {
@@ -57,7 +61,7 @@ export default {
       (response) => {
         console.log(response.data);
       }
-    );
+    );*/
   },
 
   methods: {
