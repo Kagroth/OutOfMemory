@@ -90,14 +90,14 @@ class PostViewFilter(generics.ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        titleFilter = self.request.query_params.get('title', None)
-        print(titleFilter)
+        searchParam = self.request.query_params.get('param', None)
+        print(searchParam)
         posts = Post.objects.all()
         print(type(posts))
         postsFiltered = list()
 
         for post in posts:
-            if titleFilter in post.title:
+            if searchParam in post.title or searchParam in post.postField:
                 postsFiltered.append(post)
 
         return postsFiltered
