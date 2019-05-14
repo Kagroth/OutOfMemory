@@ -1,10 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-#test imports
-from pygments.lexers import get_all_lexers
-from pygments.styles import get_all_styles
-
 # Create your models here.
 
 # klasa Profile polaczona 1 do 1 z klasa User 
