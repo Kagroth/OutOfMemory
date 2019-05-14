@@ -10,14 +10,15 @@ export default new Vuex.Store({
       token: "",
       isLogged: "",
   
-      post_previews: []
-  
+      post_previews: [],
+      posts: []
     },
   
     mutations: {
       init (state) {
         state.token = localStorage.getItem('token'),
-        state.isLogged = (localStorage.getItem('token') !== null)
+        state.isLogged = (localStorage.getItem('token') !== "null"
+                          && localStorage.getItem('token') !== undefined)
       },
   
       setToken (state, payload) {
@@ -92,7 +93,7 @@ export default new Vuex.Store({
   
         return new Promise((resolve, reject) => {
           let authHeader = "Bearer " + this.state.token;
-          axios.get(api.getPostEndpoint())
+          axios.get(api.getPostPreviewsEndpoint())
              .then((response) => {
                 commit('setPostPreviews', response.data)
                 resolve()
@@ -104,21 +105,27 @@ export default new Vuex.Store({
         })      
       },
   
-      createGroup ({commit}, payload) {
+      createPost ({commit}, payload) {
+        console.log("Wysylam request z utworzeniem posta")
+
         return new Promise((resolve, reject) => {
           let authHeader = "Bearer " + this.state.token;
-  
-          axios.post("http://localhost:8000/groups/", {
-            params: payload},
-            {headers: {
-            'Authorization': authHeader
-          }})
-            .then((response) => {
-              resolve()
+
+          axios.post(api.getCreatePostEndpoint(), {
+            params: payload },
+            {
+              headers: {
+                'Authorization': authHeader
+              }
             })
-            .catch((error) => {
-              reject()
-            })
+               .then(response => {
+                 console.log(response.data)
+                 resolve()
+               })
+               .catch(() => {
+                 alert("Nie udalo sie utworzyc posta")
+                 reject()
+               })
         })
       }
     }

@@ -73,18 +73,16 @@ export default {
            alert("Nie wypelniono wszystkich danych");
            return;
          }
+      
+      let splittedTags = this.post.tags.split(","); // tworze tablice z tagow oddzielonych przecinkiem
+      splittedTags = splittedTags.map(tag => { return tag.trim() }); // usuwam spacje po bokach
 
-      this.$http.post(api.getCreatePostEndpoint(), this.post, {headers: {Authorization: "Bearer " + localStorage.getItem('token')}} ).then(
-        (response) => {
-          console.log(response.body);
-          alert("Pomyslnie dodano post");
-        },
+      console.log(splittedTags);
 
-        (response) => {
-          console.log(response.body);
-          alert("Nie udalo sie dodac postu");
-        }
-      );
+      let postToSend = this.post;
+      this.post.tags = splittedTags;
+      
+      this.$store.dispatch('createPost', this.post);
     }
   }
 };
