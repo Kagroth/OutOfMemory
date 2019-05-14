@@ -4,9 +4,10 @@
 export default {
     baseURL: "http://localhost:8000/",
     endpoints: {
-        login: "login/",
-        register: "register/",
-
+        login: "token/",
+        register: "user/",
+        posts: "post/",
+        createPost: "post/new/"
     },
 
     getLoginEndpoint() {
@@ -15,5 +16,13 @@ export default {
 
     getRegisterEndpoint() {
         return this.baseURL + this.endpoints.register;
+    },
+
+    getPostEndpoint() {
+        return this.baseURL + this.endpoints.posts;
+    },
+
+    getCreatePostEndpoint() {
+        return this.baseURL + this.endpoints.createPost;
     }
 }

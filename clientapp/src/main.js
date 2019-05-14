@@ -2,12 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
 import VueRouter from 'vue-router'
-import VueResource from 'vue-resource'
+import Vuex from 'vuex'
 import Routes from './routes'
+import store from './store/index'
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
-Vue.use(VueResource);
+Vue.use(Vuex);
 
 const router = new VueRouter({
   routes: Routes,
@@ -17,5 +18,10 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   render: h => h(App),
-  router: router
+  router: router,
+  store: store,
+
+  created () {
+    this.$store.commit('init');
+  }
 })

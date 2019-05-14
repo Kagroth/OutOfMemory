@@ -3,13 +3,13 @@
     <b-row>
       <b-col cols="4" offset="4">
         <b-form>
-          <b-form-group label="Email:" label-for="emailInput">
+          <b-form-group label="Nazwa uzytkownika:" label-for="usernameInput">
             <b-form-input
-              id="emailInput"
-              v-model="form.email"
-              type="email"
+              id="usernameInput"
+              v-model="form.username"
+              type="text"
               :state="emailState"
-              placeholder="jankowalski@domena.pl"
+              placeholder="Twoja nazwa uzytkownika"
             ></b-form-input>
           </b-form-group>
           <b-form-group label="Haslo:" label-for="passwordInput">
@@ -36,34 +36,11 @@
 </template>
 
 <script>
-import api from "../api.js";
-
-// Form components
-import BForm from "bootstrap-vue/es/components/form/form";
-import BFormGroup from "bootstrap-vue/es/components/form-group/form-group";
-import BFormInput from "bootstrap-vue/es/components/form-input/form-input";
-import BFormCheckbox from "bootstrap-vue/es/components/form-checkbox/form-checkbox";
-import BButton from "bootstrap-vue/es/components/button/button";
-
-// Layout components
-import BRow from "bootstrap-vue/es/components/layout/row";
-import BCol from "bootstrap-vue/es/components/layout/col";
-
 export default {
-  components: {
-    "b-form": BForm,
-    "b-form-group": BFormGroup,
-    "b-form-input": BFormInput,
-    "b-form-checkbox": BFormCheckbox,
-    "b-button": BButton,
-    "b-row": BRow,
-    "b-col": BCol
-  },
-
   data() {
     return {
       form: {
-        email: "",
+        username: "",
         password: ""
       }
     };
@@ -72,11 +49,8 @@ export default {
   methods: {
     sendLoginForm(event) {
       event.preventDefault();
-
-      this.$http.post(api.getLoginEndpoint(), {myForm: this.form}).then(
-        (data) => { alert(data.body.content.myForm.email) ;}, // on success
-        (data) => { alert(data.body.content) ;} // on fail
-      );
+      console.log(this.form);
+      this.$store.dispatch('loginUser', this.form);
     }
   },
 

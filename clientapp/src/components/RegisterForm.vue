@@ -8,7 +8,7 @@
                         id="firstNameInput"
                         type="text"
                         placeholder="Jan"
-                        v-model="form.firstName"
+                        v-model="form.first_name"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -17,7 +17,7 @@
                         id="lastNameInput"
                         type="text"
                         placeholder="Kowalski"
-                        v-model="form.lastName"
+                        v-model="form.last_name"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -27,6 +27,15 @@
                         type="email"
                         placeholder="jankowalski@domena.pl"
                         v-model="form.email"
+                      >                          
+                      </b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Username:" label-for="usernameInput">
+                      <b-form-input
+                        id="usernameInput"
+                        type="text"
+                        placeholder="Twoja nazwa uzytwkonika"
+                        v-model="form.username"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -44,7 +53,7 @@
                         id="passwordRepeatInput"
                         type="password"
                         placeholder=""
-                        v-model="form.passwordRepeat"
+                        v-model="passwordRepeat"
                       >                          
                       </b-form-input>
                   </b-form-group>
@@ -56,48 +65,23 @@
 </template>
 
 <script>
-import api from "../api.js";
-
-// Form components
-import BForm from "bootstrap-vue/es/components/form/form";
-import BFormGroup from "bootstrap-vue/es/components/form-group/form-group";
-import BFormInput from "bootstrap-vue/es/components/form-input/form-input";
-import BFormCheckbox from "bootstrap-vue/es/components/form-checkbox/form-checkbox";
-import BButton from "bootstrap-vue/es/components/button/button";
-
-// Layout components
-import BRow from "bootstrap-vue/es/components/layout/row";
-import BCol from "bootstrap-vue/es/components/layout/col";
-
 export default {
-    components: {
-    "b-form": BForm,
-    "b-form-group": BFormGroup,
-    "b-form-input": BFormInput,
-    "b-form-checkbox": BFormCheckbox,
-    "b-button": BButton,
-    "b-row": BRow,
-    "b-col": BCol
-  },
-
   data() {
       return {
         form: {
-          firstName: "",
-          lastName: "",
+          first_name: "",
+          last_name: "",
           email: "",
-          password: "",
-          passwordRepeat: "",
-        }
+          username: "",
+          password: ""          
+        },
+        passwordRepeat: ""
       }
   },
 
   methods: {
     sendRegisterForm(event) {
-      this.$http.post(api.getRegisterEndpoint(), {myForm: this.form}).then(
-        (data) => { console.log("sukces"); }, // on success
-        (data) => { console.log("blad przy wysylaniu") } // on fail
-      );
+      this.$store.dispatch('createUser', this.form);
     }
   }
 }
