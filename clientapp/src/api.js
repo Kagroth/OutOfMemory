@@ -8,7 +8,8 @@ export default {
         register: "user/",
         post_previews: "post_preview/",
         searchPost: "post/search/",
-        createPost: "post/new/"
+        createPost: "post/new/",
+        postDetails: "post/details/",
     },
 
     getLoginEndpoint() {
@@ -29,5 +30,9 @@ export default {
 
     getCreatePostEndpoint() {
         return this.baseURL + this.endpoints.createPost;
+    },
+
+    getPostDetailsEndpoint() {
+        return this.baseURL + this.endpoints.postDetails;
     }
 }
