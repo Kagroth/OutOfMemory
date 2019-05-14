@@ -10,6 +10,7 @@ export default {
         searchPost: "post/search/",
         createPost: "post/new/",
         postDetails: "post/details/",
+        addComment: 'post/comment/new/'
     },
 
     getLoginEndpoint() {
@@ -34,5 +35,9 @@ export default {
 
     getPostDetailsEndpoint() {
         return this.baseURL + this.endpoints.postDetails;
+    },
+
+    getAddCommentEndpoint() {
+        return this.baseURL + this.endpoints.addComment;
     }
 }
