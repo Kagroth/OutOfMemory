@@ -154,3 +154,19 @@ class PostCreate(APIView):
         post.save()
 
         return Response({"message": "Post zostal utworzony"})
+
+class CommentView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        requestedData = JSONParser().parse(request)
+        newCommentData = requestedData['params']
+        print(newCommentData)
+
+        post = Post.objects.get(pk=newCommentData['postPk'])
+
+        newComment = Comment.objects.create(commentField=newCommentData['comment'],
+                                            author=request.user,
+                                            post=post)
+        newComment.save()
+        return Response({"message": "Komentarz dodany"})
