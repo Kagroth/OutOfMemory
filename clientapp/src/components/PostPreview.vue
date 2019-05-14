@@ -11,9 +11,9 @@
                 </div>
             </b-card-text>
             <b-card-text>
-                <b-badge variant="primary" class="mr-1" :key="tagName" v-for="tagName in postPreview.tags">{{ tagName }}</b-badge>
+                <b-badge variant="primary" class="mr-1" :key="tag" v-for="tag in postPreview.tags">{{ tag.tagName }}</b-badge>
             </b-card-text>            <!-- tymczasowe rozwiazanie -->
-            <div slot="footer"><small>{{ postPreview.creationDate }}</small></div>
+            <div slot="footer"><small>{{ postPreview.createdAt.substring(0, 10) }}</small></div>
         </b-card>
     </div>    
 </template>
