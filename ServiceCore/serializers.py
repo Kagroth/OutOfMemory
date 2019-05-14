@@ -50,6 +50,14 @@ class TagSerializer(serializers.ModelSerializer):
         model = Tag
         fields = ('tagName', )
 
+class PostPreviewSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField()
+    tags = TagSerializer(many=True)
+    
+    class Meta:
+        model = Post
+        fields = ('author', 'title', 'viewsCount', 'tags', 'createdAt')
+
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     tags = TagSerializer(many=True)
