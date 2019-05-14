@@ -84,6 +84,21 @@ class PostView(ListAPIView):
     queryset = Post.objects.all().order_by("-createdAt")
     serializer_class = PostSerializer
 
+class PostDetailsView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, pk):
+        postToShow = None
+
+        try:
+            postToShow = Post.objects.get(pk=pk)
+        except:
+            return Response({"message": "Nie ma takiego posta!"})
+        
+        serializedPost = PostSerializer(postToShow)
+
+        return Response(serializedPost.data)
+
 # filtrowanie/wyszukiwanie postow
 class PostViewFilter(generics.ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, )
@@ -125,7 +140,7 @@ class PostCreate(APIView):
             tagsToAdd.append(tag)
 
         try:
-            post = Post.objects.create(author=request.user, viewsCount=0, title=newPostData['title'])
+            post = Post.objects.create(author=request.user, viewsCount=0, title=newPostData['title'], postField=newPostData['postField'])
         except:
             return Response({"message": "Nie udalo sie utworzyc posta"})
 
