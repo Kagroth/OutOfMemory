@@ -11,7 +11,8 @@ export default new Vuex.Store({
       isLogged: "",
   
       post_previews: [],
-      posts: []
+      posts: [],
+      postDetails: ""
     },
   
     mutations: {
@@ -34,6 +35,10 @@ export default new Vuex.Store({
       setPostPreviews (state, payload) {
         console.log(payload)
         state.post_previews = payload;
+      },
+
+      setPostDetails (state, payload) {
+        state.postDetails = payload;
       },
   
       logout (state) {
@@ -145,6 +150,20 @@ export default new Vuex.Store({
                  alert("Nie udalo sie utworzyc posta")
                  reject()
                })
+        })
+      },
+
+      getPostDetails ({commit}, payload) {
+        return new Promise((resolve, reject) => {
+          axios.get(api.getPostDetailsEndpoint() + payload)
+             .then((response) => {
+                commit('setPostDetails', response.data)
+                resolve()
+             })
+             .catch(() => {
+              alert("Nie znaleziono posta!")
+              reject()
+             })
         })
       }
     }
