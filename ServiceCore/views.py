@@ -15,7 +15,7 @@ from rest_framework import status
 from rest_framework.generics import ListAPIView 
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework import generics
-
+# pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
     
     def get(self, format=None):
@@ -26,22 +26,41 @@ class ProfileRecordView(APIView):
         serializer = ProfileSerializer(users, many=True)
         return Response(serializer.data)
 
+    # Tworzenie nowego uzytkownika - rejestracja
     def post(self, request):
         requestedData = JSONParser().parse(request)
         print(requestedData)
-        user = User.objects.create_user(first_name=requestedData['first_name'],
+
+        isUserExist = None
+        user = None
+        
+        try:
+            isUserExist = User.objects.get(username=requestedData['username'])
+            print("Uzytkowniko podanym nicku istnieje!")
+        except:
+            isUserExist = False
+            print("Username wolny, jest ok")
+
+        if isUserExist == False:
+            user = User.objects.create_user(first_name=requestedData['first_name'],
                                        last_name=requestedData['last_name'],
                                        username=requestedData['username'],
                                        email=requestedData['email'],
                                        password=requestedData['password'])
-        
-        
+        else:
+            return Response({"message": "Użytkownik o podanym nicku juz istnieje"})
+
         try:
             user.save()
-            return Response({"userData": requestedData, "message": "sukces"})
+            profile = Profile.objects.create(user=user, description="")
+            profile.save()
+            print("Uzytkownik zarejestrowany!")
+            
+            return Response({"userData": requestedData, "message": "Użytkownik zostal zarejestrowany"})
         except Exception as e:
-            print(str(e))            
-            return Response({"userData": requestedData, "message": "error"})
+            print(str(e))      
+
+            return Response({"userData": requestedData, "message": "Nie udalo sie zarejestrowac uzytkownika"})
 
         """
         Create a profile record
