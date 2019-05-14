@@ -1,11 +1,7 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.cache import never_cache
 import json
 
 from rest_framework.parsers import JSONParser
-
 
 from ServiceCore.serializers import *
 from ServiceCore.models import *
@@ -76,17 +72,17 @@ class ProfileRecordView(APIView):
                         status=status.HTTP_400_BAD_REQUEST)
         """
 
+# wszystkie posty w formie skroconej (bez komentarzy i tresci)
+class PostPreviewView(ListAPIView):    
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+    queryset = Post.objects.all().order_by("-createdAt")
+    serializer_class = PostPreviewSerializer
+
 # wszystkie posty
 class PostView(ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, )
     queryset = Post.objects.all().order_by("-createdAt")
     serializer_class = PostSerializer
-
-    '''
-    def get(self, request):
-        posts = Post.objects.all()
-        serializedPosts = PostSerializer(posts, many=True)
-        return Response(serializedPosts.data)'''
 
 # filtrowanie/wyszukiwanie postow
 class PostViewFilter(generics.ListAPIView):
@@ -112,21 +108,34 @@ class PostCreate(APIView):
 
     def post(self, request):
         #u = (request.user)
+        print(request.user)
         requestedData = JSONParser().parse(request)
-        print(requestedData)
-        tag = None
-        try: 
-            tag = Tag.objects.get(tagName=requestedData['tags'])
-        except: 
-            tag = Tag.objects.create(tagName=requestedData['tags'])
-            print(tag)
-            
-        try:
-            post = Post.objects.create(author=request.user, viewsCount=0, title=requestedData['title'])
-            post.tags.add(tag)
-            post.save()
-        except Exception as e:
-            print(str(e))
-            return Response({"message": "niepowodzenie"})
+        newPostData = requestedData['params']
 
-        return Response({"message": "sukces"})
+        postToAdd = None
+        tag = None
+        tagsToAdd = []
+
+        for tagToAdd in newPostData['tags']:
+            try: 
+                tag = Tag.objects.get(tagName=tagToAdd)
+            except: 
+                tag = Tag.objects.create(tagName=tagToAdd)
+                print(tag)
+            tagsToAdd.append(tag)
+
+        try:
+            post = Post.objects.create(author=request.user, viewsCount=0, title=newPostData['title'])
+        except:
+            return Response({"message": "Nie udalo sie utworzyc posta"})
+
+        for tag in tagsToAdd:
+            try:                
+                post.tags.add(tag)
+            except Exception as e:
+                print(str(e))
+                return Response({"message": "Nie udalo sie dodac wszystkich tagow"})
+        
+        post.save()
+
+        return Response({"message": "Post zostal utworzony"})
