@@ -15,7 +15,11 @@
         <b-nav-item to="/register" href="#" class="menuLink">Rejestracja</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto" v-else>
-        <b-nav-item to="" href="#" class="menuLink" @click="logout">Wyloguj</b-nav-item>
+        <b-nav-item-dropdown to="" href="#" id="menuDropdownLink" :text="username">
+          <b-dropdown-item class="blackText">Profil</b-dropdown-item>
+          <b-dropdown-divider></b-dropdown-divider>
+          <b-dropdown-item class="blackText" @click="logout">Wyloguj</b-dropdown-item>
+        </b-nav-item-dropdown>
       </b-navbar-nav> 
     </b-navbar>
   </div>
@@ -32,6 +36,10 @@ export default {
   computed: {
     isLogged () {
       return this.$store.state.isLogged;
+    },
+
+    username () {
+      return this.$store.state.username;
     }
   },
 
@@ -56,5 +64,9 @@ export default {
 .navbar .navbar-brand a {
     text-decoration: none;
     color: white;
+}
+
+.navbar .navbar-nav #menuDropdownLink .dropdown-menu .blackText {
+  color: black;
 }
 </style>
