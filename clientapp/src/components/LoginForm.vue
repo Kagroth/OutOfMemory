@@ -36,8 +36,6 @@
 </template>
 
 <script>
-import api from "../api.js";
-
 export default {
   data() {
     return {
@@ -53,31 +51,8 @@ export default {
       event.preventDefault();
       console.log(this.form);
       this.$store.dispatch('loginUser', this.form);
-      /*
-      this.$http.post(api.getLoginEndpoint(), this.form).then(
-        (response) => { 
-          console.log(response.data.access);
-          if(response.status === 200) {
-            localStorage.setItem("token", response.data.access);
-            localStorage.setItem("refreshToken", response.data.refresh);
-            console.log("Emituje zdarzenie");
-            this.$emit('loginEvent');
-            alert("zalogowano")
-          }
-          else {
-            alert("bledne dane")
-          }
-
-        }, // on success
-        (response) => { console.log(response.data); alert("bledne dane") ;} // on fail
-      );*/
     }
   },
-
-  /*
-  created() {
-    localStorage.setItem('token', "");
-  },*/
 
   computed: {
     emailState() {
