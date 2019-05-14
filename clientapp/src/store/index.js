@@ -9,7 +9,7 @@ export default new Vuex.Store({
     state: {
       token: "",
       isLogged: "",
-  
+      username: "",
       post_previews: [],
       posts: [],
       postDetails: ""
@@ -20,12 +20,16 @@ export default new Vuex.Store({
         state.token = localStorage.getItem('token'),
         state.isLogged = (localStorage.getItem('token') !== "null"
                           && localStorage.getItem('token') !== undefined)
+        state.username = localStorage.getItem('username') || ""
+        
       },
   
       setToken (state, payload) {
         localStorage.setItem('token', payload.token);
+        localStorage.setItem('username', payload.username);
         state.token = localStorage.getItem('token');
-        state.isLogged = (localStorage.getItem('token') != null)
+        state.isLogged = (localStorage.getItem('token') != null);
+        state.username = payload.username;
       },
   
       setUsers (state, payload) {
@@ -65,7 +69,8 @@ export default new Vuex.Store({
              .then(response => {
                console.log(response.data.access);
                commit('setToken', {
-                 token: response.data.access
+                 token: response.data.access,
+                 username: payload.username
                });
                
                resolve()
@@ -164,6 +169,28 @@ export default new Vuex.Store({
               alert("Nie znaleziono posta!")
               reject()
              })
+        })
+      },
+
+      addComment ({commit}, payload) {
+        let authHeader = "Bearer " + this.state.token;
+
+        return new Promise((resolve, reject) => {
+          axios.post(api.getAddCommentEndpoint(), {
+            params: payload},
+            {
+              headers: {
+                'Authorization': authHeader
+              }
+            })
+               .then(response => {
+                  console.log(response)
+                  resolve()
+               })
+               .catch(() => {
+                 console.log("nie udalo sie dodac komentarza")
+                 reject()
+               })
         })
       }
     }
