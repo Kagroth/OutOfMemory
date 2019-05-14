@@ -105,6 +105,25 @@ export default new Vuex.Store({
         })      
       },
   
+      searchPosts ({commit}, payload) {
+        console.log(payload);
+
+        let urlToFilteredPosts = api.getSearchPostEndpoint() + "?param=" + payload; 
+        console.log(urlToFilteredPosts);
+
+        return new Promise((resolve, reject) => {
+          axios.get(urlToFilteredPosts)
+             .then((response) => {
+                commit('setPostPreviews', response.data)
+                resolve()
+             })
+             .catch(() => {
+              alert("Blad wyszukiwania postow")
+              reject()
+             })
+        })        
+      },
+
       createPost ({commit}, payload) {
         console.log("Wysylam request z utworzeniem posta")
 

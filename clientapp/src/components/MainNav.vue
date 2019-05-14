@@ -6,8 +6,8 @@
       </b-navbar-brand>
       <b-navbar-nav>
         <b-nav-form class="ml-5">
-          <b-form-input v-model="filterParam" size="sm" placeholder="Wprowadz szukana fraze"></b-form-input>
-          <b-button size="sm" class="ml-1">Szukaj</b-button>
+          <b-form-input v-model="searchParam" size="sm" placeholder="Wprowadz szukana fraze"></b-form-input>
+          <b-button size="sm" class="ml-1" @click="searchPosts">Szukaj</b-button>
         </b-nav-form>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto" v-if="!isLogged">
@@ -25,8 +25,7 @@
 export default {
   data() {
     return {
-      message: "Nawigacja",
-      filterParam: ""
+      searchParam: ""
     };
   },
 
@@ -40,6 +39,10 @@ export default {
     logout () {
       this.$store.commit('logout');
       console.log("Tu nastapi wylogowanie");
+    },
+
+    searchPosts () {
+      this.$store.dispatch('searchPosts', this.searchParam);
     }
   }
 };

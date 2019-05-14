@@ -81,6 +81,23 @@ export default {
 
   methods: {
     sendRegisterForm(event) {
+      console.log(this.form)
+
+      if(this.form.first_name === "" 
+         || this.form.last_name === ""
+         || this.form.email === ""
+         || this.form.username === "") {
+           alert("Nie wprowadzono wszystkich danych")
+           return;
+         }
+
+      if(this.form.password !== this.passwordRepeat
+         || this.form.password === ""
+         || this.passwordRepeat === "") {
+        alert("Hasla sie roznia!")
+        return;
+      }
+
       this.$store.dispatch('createUser', this.form);
     }
   }
