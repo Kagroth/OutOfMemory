@@ -4,24 +4,6 @@ from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 
 class UserSerializer(serializers.ModelSerializer):
-    '''
-    first_name = serializers.CharField(
-        required=True,
-    )
-    last_name = serializers.CharField(
-        required=True,
-    )
-
-    username = serializers.EmailField(
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-
-    password = serializers.CharField(
-        style={'input_type': 'password'},
-        min_length=8
-    )
-    '''
-
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
@@ -58,11 +40,17 @@ class PostPreviewSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('pk', 'author', 'title', 'viewsCount', 'tags', 'createdAt')
 
+class CommentSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField()
+    class Meta:
+        model = Comment
+        fields = ('author', 'createdAt', 'commentField')
+
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     tags = TagSerializer(many=True)
-    comments = serializers.StringRelatedField(many=True)
+    comments = CommentSerializer(many=True)
     
     class Meta:
         model = Post
-        fields = ('author', 'title', 'postField', 'viewsCount', 'tags', 'createdAt', 'comments')
+        fields = ('pk', 'author', 'title', 'postField', 'viewsCount', 'tags', 'createdAt', 'comments')
