@@ -52,6 +52,8 @@ export default {
     sendLoginForm(event) {
       event.preventDefault();
       console.log(this.form);
+      this.$store.dispatch('loginUser', this.form);
+      /*
       this.$http.post(api.getLoginEndpoint(), this.form).then(
         (response) => { 
           console.log(response.data.access);
@@ -68,7 +70,7 @@ export default {
 
         }, // on success
         (response) => { console.log(response.data); alert("bledne dane") ;} // on fail
-      );
+      );*/
     }
   },
 
