@@ -83,10 +83,7 @@ export default {
 
   methods: {
     sendRegisterForm(event) {
-      this.$http.post(api.getRegisterEndpoint(), this.form).then(
-        (response) => { console.log(response.data); alert("Zarejestrowano") }, // on success
-        (response) => { console.log(response.data); alert("Nie udalo sie zarejestrowac") } // on fail
-      );
+      this.$store.dispatch('createUser', this.form);
     }
   }
 }
