@@ -20,20 +20,14 @@
     </b-tabs>
   </div>
 </template>
+
 <script>
 //custom components
-import api from "../api.js";
 import PostPreview from "./PostPreview.vue";
 
 export default {
   components: {
     'post-preview': PostPreview
-  },
-
-  data() {
-    return {
-
-    }
   },
 
   computed: {
@@ -43,32 +37,10 @@ export default {
   },
 
   created() {
-    console.log(); 
-    console.log(this.$store);
-    console.log(this.$store.state.isLoggedUser);
-    console.log(this.$store.state.token);
-
     this.$store.dispatch('getAllPostPreviews');
-  /*
-    this.$http.get(api.getPostEndpoint(), {headers: {Authorization: "Bearer " + localStorage.getItem('token')}}).then(
-      // on success
-      (response) => {
-        console.log(response.data);
-        this.posts_prevs = response.data;
-      },
-      
-      // on fail
-      (response) => {
-        console.log(response.data);
-      }
-    );*/
-  },
-
-  methods: {
-
   }
-
 };
 </script>
+
 <style scoped>
 </style>
