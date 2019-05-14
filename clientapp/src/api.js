@@ -7,6 +7,7 @@ export default {
         login: "token/",
         register: "user/",
         post_previews: "post_preview/",
+        searchPost: "post/search/",
         createPost: "post/new/"
     },
 
@@ -20,6 +21,10 @@ export default {
 
     getPostPreviewsEndpoint() {
         return this.baseURL + this.endpoints.post_previews;
+    },
+
+    getSearchPostEndpoint() {
+        return this.baseURL + this.endpoints.searchPost;
     },
 
     getCreatePostEndpoint() {
