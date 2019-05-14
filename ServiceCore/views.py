@@ -95,6 +95,7 @@ class ProfileRecordView(APIView):
 
     def post(self, request):
         requestedData = JSONParser().parse(request)
+        print(requestedData)
         user = User.objects.create_user(first_name=requestedData['first_name'],
                                        last_name=requestedData['last_name'],
                                        username=requestedData['username'],
