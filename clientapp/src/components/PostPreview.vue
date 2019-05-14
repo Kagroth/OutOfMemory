@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-1">
+    <div @click="showDetails" class="mb-1">
         <b-card v-bind:title="postPreview.title">            
             <b-card-text>
                 <div class="cardAuthor w-75">
@@ -25,7 +25,15 @@ export default {
     data(){
         return {
         }
-    }
+    },
+
+    methods: {
+        showDetails () {
+            let pk = this.postPreview.pk;
+            console.log("Zmieniam na details!");
+            this.$router.push({name: 'PostDetails', params: { pk }});
+        }
+    },
 }
 </script>
 
