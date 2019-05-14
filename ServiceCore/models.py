@@ -11,6 +11,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.CharField(name='description', max_length=500)
 
+    def __str__(self):
+        return self.user.username + " - profil"
+
 # Klasa CV reprezentujaca CV usera
 class CV(models.Model):
     cvID = models.AutoField(primary_key=True)
