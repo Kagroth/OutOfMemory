@@ -56,7 +56,7 @@ class PostPreviewSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Post
-        fields = ('author', 'title', 'viewsCount', 'tags', 'createdAt')
+        fields = ('pk', 'author', 'title', 'viewsCount', 'tags', 'createdAt')
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
