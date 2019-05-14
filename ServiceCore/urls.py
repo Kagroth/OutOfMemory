@@ -13,6 +13,7 @@ urlpatterns = [
     path('post/search/', views.PostViewFilter.as_view()),
     path('post/new/', views.PostCreate.as_view()),
     path('post/details/<int:pk>', views.PostDetailsView.as_view()),
+    path('post/comment/new/', views.CommentView.as_view()),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
