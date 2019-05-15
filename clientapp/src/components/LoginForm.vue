@@ -50,7 +50,12 @@ export default {
     sendLoginForm(event) {
       event.preventDefault();
       console.log(this.form);
-      this.$store.dispatch('loginUser', this.form);
+      this.$store.dispatch('loginUser', this.form).then(() => {
+        alert("Zalogowano pomyslnie")
+        this.$router.push('/')
+      }).catch(() => {
+        alert("Niepoprawne dane logowania")
+      });
     }
   },
 
