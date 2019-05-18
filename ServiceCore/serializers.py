@@ -35,10 +35,14 @@ class TagSerializer(serializers.ModelSerializer):
 class PostPreviewSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     tags = TagSerializer(many=True)
-    
+    commentsCount = serializers.SerializerMethodField('get_comment_count')
+
     class Meta:
         model = Post
-        fields = ('pk', 'author', 'title', 'viewsCount', 'tags', 'createdAt')
+        fields = ('pk', 'author', 'title', 'viewsCount', 'tags', 'createdAt', 'commentsCount')
+
+    def get_comment_count(self, postObj):
+        return postObj.comments.all().count()
 
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
