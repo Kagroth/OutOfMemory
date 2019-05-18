@@ -8,9 +8,11 @@ from ServiceCore.models import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.generics import ListAPIView 
+from rest_framework.generics import ListAPIView, UpdateAPIView 
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework import generics
+from rest_framework import mixins
+
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
     
@@ -84,6 +86,7 @@ class PostView(ListAPIView):
     queryset = Post.objects.all().order_by("-createdAt")
     serializer_class = PostSerializer
 
+# szzczegoly posta
 class PostDetailsView(APIView):
     permission_classes = (AllowAny,)
 
@@ -92,12 +95,15 @@ class PostDetailsView(APIView):
 
         try:
             postToShow = Post.objects.get(pk=pk)
+            postToShow.viewsCount += 1
+            postToShow.save()
         except:
             return Response({"message": "Nie ma takiego posta!"})
         
         serializedPost = PostSerializer(postToShow)
 
         return Response(serializedPost.data)
+    
 
 # filtrowanie/wyszukiwanie postow
 class PostViewFilter(generics.ListAPIView):
