@@ -162,17 +162,17 @@ export default new Vuex.Store({
         return new Promise((resolve, reject) => {
           axios.get(api.getPostDetailsEndpoint() + payload)
              .then((response) => {
-                commit('setPostDetails', response.data)
-                resolve()
+                commit('setPostDetails', response.data)                
+                resolve(response.data)
              })
              .catch(() => {
-              alert("Nie znaleziono posta!")
+              alert("Blad pobierania posta")
               reject()
              })
         })
       },
 
-      addComment ({commit}, payload) {
+      addComment ({commit, dispatch}, payload) {
         let authHeader = "Bearer " + this.state.token;
 
         return new Promise((resolve, reject) => {
@@ -185,6 +185,10 @@ export default new Vuex.Store({
             })
                .then(response => {
                   console.log(response)
+                  console.log(payload.postPk)
+                  dispatch('getPostDetails', payload.postPk)
+                  .then(() => {console.log("Udalo sie")})
+                  .catch((error) => {console.log(error)});
                   resolve()
                })
                .catch(() => {
