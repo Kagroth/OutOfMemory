@@ -53,7 +53,14 @@ export default {
 
     created() {
         console.log(this.$route);
-        this.$store.dispatch('getPostDetails', this.$route.params.pk);
+        this.$store.dispatch('getPostDetails', this.$route.params.pk)
+                   .then((responseData) => {
+                       if(responseData.message === "Nie ma takiego posta!") {
+                           alert("Taki post nie istnieje");
+                       }
+                   })
+                   .catch(() => {
+                   });
     },
 
     computed: {
@@ -80,6 +87,10 @@ export default {
             this.$store.dispatch('addComment', {
                 postPk: this.post.pk,
                 comment: this.commentField
+            }).then(() => {
+                alert("Komentarz zostal dodany!")
+            }).catch(() => {
+                alert("Nie udalo sie dodac komentarza")
             })
         }
     }
