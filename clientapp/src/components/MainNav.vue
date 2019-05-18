@@ -15,7 +15,7 @@
         <b-nav-item to="/register" href="#" class="menuLink">Rejestracja</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto" v-else>
-        <b-nav-item-dropdown to="" href="#" id="menuDropdownLink" :text="username">
+        <b-nav-item-dropdown to="" href="#" id="menuDropdownLink" :text="username" right>
           <b-dropdown-item class="blackText">Profil</b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item class="blackText" @click="logout">Wyloguj</b-dropdown-item>
@@ -45,8 +45,10 @@ export default {
 
   methods: {
     logout () {
+      let currentPath = this.$route.path;
       this.$store.commit('logout');
-      console.log("Tu nastapi wylogowanie");
+      alert("Nastapilo wylogowanie");      
+      this.$router.push(currentPath);
     },
 
     searchPosts () {
@@ -59,6 +61,15 @@ export default {
 <style scoped>
 .navbar .navbar-nav .menuLink a {
     color: white;
+}
+
+#menuDropdownLink a {
+  text-decoration: none;
+  color: white;
+}
+
+#menuDropdownLink a span {
+  color: white;
 }
 
 .navbar .navbar-brand a {
