@@ -56,8 +56,9 @@ export default {
         this.$store.dispatch('getPostDetails', this.$route.params.pk)
                    .then((responseData) => {
                        if(responseData.message === "Nie ma takiego posta!") {
-                           alert("Taki post nie istnieje");
-                       }
+                           alert("Taki post nie istnieje");                            
+                           return;
+                       }       
                    })
                    .catch(() => {
                    });
@@ -89,6 +90,7 @@ export default {
                 comment: this.commentField
             }).then(() => {
                 alert("Komentarz zostal dodany!")
+                this.commentField = "";
             }).catch(() => {
                 alert("Nie udalo sie dodac komentarza")
             })
