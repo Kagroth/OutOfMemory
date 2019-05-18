@@ -107,7 +107,7 @@ class PostViewFilter(generics.ListAPIView):
     def get_queryset(self):
         searchParam = self.request.query_params.get('param', None)
         print(searchParam)
-        posts = Post.objects.all()
+        posts = Post.objects.all().order_by('-createdAt')
         print(type(posts))
         postsFiltered = list()
 
