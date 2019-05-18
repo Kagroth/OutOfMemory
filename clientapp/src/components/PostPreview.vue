@@ -7,7 +7,7 @@
                 </div>
                 <div class="cardBadges w-25">
                     <span class="mr-5">Wyswietlen: {{ postPreview.viewsCount}} </span><br>
-                    <span class="mr-5">Odpowiedzi: {{ postPreview.answersCount }} </span>
+                    <span class="mr-5">Odpowiedzi: {{ postPreview.commentsCount }} </span>
                 </div>
             </b-card-text>
             <b-card-text>
