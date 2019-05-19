@@ -45,6 +45,11 @@ export default new Vuex.Store({
         state.postDetails = payload;
       },
   
+      updateCommentOfPostDetails (state, payload) {
+        const item = state.postDetails.comments.find(comment => comment.pk === payload.pk)
+        Object.assign(item, payload)  // podmienienie komentarza na ten z nową oceną
+      },
+
       logout (state) {
         localStorage.setItem('token', null);
         state.token = null;
@@ -193,6 +198,28 @@ export default new Vuex.Store({
                })
                .catch(() => {
                  console.log("nie udalo sie dodac komentarza")
+                 reject()
+               })
+        })
+      },
+
+      rateComment ({commit}, payload) {
+        let authHeader = "Bearer " + this.state.token;
+
+        return new Promise((resolve, reject) => {
+          axios.post(api.getRateCommentEndpoint() + payload.commentPk, {
+            rate: payload.rate},
+            {
+              headers: {
+                'Authorization': authHeader
+              }
+            })
+               .then(response => {
+                  console.log(response)
+                  commit('updateCommentOfPostDetails', response.data)
+                  resolve()
+               })
+               .catch(() => {
                  reject()
                })
         })
