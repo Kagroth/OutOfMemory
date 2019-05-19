@@ -176,3 +176,24 @@ class CommentView(APIView):
                                             post=post)
         newComment.save()
         return Response({"message": "Komentarz dodany"})
+
+class RateCommentView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, pk):
+        requestedData = JSONParser().parse(request)
+        newRate = requestedData['rate']
+        comment = None
+        try:
+            comment = Comment.objects.get(pk=pk)
+            (rate, created) = Rating.objects.get_or_create(user=request.user, comment=comment)
+            rate.ratingValue = newRate
+            rate.save()
+        except Exception as e:
+            print(e)
+            print("Nie udalo sie dodac oceny")
+            return Response({"message": "nie udalo sie dodac oceny"})
+
+        currentComment = CommentSerializer(comment)
+
+        return Response(currentComment.data)
