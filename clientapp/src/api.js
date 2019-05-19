@@ -10,7 +10,8 @@ export default {
         searchPost: "post/search/",
         createPost: "post/new/",
         postDetails: "post/details/",
-        addComment: 'post/comment/new/'
+        addComment: 'post/comment/new/',
+        rateComment: 'post/comment/'
     },
 
     getLoginEndpoint() {
@@ -39,5 +40,9 @@ export default {
 
     getAddCommentEndpoint() {
         return this.baseURL + this.endpoints.addComment;
+    },
+
+    getRateCommentEndpoint() {
+        return this.baseURL + this.endpoints.rateComment;
     }
 }
