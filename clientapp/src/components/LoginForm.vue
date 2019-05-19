@@ -49,7 +49,13 @@ export default {
   methods: {
     sendLoginForm(event) {
       event.preventDefault();
-      console.log(this.form);
+      
+      if(this.form.username === "" ||
+         this.form.password === "") {
+           alert("Nie wypelniono wszystkich pol!");
+           return;
+         }
+
       this.$store.dispatch('loginUser', this.form).then(() => {
         alert("Zalogowano pomyslnie")
         this.$router.push('/')
