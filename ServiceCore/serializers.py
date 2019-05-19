@@ -46,9 +46,16 @@ class PostPreviewSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
+    rate = serializers.SerializerMethodField('calculate_rate')
     class Meta:
         model = Comment
-        fields = ('author', 'createdAt', 'commentField')
+        fields = ('pk', 'author', 'createdAt', 'commentField', 'rate')
+
+    def calculate_rate(self, commentObj):
+        pluses = commentObj.rates.filter(ratingValue=1).count()
+        minuses = commentObj.rates.filter(ratingValue=-1).count()
+
+        return pluses + minuses * (-1)
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
