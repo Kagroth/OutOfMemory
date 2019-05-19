@@ -77,5 +77,5 @@ class Comment(models.Model):
 # Klasa trzymajaca info czy dany uzytkownik ocenil dany komentarz
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    ratingValue = models.BooleanField(default=True)
+    comment = models.ForeignKey(Comment, related_name="rates", on_delete=models.CASCADE)
+    ratingValue = models.IntegerField(default=0)
