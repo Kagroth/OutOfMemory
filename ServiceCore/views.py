@@ -166,16 +166,38 @@ class CommentView(APIView):
 
     def post(self, request):
         requestedData = JSONParser().parse(request)
+
+        if requestedData['params'] is None:
+            print("Brak obiektu params - brak danych")
+            return Response({"message": "Brak danych"})
+        
         newCommentData = requestedData['params']
         print(newCommentData)
 
-        post = Post.objects.get(pk=newCommentData['postPk'])
+        post = None
 
-        newComment = Comment.objects.create(commentField=newCommentData['comment'],
+        try:
+            if newCommentData['postPk'] is None:
+                print("Brak podanego klucza glownego")
+                return Response({"message": "Nie podano id posta"})
+            
+            post = Post.objects.get(pk=newCommentData['postPk'])
+        except:
+            print("Post o podanym kluczu nie istnieje")
+            return Response({"message": "Post o podanym kluczu nie istnieje"})
+        
+        if newCommentData['comment'] is None:
+            print("Brak podanego pola komentarza")
+            return Response({"message": "Brak podanego pola komentarza"})
+
+        try:            
+            newComment = Comment.objects.create(commentField=newCommentData['comment'],
                                             author=request.user,
                                             post=post)
-        newComment.save()
-        return Response({"message": "Komentarz dodany"})
+            newComment.save()
+            return Response({"message": "Komentarz dodany"})
+        except:
+            return Response({"message": "Nie udalo sie dodac komentarza"})
 
 class RateCommentView(APIView):
     permission_classes = (IsAuthenticated,)
