@@ -15,13 +15,13 @@ from rest_framework import mixins
 
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
-    
-    def get(self, format=None):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request):
         """
-        Get all the profile records
+        Get user profile
         """
-        users = Profile.objects.all()
-        serializer = ProfileSerializer(users, many=True)
+        profile = Profile.objects.get(user=request.user)
+        serializer = ProfileSerializerExtended(profile)
         return Response(serializer.data)
 
     # Tworzenie nowego uzytkownika - rejestracja
