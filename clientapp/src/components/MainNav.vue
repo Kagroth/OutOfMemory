@@ -48,7 +48,7 @@ export default {
       let currentPath = this.$route.path;
       this.$store.commit('logout');
       alert("Nastapilo wylogowanie");      
-      this.$router.push(currentPath);
+      this.$router.push("/");
     },
 
     searchPosts () {
