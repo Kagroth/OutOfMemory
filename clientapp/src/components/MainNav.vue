@@ -16,7 +16,7 @@
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto" v-else>
         <b-nav-item-dropdown to="" href="#" id="menuDropdownLink" :text="username" right>
-          <b-dropdown-item class="blackText">Profil</b-dropdown-item>
+          <b-dropdown-item to="/profile" class="blackText">Profil</b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item class="blackText" @click="logout">Wyloguj</b-dropdown-item>
         </b-nav-item-dropdown>
