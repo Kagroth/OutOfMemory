@@ -7,7 +7,8 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    path('user/', views.ProfileRecordView.as_view()),
+    #path('user/', views.ProfileRecordView.as_view()),
+    path('profile/', views.ProfileRecordView.as_view()),
     path('post_preview/', views.PostPreviewView.as_view()),
     path('post/', views.PostView.as_view()),
     path('post/search/', views.PostViewFilter.as_view()),
