@@ -82,7 +82,9 @@ export default {
       let postToSend = this.post;
       this.post.tags = splittedTags;
       
-      this.$store.dispatch('createPost', this.post);
+      this.$store.dispatch('createPost', this.post).then(response => {
+        alert("Utworzono post")
+      });
     }
   }
 };
