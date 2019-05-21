@@ -65,3 +65,20 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('pk', 'author', 'title', 'postField', 'viewsCount', 'tags', 'createdAt', 'comments')
+
+class UserWholeDataSerializer(serializers.ModelSerializer):
+    posts = PostPreviewSerializer(many=True)
+    comments = CommentSerializer(many=True)
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'posts', 'comments')
+
+class ProfileSerializerExtended(serializers.ModelSerializer):
+    """
+    A  profile serializer to return the user details
+    """
+    user = UserWholeDataSerializer(required=True)
+
+    class Meta:
+        model = Profile
+        fields = ('user', 'description',)
