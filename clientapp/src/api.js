@@ -6,6 +6,7 @@ export default {
     endpoints: {
         login: "token/",
         register: "user/",
+        profile: "profile/",
         post_previews: "post_preview/",
         searchPost: "post/search/",
         createPost: "post/new/",
@@ -20,6 +21,10 @@ export default {
 
     getRegisterEndpoint() {
         return this.baseURL + this.endpoints.register;
+    },
+
+    getProfileEndpoint() {
+        return this.baseURL + this.endpoints.profile;
     },
 
     getPostPreviewsEndpoint() {
