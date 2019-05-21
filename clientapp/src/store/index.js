@@ -10,6 +10,7 @@ export default new Vuex.Store({
       token: "",
       isLogged: "",
       username: "",
+      currentUser: "",
       post_previews: [],
       posts: [],
       postDetails: ""
@@ -36,6 +37,11 @@ export default new Vuex.Store({
         state.users = payload
       },
   
+      setCurrentProfile(state, payload) {
+        state.currentUser = payload;
+        console.log(state.currentUser);
+      },
+
       setPostPreviews (state, payload) {
         console.log(payload)
         state.post_previews = payload;
@@ -87,19 +93,21 @@ export default new Vuex.Store({
         })      
       },
   
-      getAllUsers({commit}, payload) {
-        console.log("Wysylam zadanie pobrania userow!");
-  
+      getLoggedUserProfile({commit}) {
+        let authHeader = "Bearer " + this.state.token;
+
         return new Promise((resolve, reject) => {
-          axios.get('http://localhost:8000/users/')
-               .then((response) => {
-                 commit('setUsers', response.data)
-                 resolve();
-               })
-               .catch(() => {
-                 console.log("Blad pobierania userow");
-                 reject();
-               })
+          axios.get(api.getProfileEndpoint(), {
+            headers: {
+              "Authorization": authHeader
+            }
+          }).then(response => {
+            console.log(response.data);
+            commit('setCurrentProfile', response.data);
+            resolve()
+          }).catch(() => {
+            reject()
+          })
         })
       },
   
