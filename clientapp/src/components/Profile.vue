@@ -1,21 +1,30 @@
 <template>
     <div>
         <b-row>
-            <b-col cols=5 class="username">
-                {{ profile.user.username }} <br>
-                Data dolaczenia: 01-01-2019
+            <b-col class="username">
+                <h3>
+                    {{ profile.user.username }}
+                </h3>
             </b-col>
+        </b-row>
+        <b-row>
             <b-col cols=5 class="stats">
                 Liczba postów: {{ profile.user.posts.length }} <br>
                 Liczba komentarzy: {{ profile.user.comments.length }}
             </b-col>
-            <b-col cols=2 class="cvButton text-center" align-self="center">
-                <b-button size="sm">Moje CV</b-button>
+            <b-col cols=5></b-col>
+            <b-col cols=2 class=" cvButton text-right" align-self="center">
+                <b-button size="sm" variant="info">Moje CV</b-button>
             </b-col>
         </b-row>
-        <b-row>
+        <b-row class=" mt-1">
+            <b-col cols=12>
+                <hr>
+               Opis:
+            </b-col>
             <b-col>
                 {{ profile.description }}
+                <hr>
             </b-col>
         </b-row>
         <b-row>
@@ -71,5 +80,9 @@ export default {
 
 .cvButton {
     background-color: silver;
+}
+
+.descriptionRow {
+    border-top: solid 1px;
 }
 </style>
