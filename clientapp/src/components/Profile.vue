@@ -34,7 +34,7 @@
                     {{ profile.description }}
                 </span>
                 <div class="textarea-container" v-else>
-                    <textarea :value="profile.description" rows=10></textarea>
+                    <textarea v-model="description" rows=10></textarea>
                 </div>
                 <hr>
             </b-col>
@@ -43,11 +43,11 @@
             <b-col class="mt-5">
                 <b-tabs>
                     <b-tab title="Posty">
-                        <post-preview v-for="post_prev in profile.user.posts"
+                        <post-preview :key="post_prev" v-for="post_prev in profile.user.posts"
                                       v-bind:postPreview="post_prev"></post-preview>
                     </b-tab>
                     <b-tab title="Komentarze">
-                        <comment v-for="comment in profile.user.comments"
+                        <comment :key="comment" v-for="comment in profile.user.comments"
                                  v-bind:comment="comment"></comment>
                     </b-tab>
                 </b-tabs>
@@ -74,6 +74,7 @@ export default {
 
     data() {
         return {
+            description: this.$store.state.currentUser.description,
             isDescriptionEditing: false,
             editButtonText: "Edytuj"
         }
@@ -84,8 +85,10 @@ export default {
             this.isDescriptionEditing = !this.isDescriptionEditing;
             if(this.editButtonText === "Edytuj")
                 this.editButtonText = "Zakończ edycję"
-            else
+            else {
+                console.log("Zapisuje opis!");
                 this.editButtonText = "Edytuj"
+            }
         }
     },
 
