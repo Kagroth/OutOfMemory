@@ -14,7 +14,9 @@
             </b-col>
             <b-col cols=5></b-col>
             <b-col cols=2 class=" text-right" align-self="center">
-                <b-button size="sm" variant="info">Moje CV</b-button>
+                <router-link to="/profile/cv">
+                    <b-button size="sm" variant="info">Moje CV</b-button>
+                </router-link>
             </b-col>
         </b-row>
         <b-row class=" mt-1">
