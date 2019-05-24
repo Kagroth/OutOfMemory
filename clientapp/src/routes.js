@@ -7,6 +7,7 @@ import RegisterForm from './components/RegisterForm.vue'
 import PostCreator from './components/PostCreator.vue'
 import PostDetails from './components/PostDetails.vue'
 import Profile from './components/Profile.vue'
+import CV from './components/CV.vue'
 
 export default [
     {path: '/', component: ListingTab},
@@ -14,5 +15,6 @@ export default [
     {path: '/register', name: 'Register', component: RegisterForm},
     {path: '/post/new', name: 'NewPost', component: PostCreator},
     {path: '/post/:pk', name: 'PostDetails', component: PostDetails},
-    {path: '/profile', name: 'Profile', component: Profile}
+    {path: '/profile', name: 'Profile', component: Profile},
+    {path: '/profile/cv', name: "CV", component: CV }
 ]
