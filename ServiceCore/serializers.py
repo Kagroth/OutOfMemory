@@ -3,6 +3,11 @@ from ServiceCore.models import *
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 
+class CVSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CV
+        fields = ('user', 'skills', 'experience')
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -69,9 +74,11 @@ class PostSerializer(serializers.ModelSerializer):
 class UserWholeDataSerializer(serializers.ModelSerializer):
     posts = PostPreviewSerializer(many=True)
     comments = CommentSerializer(many=True)
+    cv = CVSerializer()
+
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'posts', 'comments')
+        fields = ('username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'cv')
 
 class ProfileSerializerExtended(serializers.ModelSerializer):
     """
