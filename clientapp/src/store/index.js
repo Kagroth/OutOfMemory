@@ -247,7 +247,29 @@ export default new Vuex.Store({
             })
                .then(response => {
                   console.log(response)
-                  //commit('updateCommentOfPostDetails', response.data)
+                  dispatch('getLoggedUserProfile')
+                  resolve()
+               })
+               .catch((error) => {
+                 reject(error)
+               })
+        })
+      },
+
+      createCV({dispatch}, payload) {
+        let authHeader = "Bearer " + this.state.token;
+
+        return new Promise((resolve, reject) => {
+          axios.post(api.getCVEndpoint(), {
+            skills: payload.skills,
+            experience: payload.experiences},
+            {
+              headers: {
+                'Authorization': authHeader
+              }
+            })
+               .then(response => {
+                  console.log(response)
                   dispatch('getLoggedUserProfile')
                   resolve()
                })
