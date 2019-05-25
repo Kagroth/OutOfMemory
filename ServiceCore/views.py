@@ -13,6 +13,17 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticate
 from rest_framework import generics
 from rest_framework import mixins
 
+class CVView(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        # pobranie CV z bazy
+        pass
+    
+    def post(self, request):
+        # zapis CV do bazy
+        pass
+
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
     permission_classes = (IsAuthenticated, )
@@ -73,6 +84,19 @@ class ProfileRecordView(APIView):
         return Response(serializer.error_messages,
                         status=status.HTTP_400_BAD_REQUEST)
         """
+    
+    #edycja opisu profilu użytkownika
+    def put(self, request):
+       
+        requestedData = JSONParser().parse(request)
+
+        print(requestedData)
+
+        profile = Profile.objects.get(user=request.user)
+        profile.description = requestedData['newDescription']
+        profile.save()
+
+        return Response({"message": "Edytowano opis profilu"})
 
 # wszystkie posty w formie skroconej (bez komentarzy i tresci)
 class PostPreviewView(ListAPIView):    
@@ -161,6 +185,7 @@ class PostCreate(APIView):
 
         return Response({"message": "Post zostal utworzony"})
 
+# tworzenie komentarza
 class CommentView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -199,6 +224,7 @@ class CommentView(APIView):
         except:
             return Response({"message": "Nie udalo sie dodac komentarza"})
 
+# dodawanie oceny do komentarza
 class RateCommentView(APIView):
     permission_classes = (IsAuthenticated,)
 

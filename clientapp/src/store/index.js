@@ -231,6 +231,30 @@ export default new Vuex.Store({
                  reject()
                })
         })
+      },
+
+      updateUserDescription({commit, dispatch}, payload) {
+        let authHeader = "Bearer " + this.state.token;
+
+        return new Promise((resolve, reject) => {
+          axios.put(api.getProfileEndpoint(), {
+            userPk: payload.userPk,
+            newDescription: payload.description},
+            {
+              headers: {
+                'Authorization': authHeader
+              }
+            })
+               .then(response => {
+                  console.log(response)
+                  //commit('updateCommentOfPostDetails', response.data)
+                  dispatch('getLoggedUserProfile')
+                  resolve()
+               })
+               .catch((error) => {
+                 reject(error)
+               })
+        })
       }
     }
   })
