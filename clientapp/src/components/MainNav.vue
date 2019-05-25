@@ -7,7 +7,7 @@
       <b-navbar-nav>
         <b-nav-form class="ml-5">
           <b-form-input v-model="searchParam" size="sm" placeholder="Wprowadz szukana fraze"></b-form-input>
-          <b-button size="sm" class="ml-1" @click="searchPosts">Szukaj</b-button>
+          <b-button variant="success" size="sm" class="orangeBg ml-1" @click="searchPosts">Szukaj</b-button>
         </b-nav-form>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto" v-if="!isLogged">
@@ -59,6 +59,10 @@ export default {
 </script>
 
 <style scoped>
+.orangeBg {
+  background-color: #ff9b04;
+}
+
 .navbar .navbar-nav .menuLink a {
     color: white;
 }
