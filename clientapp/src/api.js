@@ -7,12 +7,13 @@ export default {
         login: "token/",
         register: "user/",
         profile: "profile/",
+        cv: 'profile/cv/',
         post_previews: "post_preview/",
         searchPost: "post/search/",
         createPost: "post/new/",
         postDetails: "post/details/",
         addComment: 'post/comment/new/',
-        rateComment: 'post/comment/'
+        rateComment: 'post/comment/'        
     },
 
     getLoginEndpoint() {
@@ -25,6 +26,10 @@ export default {
 
     getProfileEndpoint() {
         return this.baseURL + this.endpoints.profile;
+    },
+
+    getCVEndpoint() {
+        return this.baseURL + this.endpoints.cv;
     },
 
     getPostPreviewsEndpoint() {
