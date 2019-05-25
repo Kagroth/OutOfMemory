@@ -266,10 +266,10 @@ export default {
         serializeExperiencesArray() {
             return this.experiences.map(experience => {
                let expString = "";
-               for(let property of ['startDate', 'endDate', 'company', 'description']) {
-                   expString += experience[property] + ", "
+               for(let property of ['startDate', 'endDate', 'company', 'description']) {                   
+                   expString += experience[property].trim() + ","
                }
-               return expString
+               return expString.trim()
            }).join(";")
         }
     },
