@@ -7,13 +7,12 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    #path('user/', views.ProfileRecordView.as_view()),
     path('profile/', views.ProfileRecordView.as_view()),
     path('profile/cv/', views.CVView.as_view()),
     path('post_preview/', views.PostPreviewView.as_view()),
     path('post/', views.PostView.as_view()),
     path('post/search/', views.PostViewFilter.as_view()),
-    path('post/<str:tag>', views.PostPreviewByTagFilterView.as_view()),
+    path('post/tag/<str:tag>', views.PostPreviewByTagFilterView.as_view()),
     path('post/new/', views.PostCreate.as_view()),
     path('post/details/<int:pk>', views.PostDetailsView.as_view()),
     path('post/comment/new/', views.CommentView.as_view()),
