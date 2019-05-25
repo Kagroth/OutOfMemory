@@ -28,7 +28,7 @@
             <b-col cols=10>
                Opis:
             </b-col>
-            <b-col cols=2>
+            <b-col cols=2 class="text-right">
                 <b-button size="sm" @click="toggleDescription">{{ editButtonText }}</b-button>
             </b-col>
             <b-col class="mt-2">
@@ -71,6 +71,7 @@ export default {
     created() {
         this.$store.dispatch('getLoggedUserProfile')
                     .then(() => {
+                        this.description = this.$store.state.currentUser.description;
                     });
     },
 
@@ -88,7 +89,18 @@ export default {
             if(this.editButtonText === "Edytuj")
                 this.editButtonText = "Zakończ edycję"
             else {
-                console.log("Zapisuje opis!");
+                console.log("Zapisuje opis");
+                console.log(this.description);
+                this.$store.dispatch('updateUserDescription', {
+                    userPk: this.$store.state.currentUser.pk,
+                    description: this.description
+                }).then(() => {
+                    console.log("Zakonczono polaczenie pomyslnie")
+                    alert("Zakonczono edycje!");
+                }).catch((error) => {
+                    console.log(error)
+                })
+
                 this.editButtonText = "Edytuj"
             }
         }
