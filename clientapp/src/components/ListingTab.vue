@@ -1,10 +1,11 @@
 <template>
   <div>
-    <b-tabs>
+    <b-tabs pills>
+      <hr>
       <b-tab title="Posty">
         <b-row class="mt-2" align-h="start">
           <b-col cols=1>
-            <b-button variant="success" to="/post/new">Dodaj</b-button>
+            <b-button variant="primary" size="sm" to="/post/new">Dodaj</b-button>
           </b-col>
         </b-row>
         <b-row class="mt-2">
@@ -42,5 +43,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #ff9b04;
+}
 </style>
