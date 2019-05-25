@@ -17,7 +17,7 @@ class Profile(models.Model):
 # Klasa CV reprezentujaca CV usera
 class CV(models.Model):
     cvID = models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name="cv", on_delete=models.CASCADE)
     skills = models.CharField(max_length=1000)
     experience = models.CharField(max_length=1000)
 
