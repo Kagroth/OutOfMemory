@@ -172,6 +172,18 @@ class PostViewFilter(generics.ListAPIView):
 
         return postsFiltered
 
+# posty o okreslonym tagu
+class PostPreviewByTagFilterView(generics.ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        searchParam = self.kwargs['tag']
+        print(searchParam)
+        postsFiltered = Post.objects.filter(tags__tagName=searchParam).order_by('-createdAt')
+
+        return postsFiltered
+
 # tworzenie posta
 class PostCreate(APIView):
     permission_classes = (IsAuthenticated, )
