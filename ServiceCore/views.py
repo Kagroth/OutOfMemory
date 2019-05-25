@@ -40,6 +40,15 @@ class CVView(APIView):
 
         return Response({"message": "CV zostlao utworzone"})
 
+    def delete(self, request):
+        try:
+            cvToDelete = CV.objects.get(user=request.user)
+            cvToDelete.delete()
+        except:
+            return Response({"message": "Nie udalo sie usunac CV"})
+        
+        return Response({"message": "Usunieto CV"})
+        
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
     permission_classes = (IsAuthenticated, )
