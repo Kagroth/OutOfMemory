@@ -16,13 +16,29 @@ from rest_framework import mixins
 class CVView(APIView):
     permission_classes = (IsAuthenticated,)
     
+    # pobranie CV z bazy
     def get(self, request):
-        # pobranie CV z bazy
-        pass
+        cv = CV.objects.get(user=request.user)
+
+        cvSerializer = CVSerializer(cv)
     
+        return Response(cvSerializer.data)
+
+    # zapis CV do bazy
     def post(self, request):
-        # zapis CV do bazy
-        pass
+        requestedData = JSONParser().parse(request)
+        print(requestedData)
+        if requestedData['skills'] is None or requestedData['experience'] is None:
+            return Response({"message": "Nie podano wszystkich danych"})
+        try:            
+            newCV = CV.objects.create(user=request.user,
+                                      skills=requestedData['skills'],
+                                      experience=requestedData['experience'])
+            newCV.save()
+        except:
+            return Response({"message": "Nie udalo sie utworzyc CV"})
+
+        return Response({"message": "CV zostlao utworzone"})
 
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
