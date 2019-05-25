@@ -31,9 +31,9 @@ class CVView(APIView):
         if requestedData['skills'] is None or requestedData['experience'] is None:
             return Response({"message": "Nie podano wszystkich danych"})
         try:            
-            newCV = CV.objects.create(user=request.user,
-                                      skills=requestedData['skills'],
-                                      experience=requestedData['experience'])
+            (newCV, created) = CV.objects.get_or_create(user=request.user)
+            newCV.skills = requestedData['skills']
+            newCV.experience = requestedData['experience']
             newCV.save()
         except:
             return Response({"message": "Nie udalo sie utworzyc CV"})
@@ -48,7 +48,7 @@ class CVView(APIView):
             return Response({"message": "Nie udalo sie usunac CV"})
         
         return Response({"message": "Usunieto CV"})
-        
+
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
     permission_classes = (IsAuthenticated, )
