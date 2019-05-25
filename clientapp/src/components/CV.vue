@@ -1,11 +1,6 @@
 <template>
-    <!--
-        if posiada CV:
-            pokaz CV i udostepnij tryb edycji
-        else:
-            pokaz przycisk z tworzeniem CV
-    -->
     <div>
+        <!-- Brak CV, mozliwosc jego utworzenia -->
         <div v-if="!hasCV && !isCreating">
             <b-row>
                 <b-col class="text-center">
@@ -18,8 +13,19 @@
                 </b-col>
             </b-row>
         </div>
+        <!-- Jest CV, wyświetlenie go i umożliwienie edycji -->
         <div v-else>
-            Twoje CV:    
+            <h3>Twoje CV</h3>
+            <b-row v-for="experience in experienceCV" :key="experience">
+                <b-col> {{ experience.startDate }} </b-col>
+                <b-col> {{ experience.endDate }} </b-col>
+                <b-col> {{ experience.company }} </b-col>
+                <b-col> {{ experience.description }} </b-col>                
+            </b-row>
+            <b-row v-for="skill in skillsCV" :key="skill">
+                <b-col> {{ skill.name }} </b-col>
+                <b-col> {{ skill.level }} </b-col>
+            </b-row>
         </div>
         <!-- CV kreator -->
         <div v-if="showCreator">
@@ -68,8 +74,7 @@
                     <b-button variant="success" size="sm" @click="saveCV">Zapisz</b-button>
                 </b-col>
             </b-row>
-        </div>          
-        
+        </div>       
     </div>    
 </template>
 
@@ -77,7 +82,7 @@
 export default {
     data() {
         return {
-            hasCV: false,
+            hasCV: "",
             showCreator: false,
             isCreating: false,
             isEditing: false,
@@ -96,6 +101,12 @@ export default {
         /*
             Inicjalizacja parametrow: hasCV, showCreator, isCreating, isEditing
         */
+        console.log(this.$store.state.currentUser.user.cv)
+        this.hasCV = this.$store.state.currentUser.user.cv !== undefined // jesli pole cv jest undefined, wtedy hasCV = false
+        console.log(this.hasCV)
+        this.isCreating = false
+        this.showCreator = false
+        this.isEditing = false;
     },
 
     methods: {
@@ -132,6 +143,74 @@ export default {
             /*
                 Zapis CV do bazy
             */
+           // z kazdego elementu tablicy this.skills, utworz String postaci 'name level' i ze wszytkich tych stringow utworz 1 string
+           // ktorego elementy oddzielone sa przecinkami
+           let skills = this.skills.map(skill => skill.name + " " + skill.level).join(",")
+           
+           // z kazdego elementu tablicy this.experiences utworz String postaci 'startDate endDate company description'
+           // i ze wszytkich tych stringow utworz 1 string ktorego elementy oddzielone sa przecinkami
+           let experiences = this.experiences.map(experience => {
+               let expString = "";
+               for(let property of ['startDate', 'endDate', 'company', 'description']) {
+                   expString += experience[property] + " "
+               }
+               return expString
+           }).join(",")
+           
+           console.log(skills)
+           console.log(experiences)
+           
+           this.$store.dispatch('createCV', {
+               skills: skills,
+               experiences: experiences
+           }).then(() => {
+               console.log("CV zostalo utworzone")
+           })
+        }
+    },
+
+    computed: {
+        // wyswietlenie wpisow cv wymaga jego konwersji stringa na tablice
+        experienceCV() {
+            if(this.hasCV) {
+                // mapowanie stringa na tablice obiektow reprezentujacych wpis w cv
+                let experiencesArray = this.$store.state.currentUser.user.cv.experience.trim().split(',')
+
+                experiencesArray = experiencesArray.map(experience => {
+                    let exp = experience.split(" ")
+                    
+                    return {
+                        startDate: exp[0],
+                        endDate: exp[1],
+                        company: exp[2],
+                        description: exp[3],                        
+                    }
+                })
+
+                return experiencesArray
+            }
+            
+            return ""
+        },
+
+        // wyswietlenie umiejetnosci w cv wymaga jego konwersji stringa na tablice
+        skillsCV() {
+            if(this.hasCV) {
+                let skillsArray = this.$store.state.currentUser.user.cv.skills.trim().split(',')
+
+                skillsArray = skillsArray.map(skill => {
+                    let sk = skill.split(" ")
+                    
+                    return {
+                        name: sk[0],
+                        level: sk[1]                      
+                    }
+                })
+
+                return skillsArray
+            }
+            
+            return ""
         }
     }
 }
