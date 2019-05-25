@@ -99,6 +99,7 @@ export default {
                     alert("Zakonczono edycje!");
                 }).catch((error) => {
                     console.log(error)
+                    alert("Nie udalo sie edytowac opisu");
                 })
 
                 this.editButtonText = "Edytuj"
