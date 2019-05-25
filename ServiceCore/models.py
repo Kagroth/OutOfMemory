@@ -21,6 +21,9 @@ class CV(models.Model):
     skills = models.CharField(max_length=1000)
     experience = models.CharField(max_length=1000)
 
+    def __str__(self):
+        return self.user.username + " - CV"
+
 # Oferta pracy
 class JobOffer(models.Model):
     jobOfferID = models.AutoField(primary_key=True)
