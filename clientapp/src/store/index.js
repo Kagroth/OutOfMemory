@@ -147,6 +147,22 @@ export default new Vuex.Store({
         })        
       },
 
+      getPostsByTag({commit}, payload) {
+        let urlToFilterPostsByTag = api.getPostByTagEndpoint() + payload.tagName;
+
+        return new Promise((resolve, reject) => {
+          axios.get(urlToFilterPostsByTag)
+               .then((response) => {
+                 commit('setPostPreviews', response.data)
+                 resolve()
+               })
+               .catch(() => {
+                 alert("Blad wyszukiwania postow")
+                 reject()
+               })
+        })
+      },
+
       createPost ({commit}, payload) {
         console.log("Wysylam request z utworzeniem posta")
 

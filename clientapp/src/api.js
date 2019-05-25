@@ -10,6 +10,7 @@ export default {
         cv: 'profile/cv/',
         post_previews: "post_preview/",
         searchPost: "post/search/",
+        postByTag: "post/tag/",
         createPost: "post/new/",
         postDetails: "post/details/",
         addComment: 'post/comment/new/',
@@ -38,6 +39,10 @@ export default {
 
     getSearchPostEndpoint() {
         return this.baseURL + this.endpoints.searchPost;
+    },
+
+    getPostByTagEndpoint() {
+        return this.baseURL + this.endpoints.postByTag;
     },
 
     getCreatePostEndpoint() {
