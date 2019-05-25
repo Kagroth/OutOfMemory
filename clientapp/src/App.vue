@@ -4,8 +4,9 @@
     <b-container fluid class="content">
       <b-row>
         <b-col cols=8 offset=2>
-          <router-view></router-view>
-          <!--<listing-tab v-bind:post_previews="post_previews"></listing-tab>-->
+          <transition name="component-slide" mode="out-in">
+            <router-view></router-view>
+          </transition>
         </b-col>
       </b-row>
     </b-container>
@@ -43,7 +44,16 @@ export default {
 
   position: absolute;
     top: 10%;
-  
-  background-color: lightblue;
+
+  font-family: Arial, Helvetica, sans-serif
 }
+
+.component-slide-enter-active, .component-slide-leave-active {
+  transition: all .3s
+}
+
+.component-slide-enter, .component-slide-leave-to {
+  opacity: 0
+}
+
 </style>
