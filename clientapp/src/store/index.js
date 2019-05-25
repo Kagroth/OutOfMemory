@@ -277,6 +277,27 @@ export default new Vuex.Store({
                  reject(error)
                })
         })
+      },
+
+      deleteCV({dispatch}) {
+        let authHeader = "Bearer " + this.state.token;
+
+        return new Promise((resolve, reject) => {
+          axios.delete(api.getCVEndpoint(),
+            {
+              headers: {
+                'Authorization': authHeader
+              }
+            })
+               .then(response => {
+                  console.log(response)
+                  dispatch('getLoggedUserProfile')
+                  resolve()
+               })
+               .catch((error) => {
+                 reject(error)
+               })
+        })
       }
     }
   })

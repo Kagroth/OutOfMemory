@@ -1,7 +1,43 @@
 <template>
-    <div>
+    <div>        
+        <!-- Jest CV, wyświetlenie go i umożliwienie edycji -->
+        <div v-if="hasCV">
+            <b-row>
+                <b-col><h3>Twoje CV</h3></b-col>
+                <b-col class="text-right">
+                    <b-button variant="primary" size="sm">Edytuj</b-button>
+                    <b-button variant="danger" size="sm" @click="deleteCV">Usuń</b-button>
+                </b-col>
+            </b-row>
+            <hr>
+            <div>
+                <h5>Doświadczenie: </h5>
+                <b-row>
+                    <b-col cols=2>Od</b-col>
+                    <b-col cols=2>Do</b-col>
+                    <b-col cols=8>Firma i opis</b-col>
+                </b-row>
+                <b-row v-for="experience in experienceCV" :key="experience">
+                    <b-col cols=2> {{ experience.startDate }} </b-col>
+                    <b-col cols=2> {{ experience.endDate }} </b-col>
+                    <b-col cols=8> {{ experience.company }} <br> {{ experience.description }} </b-col>           
+                </b-row>
+            </div>
+            <hr>
+            <div>
+                <h5>Umiejętności: </h5>
+                <b-row>
+                    <b-col cols=6>Umiejętność</b-col>
+                    <b-col cols=6>Poziom</b-col>
+                </b-row>
+                <b-row v-for="skill in skillsCV" :key="skill">
+                    <b-col cols=6> {{ skill.name }} </b-col>
+                    <b-col cols=6> {{ skill.level }} </b-col>
+                </b-row>
+            </div>        
+        </div>
         <!-- Brak CV, mozliwosc jego utworzenia -->
-        <div v-if="!hasCV && !isCreating">
+        <div v-else>
             <b-row>
                 <b-col class="text-center">
                     Nie masz jeszcze CV
@@ -12,21 +48,7 @@
                     <b-button variant="success" size="sm" @click="showCreatorHandler">Nowe CV</b-button>
                 </b-col>
             </b-row>
-        </div>
-        <!-- Jest CV, wyświetlenie go i umożliwienie edycji -->
-        <div v-else>
-            <h3>Twoje CV</h3>
-            <b-row v-for="experience in experienceCV" :key="experience">
-                <b-col> {{ experience.startDate }} </b-col>
-                <b-col> {{ experience.endDate }} </b-col>
-                <b-col> {{ experience.company }} </b-col>
-                <b-col> {{ experience.description }} </b-col>                
-            </b-row>
-            <b-row v-for="skill in skillsCV" :key="skill">
-                <b-col> {{ skill.name }} </b-col>
-                <b-col> {{ skill.level }} </b-col>
-            </b-row>
-        </div>
+        </div>        
         <!-- CV kreator -->
         <div v-if="showCreator">
             <b-row>
@@ -102,7 +124,8 @@ export default {
             Inicjalizacja parametrow: hasCV, showCreator, isCreating, isEditing
         */
         console.log(this.$store.state.currentUser.user.cv)
-        this.hasCV = this.$store.state.currentUser.user.cv !== undefined // jesli pole cv jest undefined, wtedy hasCV = false
+        this.hasCV = !(this.$store.state.currentUser.user.cv === undefined || // jesli pole cv jest undefined, wtedy hasCV = false
+                     this.$store.state.currentUser.user.cv === null) 
         console.log(this.hasCV)
         this.isCreating = false
         this.showCreator = false
@@ -147,15 +170,15 @@ export default {
            // ktorego elementy oddzielone sa przecinkami
            let skills = this.skills.map(skill => skill.name + " " + skill.level).join(",")
            
-           // z kazdego elementu tablicy this.experiences utworz String postaci 'startDate endDate company description'
-           // i ze wszytkich tych stringow utworz 1 string ktorego elementy oddzielone sa przecinkami
+           // z kazdego elementu tablicy this.experiences utworz String postaci 'startDate, endDate, company, description'
+           // i ze wszytkich tych stringow utworz 1 string ktorego elementy oddzielone sa srednikami
            let experiences = this.experiences.map(experience => {
                let expString = "";
                for(let property of ['startDate', 'endDate', 'company', 'description']) {
-                   expString += experience[property] + " "
+                   expString += experience[property] + ", "
                }
                return expString
-           }).join(",")
+           }).join(";")
            
            console.log(skills)
            console.log(experiences)
@@ -166,6 +189,19 @@ export default {
            }).then(() => {
                console.log("CV zostalo utworzone")
            })
+        },
+
+        deleteCV() {
+            let isSure = confirm("Czy na pewno chcesz usunac CV?")
+
+            if(isSure) {
+                this.$store.dispatch('deleteCV').then(() => {
+                    alert("Zakonczono procedure usuwania CV")
+                    this.$router.push("/profile")
+                }).catch(() => {
+                    alert("Niestety nie udalo sie usunac CV")
+                })
+            }
         }
     },
 
@@ -174,10 +210,10 @@ export default {
         experienceCV() {
             if(this.hasCV) {
                 // mapowanie stringa na tablice obiektow reprezentujacych wpis w cv
-                let experiencesArray = this.$store.state.currentUser.user.cv.experience.trim().split(',')
+                let experiencesArray = this.$store.state.currentUser.user.cv.experience.trim().split(';')
 
                 experiencesArray = experiencesArray.map(experience => {
-                    let exp = experience.split(" ")
+                    let exp = experience.split(",")
                     
                     return {
                         startDate: exp[0],
