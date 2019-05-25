@@ -5,7 +5,7 @@
       <b-row>
         <b-col cols=8 offset=2>
           <transition name="component-slide" mode="out-in">
-            <router-view></router-view>
+            <router-view :key="$route.fullPath"></router-view>
           </transition>
         </b-col>
       </b-row>
