@@ -175,7 +175,7 @@ class PostViewFilter(generics.ListAPIView):
 # posty o okreslonym tagu
 class PostPreviewByTagFilterView(generics.ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, )
-    serializer_class = PostSerializer
+    serializer_class = PostPreviewSerializer
 
     def get_queryset(self):
         searchParam = self.kwargs['tag']
