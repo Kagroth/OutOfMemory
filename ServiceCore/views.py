@@ -8,20 +8,21 @@ from ServiceCore.models import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.generics import ListAPIView, UpdateAPIView 
+from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework import generics
 from rest_framework import mixins
 
+
 class CVView(APIView):
     permission_classes = (IsAuthenticated,)
-    
+
     # pobranie CV z bazy
     def get(self, request):
         cv = CV.objects.get(user=request.user)
 
         cvSerializer = CVSerializer(cv)
-    
+
         return Response(cvSerializer.data)
 
     # zapis CV do bazy
@@ -30,7 +31,7 @@ class CVView(APIView):
         print(requestedData)
         if requestedData['skills'] is None or requestedData['experience'] is None:
             return Response({"message": "Nie podano wszystkich danych"})
-        try:            
+        try:
             (newCV, created) = CV.objects.get_or_create(user=request.user)
             newCV.skills = requestedData['skills']
             newCV.experience = requestedData['experience']
@@ -46,12 +47,14 @@ class CVView(APIView):
             cvToDelete.delete()
         except:
             return Response({"message": "Nie udalo sie usunac CV"})
-        
+
         return Response({"message": "Usunieto CV"})
+
 
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         """
         Get user profile
@@ -67,7 +70,7 @@ class ProfileRecordView(APIView):
 
         isUserExist = None
         user = None
-        
+
         try:
             isUserExist = User.objects.get(username=requestedData['username'])
             print("Uzytkowniko podanym nicku istnieje!")
@@ -77,10 +80,10 @@ class ProfileRecordView(APIView):
 
         if isUserExist == False:
             user = User.objects.create_user(first_name=requestedData['first_name'],
-                                       last_name=requestedData['last_name'],
-                                       username=requestedData['username'],
-                                       email=requestedData['email'],
-                                       password=requestedData['password'])
+                                            last_name=requestedData['last_name'],
+                                            username=requestedData['username'],
+                                            email=requestedData['email'],
+                                            password=requestedData['password'])
         else:
             return Response({"message": "Użytkownik o podanym nicku juz istnieje"})
 
@@ -89,10 +92,10 @@ class ProfileRecordView(APIView):
             profile = Profile.objects.create(user=user, description="")
             profile.save()
             print("Uzytkownik zarejestrowany!")
-            
+
             return Response({"userData": requestedData, "message": "Użytkownik zostal zarejestrowany"})
         except Exception as e:
-            print(str(e))      
+            print(str(e))
 
             return Response({"userData": requestedData, "message": "Nie udalo sie zarejestrowac uzytkownika"})
 
@@ -109,10 +112,10 @@ class ProfileRecordView(APIView):
         return Response(serializer.error_messages,
                         status=status.HTTP_400_BAD_REQUEST)
         """
-    
-    #edycja opisu profilu użytkownika
+
+    # edycja opisu profilu użytkownika
     def put(self, request):
-       
+
         requestedData = JSONParser().parse(request)
 
         print(requestedData)
@@ -123,17 +126,20 @@ class ProfileRecordView(APIView):
 
         return Response({"message": "Edytowano opis profilu"})
 
+
 # wszystkie posty w formie skroconej (bez komentarzy i tresci)
-class PostPreviewView(ListAPIView):    
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+class PostPreviewView(ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Post.objects.all().order_by("-createdAt")
     serializer_class = PostPreviewSerializer
 
+
 # wszystkie posty
 class PostView(ListAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Post.objects.all().order_by("-createdAt")
     serializer_class = PostSerializer
+
 
 # szzczegoly posta
 class PostDetailsView(APIView):
@@ -148,15 +154,15 @@ class PostDetailsView(APIView):
             postToShow.save()
         except:
             return Response({"message": "Nie ma takiego posta!"})
-        
+
         serializedPost = PostSerializer(postToShow)
 
         return Response(serializedPost.data)
-    
+
 
 # filtrowanie/wyszukiwanie postow
 class PostViewFilter(generics.ListAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -172,9 +178,10 @@ class PostViewFilter(generics.ListAPIView):
 
         return postsFiltered
 
+
 # posty o okreslonym tagu
 class PostPreviewByTagFilterView(generics.ListAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = PostPreviewSerializer
 
     def get_queryset(self):
@@ -184,12 +191,13 @@ class PostPreviewByTagFilterView(generics.ListAPIView):
 
         return postsFiltered
 
+
 # tworzenie posta
 class PostCreate(APIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        #u = (request.user)
+        # u = (request.user)
         print(request.user)
         requestedData = JSONParser().parse(request)
         newPostData = requestedData['params']
@@ -199,28 +207,30 @@ class PostCreate(APIView):
         tagsToAdd = []
 
         for tagToAdd in newPostData['tags']:
-            try: 
+            try:
                 tag = Tag.objects.get(tagName=tagToAdd)
-            except: 
+            except:
                 tag = Tag.objects.create(tagName=tagToAdd)
                 print(tag)
             tagsToAdd.append(tag)
 
         try:
-            post = Post.objects.create(author=request.user, viewsCount=0, title=newPostData['title'], postField=newPostData['postField'])
+            post = Post.objects.create(author=request.user, viewsCount=0, title=newPostData['title'],
+                                       postField=newPostData['postField'])
         except:
             return Response({"message": "Nie udalo sie utworzyc posta"})
 
         for tag in tagsToAdd:
-            try:                
+            try:
                 post.tags.add(tag)
             except Exception as e:
                 print(str(e))
                 return Response({"message": "Nie udalo sie dodac wszystkich tagow"})
-        
+
         post.save()
 
         return Response({"message": "Post zostal utworzony"})
+
 
 # tworzenie komentarza
 class CommentView(APIView):
@@ -232,7 +242,7 @@ class CommentView(APIView):
         if requestedData['params'] is None:
             print("Brak obiektu params - brak danych")
             return Response({"message": "Brak danych"})
-        
+
         newCommentData = requestedData['params']
         print(newCommentData)
 
@@ -242,24 +252,25 @@ class CommentView(APIView):
             if newCommentData['postPk'] is None:
                 print("Brak podanego klucza glownego")
                 return Response({"message": "Nie podano id posta"})
-            
+
             post = Post.objects.get(pk=newCommentData['postPk'])
         except:
             print("Post o podanym kluczu nie istnieje")
             return Response({"message": "Post o podanym kluczu nie istnieje"})
-        
+
         if newCommentData['comment'] is None:
             print("Brak podanego pola komentarza")
             return Response({"message": "Brak podanego pola komentarza"})
 
-        try:            
+        try:
             newComment = Comment.objects.create(commentField=newCommentData['comment'],
-                                            author=request.user,
-                                            post=post)
+                                                author=request.user,
+                                                post=post)
             newComment.save()
             return Response({"message": "Komentarz dodany"})
         except:
             return Response({"message": "Nie udalo sie dodac komentarza"})
+
 
 # dodawanie oceny do komentarza
 class RateCommentView(APIView):
@@ -282,3 +293,10 @@ class RateCommentView(APIView):
         currentComment = CommentSerializer(comment)
 
         return Response(currentComment.data)
+
+
+# przeglądanie ofert pracy
+class JobOffersPreviewView(ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    queryset = JobOffer.objects.all()
+    serializer_class = JobOffersSerialiser
