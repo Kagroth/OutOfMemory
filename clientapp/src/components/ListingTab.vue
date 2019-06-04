@@ -4,14 +4,14 @@
       <hr>
       <b-tab active>
         <template slot="title">
-          <strong> Posty</strong>
-          <b-badge variant="primary" size="sm" to="/post/new" v-if="isLogged">new</b-badge>
+          <strong>Posty</strong>         
         </template>
         <b-row class="mt-2" align-h="start">
           <b-col cols=1>
+            <b-button variant="primary" size="sm" to="/post/new" v-if="isLogged">Dodaj</b-button>
           </b-col>
         </b-row>
-        <b-row class="mt-2">
+        <b-row class="mt-3">
           <b-col cols=12>
             <post-preview :key="post_preview"
                           v-for="post_preview in post_previews"
@@ -31,7 +31,7 @@
         </b-row>
         <b-row class="mt-2">
           <b-col cols=12>
-            <job-preview>xd
+            <job-preview>
             </job-preview>
           </b-col>
         </b-row>

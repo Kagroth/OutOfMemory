@@ -13,20 +13,33 @@
               </b-form-group>
             </b-col>
           </b-form-row>
-
+          
           <b-form-row>
-            <b-col>
-              <b-form-group label="Tagi:" label-for="postTags">
-                <b-form-input
-                  id="postTags"
-                  v-model="post.tags"
-                  type="text"
-                  placeholder="Wpisz tagi, rozdzielone przecinkami"
-                ></b-form-input>
+            <b-col cols=8>
+              <b-form-group label="Tagi:" label-for="postTags">                  
+                <b-form-select id="postTags" v-model="selectedTag">
+                  <option v-for="tag in tags" :key="tag" :value="tag"> {{ tag.tagName }}</option>
+                </b-form-select>
               </b-form-group>
             </b-col>
+            <b-col cols=4 class="text-center" align-self="center">
+              <b-button variant="primary" size="sm" class="mt-3" @click="addSelectedTag()">Dodaj</b-button>
+            </b-col>
           </b-form-row>
-
+          <b-form-row>
+            <b-col cols=12>
+              Wybrane tagi: <br>            
+            </b-col>  
+            <b-col cols=12>
+              <b-badge 
+                variant="primary" 
+                v-for="tag in post.tags" 
+                :key="tag" 
+                class="mr-1"> 
+                  {{ tag.tagName }} 
+              </b-badge>
+            </b-col>
+          </b-form-row>
           <b-form-row>
             <b-col cols="9" label-for="postField">Tresc posta:</b-col>
             <b-col cols="3" class="insertCodeCol">
@@ -57,15 +70,34 @@ import api from "../api.js";
 export default {
   data() {
     return {
+      selectedTag: "",
       post: {
         title: "",
         postField: "",
-        tags: ""
+        tags: []
       }
     }    
   },
 
+  created() {
+    this.$store.dispatch('getAllTags')
+  },
+
+  computed: {
+    tags() {
+      return this.$store.state.tags
+    }
+  },
+
   methods: {
+    addSelectedTag() {
+      if(this.post.tags.includes(this.selectedTag)) {
+        return
+      }
+
+      this.post.tags.push(this.selectedTag)
+    },
+
     createPost() {
       console.log(this.post);
       
