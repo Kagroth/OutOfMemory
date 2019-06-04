@@ -14,7 +14,8 @@ export default {
         createPost: "post/new/",
         postDetails: "post/details/",
         addComment: 'post/comment/new/',
-        rateComment: 'post/comment/'        
+        rateComment: 'post/comment/',
+        tags: 'tag/'        
     },
 
     getLoginEndpoint() {
@@ -59,5 +60,9 @@ export default {
 
     getRateCommentEndpoint() {
         return this.baseURL + this.endpoints.rateComment;
+    },
+
+    getTagsEndpoint() {
+        return this.baseURL + this.endpoints.tags;
     }
 }

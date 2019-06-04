@@ -13,7 +13,8 @@ export default new Vuex.Store({
       currentUser: "",
       post_previews: [],
       posts: [],
-      postDetails: ""
+      postDetails: "",
+      tags: []
     },
   
     mutations: {
@@ -54,6 +55,10 @@ export default new Vuex.Store({
       updateCommentOfPostDetails (state, payload) {
         const item = state.postDetails.comments.find(comment => comment.pk === payload.pk)
         Object.assign(item, payload)  // podmienienie komentarza na ten z nową oceną
+      },
+
+      setTags(state, payload) {
+        state.tags = payload
       },
 
       logout (state) {
@@ -158,6 +163,23 @@ export default new Vuex.Store({
                })
                .catch(() => {
                  alert("Blad wyszukiwania postow")
+                 reject()
+               })
+        })
+      },
+
+      getAllTags({commit}) {
+
+        return new Promise((resolve, reject) => {
+          let authHeader = "Bearer " + this.state.token;
+          axios.get(api.getTagsEndpoint())
+               .then((response) => {
+                 console.log(response.data)
+                 commit('setTags', response.data)
+                 resolve()
+               })
+               .catch(() => {
+                 alert("Blad pobierania tagow")
                  reject()
                })
         })
