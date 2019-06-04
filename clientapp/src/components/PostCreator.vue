@@ -108,14 +108,6 @@ export default {
            return;
          }
       
-      let splittedTags = this.post.tags.split(","); // tworze tablice z tagow oddzielonych przecinkiem
-      splittedTags = splittedTags.map(tag => { return tag.trim() }); // usuwam spacje po bokach
-
-      console.log(splittedTags);
-
-      let postToSend = this.post;
-      this.post.tags = splittedTags;
-      
       this.$store.dispatch('createPost', this.post).then(response => {
         alert("Utworzono post")
       });

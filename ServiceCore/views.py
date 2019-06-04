@@ -210,15 +210,19 @@ class PostCreate(APIView):
         postToAdd = None
         tag = None
         tagsToAdd = []
-
+        print(newPostData)
+        
         for tagToAdd in newPostData['tags']:
             try:
-                tag = Tag.objects.get(tagName=tagToAdd)
-            except:
-                tag = Tag.objects.create(tagName=tagToAdd)
+                tag = Tag.objects.get(tagName=tagToAdd['tagName'])
+            except Exception as e:
                 print(tag)
+                print(e)
+                return Response({"message": "Brak podanego tagu"})
+
             tagsToAdd.append(tag)
 
+        
         try:
             post = Post.objects.create(author=request.user, viewsCount=0, title=newPostData['title'],
                                        postField=newPostData['postField'])
@@ -233,7 +237,7 @@ class PostCreate(APIView):
                 return Response({"message": "Nie udalo sie dodac wszystkich tagow"})
 
         post.save()
-
+        
         return Response({"message": "Post zostal utworzony"})
 
 
