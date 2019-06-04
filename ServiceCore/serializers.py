@@ -3,15 +3,18 @@ from ServiceCore.models import *
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 
+
 class CVSerializer(serializers.ModelSerializer):
     class Meta:
         model = CV
         fields = ('user', 'skills', 'experience')
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     """
@@ -24,18 +27,18 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ('user', 'description',)
 
     def create(self, validated_data):
-        
         user_data = validated_data.pop('user')
         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
         profile, created = Profile.objects.update_or_create(user=user,
-                            description=validated_data.pop('description'))
+                                                            description=validated_data.pop('description'))
         return profile
 
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('tagName', )
+        fields = ('tagName',)
+
 
 class PostPreviewSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
@@ -49,9 +52,11 @@ class PostPreviewSerializer(serializers.ModelSerializer):
     def get_comment_count(self, postObj):
         return postObj.comments.all().count()
 
+
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     rate = serializers.SerializerMethodField('calculate_rate')
+
     class Meta:
         model = Comment
         fields = ('pk', 'author', 'createdAt', 'commentField', 'rate')
@@ -62,14 +67,16 @@ class CommentSerializer(serializers.ModelSerializer):
 
         return pluses + minuses * (-1)
 
+
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     tags = TagSerializer(many=True)
     comments = CommentSerializer(many=True)
-    
+
     class Meta:
         model = Post
         fields = ('pk', 'author', 'title', 'postField', 'viewsCount', 'tags', 'createdAt', 'comments')
+
 
 class UserWholeDataSerializer(serializers.ModelSerializer):
     posts = PostPreviewSerializer(many=True)
@@ -80,6 +87,7 @@ class UserWholeDataSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'cv')
 
+
 class ProfileSerializerExtended(serializers.ModelSerializer):
     """
     A  profile serializer to return the user details
@@ -89,3 +97,12 @@ class ProfileSerializerExtended(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('user', 'description',)
+
+
+class JobOffersSerialiser(serializers.ModelSerializer):
+    """
+    A Job offer serializer to return all fields
+    """
+    class Meta:
+        model = JobOffer
+        fields = ('user', 'title', 'salaryMin','salaryMax','description','requirements')
