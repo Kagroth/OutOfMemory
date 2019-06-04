@@ -51,6 +51,11 @@ class CVView(APIView):
         return Response({"message": "Usunieto CV"})
 
 
+class TagView(ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    queryset = Tag.objects.all().order_by("tagName")
+    serializer_class = TagSerializer
+
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
     permission_classes = (IsAuthenticated,)
