@@ -168,7 +168,7 @@ class PostDetailsView(APIView):
 # filtrowanie/wyszukiwanie postow
 class PostViewFilter(generics.ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
-    serializer_class = PostSerializer
+    serializer_class = PostPreviewSerializer
 
     def get_queryset(self):
         searchParam = self.request.query_params.get('param', None)
