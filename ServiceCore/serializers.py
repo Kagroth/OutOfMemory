@@ -65,7 +65,7 @@ class CommentSerializer(serializers.ModelSerializer):
         pluses = commentObj.rates.filter(ratingValue=1).count()
         minuses = commentObj.rates.filter(ratingValue=-1).count()
 
-        return pluses + minuses * (-1)
+        return pluses - minuses
 
 
 class PostSerializer(serializers.ModelSerializer):
