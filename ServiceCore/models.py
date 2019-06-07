@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 # pola first_name, last_name domyslnie nie sa required - ale sa wymagane przez nasz ERD
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='media', blank=True)
     description = models.CharField(name='description', max_length=500)
 
     def __str__(self):
