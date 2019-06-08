@@ -5,7 +5,7 @@
         <h3>
           {{ profile.user.username }}
         </h3>
-        {{profile.avatar.toString()}}
+        {{profile.avatar.size()}}
       </b-col>
     </b-row>
     <b-row>
