@@ -5,7 +5,7 @@
         <h3>
           {{ profile.user.username }}
         </h3>
-        {{profile.avatar.size()}}
+        <b-img :src="'localhost:8000' + profile.avatar"></b-img>
       </b-col>
     </b-row>
     <b-row>
@@ -72,7 +72,6 @@
     created() {
       this.$store.dispatch('getLoggedUserProfile')
         .then(() => {
-          this.avatar = this.$store.state.currentUser.avatar
           this.description = this.$store.state.currentUser.description;
         });
     },

@@ -94,10 +94,12 @@ class ProfileSerializerExtended(serializers.ModelSerializer):
     A  profile serializer to return the user details
     """
     user = UserWholeDataSerializer(required=True)
-
+    # https://www.youtube.com/watch?v=sD-Bi9QyoH0
+    avatar = serializers.ImageField(max_length=None, use_url=True)
     class Meta:
         model = Profile
-        fields = ('user', 'description',)
+        fields = ('user', 'description', 'avatar')
+
 
 
 class JobOffersSerialiser(serializers.ModelSerializer):
