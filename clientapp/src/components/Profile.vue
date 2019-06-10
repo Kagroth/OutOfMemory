@@ -3,9 +3,11 @@
     <b-row>
       <b-col class="">
         <h3>
+
+          <avatar :image="'http://localhost:8000' + profile.avatar" size='300' v-if="profile.avatar != null"></avatar>
+          <avatar :fullname="profile.user.username" size='300' v-else></avatar>
           {{ profile.user.username }}
         </h3>
-        <b-img :src="'localhost:8000' + profile.avatar"></b-img>
       </b-col>
     </b-row>
     <b-row>
@@ -62,11 +64,13 @@
 <script>
   import PostPreview from './PostPreview'
   import Comment from './Comment'
+  import Avatar from 'vue-avatar-component'
 
   export default {
     components: {
       "post-preview": PostPreview,
-      "comment": Comment
+      "comment": Comment,
+      Avatar
     },
 
     created() {
@@ -136,4 +140,6 @@
   .textarea-container, .textarea-container textarea {
     width: 100%;
   }
+
+
 </style>
