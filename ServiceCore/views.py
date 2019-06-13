@@ -1,7 +1,8 @@
 from django.shortcuts import render
 import json
 
-from rest_framework.parsers import JSONParser
+from rest_framework.exceptions import ParseError
+from rest_framework.parsers import JSONParser, FileUploadParser
 
 from ServiceCore.serializers import *
 from ServiceCore.models import *
@@ -12,6 +13,7 @@ from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework import generics
 from rest_framework import mixins
+from PIL import Image
 
 
 class CVView(APIView):
@@ -56,7 +58,8 @@ class TagView(ListAPIView):
     queryset = Tag.objects.all().order_by("tagName")
     serializer_class = TagSerializer
 
-# pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
+
+# pobranie profilu zalogowanego uzytkownika, tworzenie uzytkownika
 class ProfileRecordView(APIView):
     # permission_classes = (IsAuthenticated,)
 
@@ -130,6 +133,23 @@ class ProfileRecordView(APIView):
         profile.save()
 
         return Response({"message": "Edytowano opis profilu"})
+
+
+class ProfileAvatarUpload(APIView):
+    parser_classes = (FileUploadParser,)
+
+    def put(self, request, filename, format=None):
+        profile = Profile.objects.get(user=request.user)
+        file_obj = request.FILES['file']
+        # https://goodcode.io/articles/django-rest-framework-file-upload/
+        try:
+            img = Image.open(file_obj)
+            img.verify()
+        except:
+            raise ParseError("Unsupported image type")
+        profile.avatar = file_obj
+        # do some stuff with uploaded file
+        return Response(status=204)
 
 
 # wszystkie posty w formie skroconej (bez komentarzy i tresci)
@@ -211,7 +231,7 @@ class PostCreate(APIView):
         tag = None
         tagsToAdd = []
         print(newPostData)
-        
+
         for tagToAdd in newPostData['tags']:
             try:
                 tag = Tag.objects.get(tagName=tagToAdd['tagName'])
@@ -222,7 +242,6 @@ class PostCreate(APIView):
 
             tagsToAdd.append(tag)
 
-        
         try:
             post = Post.objects.create(author=request.user, viewsCount=0, title=newPostData['title'],
                                        postField=newPostData['postField'])
@@ -237,7 +256,7 @@ class PostCreate(APIView):
                 return Response({"message": "Nie udalo sie dodac wszystkich tagow"})
 
         post.save()
-        
+
         return Response({"message": "Post zostal utworzony"})
 
 
