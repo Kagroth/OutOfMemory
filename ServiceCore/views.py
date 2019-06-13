@@ -147,7 +147,7 @@ class ProfileAvatarUpload(APIView):
             img.verify()
         except:
             raise ParseError("Unsupported image type")
-        profile.avatar = file_obj
+        profile.avatar.save(filename, file_obj, save=True)
         # do some stuff with uploaded file
         return Response(status=204)
 

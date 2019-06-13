@@ -13,7 +13,7 @@ from django.conf import settings
 urlpatterns = [
                   path('profile/', views.ProfileRecordView.as_view()),
                   # przesłanie pliku
-                  path('upload/<str:filename>', ProfileAvatarUpload.as_view()),
+                  url(r'^upload/(?P<filename>[^/]+)$', ProfileAvatarUpload.as_view()),
                   path('profile/cv/', views.CVView.as_view()),
                   path('post_preview/', views.PostPreviewView.as_view()),
                   path('post/', views.PostView.as_view()),
