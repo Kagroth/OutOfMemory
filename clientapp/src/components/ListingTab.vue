@@ -23,7 +23,7 @@
       <b-tab>
         <template slot="title">
           <strong> Oferty pracy</strong>
-          <b-badge variant="primary" size="sm" to="" v-if="isLogged">new</b-badge>
+          <b-badge variant="primary" size="sm" to="/job/new" v-if="isLogged">new</b-badge>
         </template>
         <b-row class="mt-2" align-h="start">
           <b-col cols=1>

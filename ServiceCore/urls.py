@@ -20,7 +20,7 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('job/', views.JobOffersPreviewView.as_view()),
-    path('job/new', views.JobOfferCreateView.as_view()),
+    path('job/new/', views.JobOfferCreateView.as_view()),
     path('job/<int:pk>', views.JobOfferEditView.as_view()),
     path('tag/', views.TagView.as_view())
 ]

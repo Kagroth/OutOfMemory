@@ -208,6 +208,29 @@ export default new Vuex.Store({
                })
         })
       },
+      createJobOffer ({commit}, payload) {
+        console.log("Wysylam request z utworzeniem oferty pracy")
+
+        return new Promise((resolve, reject) => {
+          let authHeader = "Bearer " + this.state.token;
+
+          axios.post(api.getCreateJobOfferEndpoint(), {
+              params: payload },
+            {
+              headers: {
+                'Authorization': authHeader
+              }
+            })
+            .then(response => {
+              console.log(response.data)
+              resolve()
+            })
+            .catch(() => {
+              alert("Nie udalo sie utworzyc oferty pracy")
+              reject()
+            })
+        })
+      },
 
       getPostDetails ({commit}, payload) {
         return new Promise((resolve, reject) => {

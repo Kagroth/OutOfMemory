@@ -165,7 +165,6 @@ class PostDetailsView(APIView):
 
         return Response(serializedPost.data)
 
-
 # filtrowanie/wyszukiwanie postow
 class PostViewFilter(generics.ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
@@ -316,7 +315,7 @@ class JobOffersPreviewView(ListAPIView):
 
 # tworzenie oferty pracy
 class JobOfferCreateView(APIView):
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated, )
     serializer_class = JobOffersSerializer
 
     # tworzenie ofery pracy
@@ -325,9 +324,9 @@ class JobOfferCreateView(APIView):
         newJobData = requestedData['params']
 
         try:
-            job = JobOffer.objects.create(author=request.user, title=newJobData['title'],
+            job = JobOffer.objects.create(user=request.user, title=newJobData['title'],
                                           salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
-                                          description=['description'], requirements=['requiments'])
+                                          description=newJobData['description'], requirements=newJobData['requirements'])
             job.save()
         except:
             return Response({"message": "Nie udalo sie utworzyc oferty pracy"})
@@ -344,7 +343,7 @@ class JobOfferEditView(APIView):
         newJobData = requestedData['params']
 
         try:
-            job = JobOffer.objects.update(jobOfferId=pk, author=request.user, title=newJobData['title'],
+            job = JobOffer.objects.update(jobOfferId=pk, user=request.user, title=newJobData['title'],
                                           salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
                                           description=['description'], requirements=['requiments'])
             job.save()
