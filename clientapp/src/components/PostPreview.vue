@@ -61,6 +61,30 @@ export default {
                     return "icons8-html-5-48"
                 case "Spring":
                     return "icons8-spring-logo-48"
+                case "Cplusplus":
+                    return "Cplusplus"
+                case "Csharp":
+                    return "Csharp"
+                case "MATLAB":
+                    return "MATLAB"
+                case "Perl":
+                    return "Perl"
+                case "Python":
+                    return "Python"
+                case "R":
+                    return "R"
+                case "Ruby":
+                    return "Ruby"
+                case "SQL":
+                    return "SQL"
+                case "JSON":
+                    return "JSON"
+                case "XML":
+                    return "XML"
+                case "Swift":
+                    return "Swift"
+                case "C":
+                    return "C"
                 default: 
                     return ""
             }    
