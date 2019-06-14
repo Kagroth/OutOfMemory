@@ -2,33 +2,37 @@
   <div class="mb-3">
     <div class="shadow-sm">
       <b-row class="pl-2">
-        <b-col cols=8 class="lead"> {{ job.title }}</b-col>
-        <b-col cols=4 class="text-right"> Wynagrodzenie od <b>{{ job.salaryMin }} PLN</b> do <b>{{job.salaryMax}} PLN</b></b-col>
+        <b-col cols=8 class="lead"> {{ jobOffer.title }}</b-col>
+        <b-col cols=4 class="text-right"> Wynagrodzenie od <b>{{ jobOffer.salaryMin }} PLN</b> - <b>{{jobOffer.salaryMax}} PLN</b></b-col>
       </b-row>
       <b-row class="pl-2">
         <b-col cols=12>
+          <!--
           <div>
-            {{job.requirements}}
+            {{jobOffer.requirements}}
           </div>
+          -->
         </b-col>
       </b-row>
       <b-row>
         <b-col cols=12>
+          <!--
           <b-img
             :key="tag"
             v-for="tag in job.tags"
             :src="getImage(tag.tagName)">
           </b-img>
+          -->
         </b-col>
       </b-row>
       <b-row class="pl-2">
         <b-col cols=12>
-          <small>Autor: {{job.author}}</small>
+          <small>Autor: {{jobOffer.author}}</small>
         </b-col>
       </b-row>
       <b-row class="pl-2">
         <b-col cols=12>
-          <small>{{job.createDate}}</small>
+          <small>{{jobOffer.createDate}}</small>
         </b-col>
       </b-row>
     </div>
@@ -37,29 +41,13 @@
 
 <script>
   export default {
+    props: ['jobOffer'],
+
     data() {
-      return {
-        job: {
-          title: "zatrudnię od zaraz",
-          salaryMin: 6000,
-          salaryMax: 15000,
-          requirements: "jezyk angielski",
-          tags: [
-            {
-              tagName: "Javascript"
-            },
-            {
-              tagName: "HTML"
-            },
-            {
-              tagName: "CSS"
-            }
-          ],
-          author: "admin",
-          createDate: "2019-05-21"
-        }
+      return {        
       }
     },
+
     methods: {
       mapTagName(tagName) {
         switch (tagName) {

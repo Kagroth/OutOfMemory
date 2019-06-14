@@ -14,7 +14,8 @@ export default new Vuex.Store({
       post_previews: [],
       posts: [],
       postDetails: "",
-      tags: []
+      tags: [],
+      jobOffers: []
     },
   
     mutations: {
@@ -59,6 +60,10 @@ export default new Vuex.Store({
 
       setTags(state, payload) {
         state.tags = payload
+      },
+
+      setJobOffers(state, payload) {
+        state.jobOffers = payload
       },
 
       logout (state) {
@@ -289,6 +294,21 @@ export default new Vuex.Store({
                   resolve()
                })
                .catch(() => {
+                 reject()
+               })
+        })
+      },
+
+      getAllJobOffers({commit}) {
+        return new Promise((resolve, reject) => {
+          axios.get(api.getJobsEndpoint())
+               .then((response) => {
+                 console.log(response.data)
+                 commit('setJobOffers', response.data)
+                 resolve()
+               })
+               .catch(() => {
+                 alert("Blad pobierania tagow")
                  reject()
                })
         })

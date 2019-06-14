@@ -16,6 +16,7 @@ export default {
     addComment: 'post/comment/new/',
     rateComment: 'post/comment/',
     tags: 'tag/',
+    jobs: 'job/',  
     createJobOffer: "job/new/"
   },
 
@@ -65,6 +66,10 @@ export default {
 
   getTagsEndpoint() {
     return this.baseURL + this.endpoints.tags;
+  },
+  
+  getJobsEndpoint() {
+    return this.baseURL + this.endpoints.jobs;
   },
 
   getCreateJobOfferEndpoint() {
