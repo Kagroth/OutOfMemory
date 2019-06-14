@@ -52,19 +52,19 @@ export default {
         mapTagName(tagName) {
             switch(tagName) {
                 case "Java":
-                    return "icons8-java-48"
+                    return "Java"
                 case "CSS":
-                    return "icons8-css3-48"
-                case "Javascript":
-                    return "icons8-javascript-48"
+                    return "CSS3"
+                case "JavaScript":
+                    return "JavaScript"
                 case "HTML":
-                    return "icons8-html-5-48"
+                    return "HTML5"
                 case "Spring":
-                    return "icons8-spring-logo-48"
-                case "Cplusplus":
-                    return "Cplusplus"
-                case "Csharp":
-                    return "Csharp"
+                    return "Spring"
+                case "Cpp":
+                    return "Cpp"
+                case "CSharp":
+                    return "CSharp"
                 case "MATLAB":
                     return "MATLAB"
                 case "Perl":
