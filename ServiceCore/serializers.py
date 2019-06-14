@@ -99,10 +99,10 @@ class ProfileSerializerExtended(serializers.ModelSerializer):
         fields = ('user', 'description',)
 
 
-class JobOffersSerialiser(serializers.ModelSerializer):
+class JobOffersSerializer(serializers.ModelSerializer):
     """
     A Job offer serializer to return all fields
     """
     class Meta:
         model = JobOffer
-        fields = ('user', 'title', 'salaryMin','salaryMax','description','requirements')
+        fields = ('user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements')
