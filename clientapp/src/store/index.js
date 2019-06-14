@@ -77,9 +77,14 @@ export default new Vuex.Store({
       createUser ({commit}, payload) {
         console.log("Wysylam request rejestracji")
   
-        axios.post(api.getRegisterEndpoint(), payload)
-             .then(response => console.log("Sukces" + response))
+        return new Promise((resolve, reject) => {
+          axios.post(api.getRegisterEndpoint(), payload)
+             .then(response => {
+               console.log("Sukces" + response)
+               resolve(response.data.message)
+              })
              .catch(error => console.log(error.response))
+        }) 
       },
   
       loginUser ({commit}, payload) {

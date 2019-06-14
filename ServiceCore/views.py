@@ -58,7 +58,7 @@ class TagView(ListAPIView):
 
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def get(self, request):
         """
@@ -98,11 +98,11 @@ class ProfileRecordView(APIView):
             profile.save()
             print("Uzytkownik zarejestrowany!")
 
-            return Response({"userData": requestedData, "message": "Użytkownik zostal zarejestrowany"})
+            return Response({"message": "Użytkownik zostal zarejestrowany"})
         except Exception as e:
             print(str(e))
 
-            return Response({"userData": requestedData, "message": "Nie udalo sie zarejestrowac uzytkownika"})
+            return Response({"message": "Nie udalo sie zarejestrowac uzytkownika"})
 
         """
         Create a profile record
