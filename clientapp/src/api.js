@@ -5,7 +5,7 @@ export default {
     baseURL: "http://localhost:8000/",
     endpoints: {
         login: "token/",
-        register: "user/",
+        register: "profile/",
         profile: "profile/",
         cv: 'profile/cv/',
         post_previews: "post_preview/",
