@@ -56,6 +56,7 @@ class TagView(ListAPIView):
     queryset = Tag.objects.all().order_by("tagName")
     serializer_class = TagSerializer
 
+
 # pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
 class ProfileRecordView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -211,7 +212,7 @@ class PostCreate(APIView):
         tag = None
         tagsToAdd = []
         print(newPostData)
-        
+
         for tagToAdd in newPostData['tags']:
             try:
                 tag = Tag.objects.get(tagName=tagToAdd['tagName'])
@@ -222,7 +223,6 @@ class PostCreate(APIView):
 
             tagsToAdd.append(tag)
 
-        
         try:
             post = Post.objects.create(author=request.user, viewsCount=0, title=newPostData['title'],
                                        postField=newPostData['postField'])
@@ -237,7 +237,7 @@ class PostCreate(APIView):
                 return Response({"message": "Nie udalo sie dodac wszystkich tagow"})
 
         post.save()
-        
+
         return Response({"message": "Post zostal utworzony"})
 
 
@@ -307,5 +307,47 @@ class RateCommentView(APIView):
 # przeglądanie ofert pracy
 class JobOffersPreviewView(ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
-    queryset = JobOffer.objects.all()
-    serializer_class = JobOffersSerialiser
+    # queryset = JobOffer.objects.all()
+    serializer_class = JobOffersSerializer
+
+    def get_queryset(self):
+        return JobOffer.objects.all()
+
+
+# tworzenie oferty pracy
+class JobOfferCreateView(APIView):
+    permission_classes = (IsAuthenticated)
+    serializer_class = JobOffersSerializer
+
+    # tworzenie ofery pracy
+    def post(self, request):
+        requestedData = JSONParser().parse(request)
+        newJobData = requestedData['params']
+
+        try:
+            job = JobOffer.objects.create(author=request.user, title=newJobData['title'],
+                                          salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
+                                          description=['description'], requirements=['requiments'])
+            job.save()
+        except:
+            return Response({"message": "Nie udalo sie utworzyc oferty pracy"})
+        return Response({"message": "Pomyślnie utworzono ofertę pracy"})
+
+
+#   Edycja oferty pracy
+class JobOfferEditView(APIView):
+    permission_classes = (IsAuthenticated)
+    serializer_class = JobOffersSerializer
+
+    def put(self, request, pk):
+        requestedData = JSONParser().parse(request)
+        newJobData = requestedData['params']
+
+        try:
+            job = JobOffer.objects.update(jobOfferId=pk, author=request.user, title=newJobData['title'],
+                                          salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
+                                          description=['description'], requirements=['requiments'])
+            job.save()
+        except:
+            return Response({"message": "Nie udalo sie edytowac oferty pracy"})
+        return Response({"message": "Pomyślnie edytowano ofertę pracy"})
