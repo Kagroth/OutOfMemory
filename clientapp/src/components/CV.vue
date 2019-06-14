@@ -60,30 +60,34 @@
                 </b-row>
                 <hr>
                 <div>
-                    <h5>Doświadczenie: </h5>
                     <b-row>
-                        <b-col cols=2>Od</b-col>
-                        <b-col cols=2>Do</b-col>
-                        <b-col cols=8>Firma i opis</b-col>
-                    </b-row>
-                    <b-row v-for="experience in experienceCV" :key="experience">
-                        <b-col cols=2> {{ experience.startDate }} </b-col>
-                        <b-col cols=2> {{ experience.endDate }} </b-col>
-                        <b-col cols=8> {{ experience.company }} <br> {{ experience.description }} </b-col>           
-                    </b-row>
-                </div>
-                <hr>
-                <div>
-                    <h5>Umiejętności: </h5>
-                    <b-row>
-                        <b-col cols=6>Umiejętność</b-col>
-                        <b-col cols=6>Poziom</b-col>
-                    </b-row>
-                    <b-row v-for="skill in skillsCV" :key="skill">
-                        <b-col cols=6> {{ skill.name }} </b-col>
-                        <b-col cols=6> {{ skill.level }} </b-col>
-                    </b-row>
-                </div>   
+                        <b-col cols=8>
+                            <h5>Doświadczenie: </h5>
+                            <b-row>
+                                <b-col cols=2>Od</b-col>
+                                <b-col cols=2>Do</b-col>
+                                <b-col cols=8>Firma i opis</b-col>
+                            </b-row>
+                            <b-row v-for="experience in experienceCV" :key="experience">
+                                <b-col cols=2> {{ experience.startDate }} </b-col>
+                                <b-col cols=2> {{ experience.endDate }} </b-col>
+                                <b-col cols=8> {{ experience.company }} <br> {{ experience.description }} </b-col>           
+                            </b-row>
+                        </b-col>
+
+                        <b-col cols=4>
+                            <h5>Umiejętności: </h5>
+                            <b-row>
+                                <b-col cols=6>Umiejętność</b-col>
+                                <b-col cols=6>Poziom</b-col>
+                            </b-row>
+                            <b-row v-for="skill in skillsCV" :key="skill">
+                                <b-col cols=6> {{ skill.name }} </b-col>
+                                <b-col cols=6> {{ skill.level }} </b-col>
+                            </b-row>
+                        </b-col>
+                    </b-row>                   
+                </div>  
             </div>                 
         </div>
         <!-- Brak CV, mozliwosc jego utworzenia -->
