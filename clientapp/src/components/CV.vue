@@ -62,11 +62,11 @@
                 <div>
                     <b-row>
                         <b-col cols=8>
-                            <h5>Doświadczenie: </h5>
+                            <h4>Doświadczenie: </h4>
                             <b-row>
-                                <b-col cols=2>Od</b-col>
-                                <b-col cols=2>Do</b-col>
-                                <b-col cols=8>Firma i opis</b-col>
+                                <b-col cols=2><h5>Od</h5></b-col>
+                                <b-col cols=2><h5>Do</h5></b-col>
+                                <b-col cols=8><h5>Firma i opis</h5></b-col>
                             </b-row>
                             <b-row v-for="experience in experienceCV" :key="experience">
                                 <b-col cols=2> {{ experience.startDate }} </b-col>
@@ -75,15 +75,15 @@
                             </b-row>
                         </b-col>
 
-                        <b-col cols=4>
-                            <h5>Umiejętności: </h5>
+                        <b-col cols=4 class="border-left">
+                            <h4>Umiejętności: </h4>
                             <b-row>
-                                <b-col cols=6>Umiejętność</b-col>
-                                <b-col cols=6>Poziom</b-col>
+                                <b-col cols=6 class="text-center"><h5>Umiejętność</h5></b-col>
+                                <b-col cols=6 class="text-center"><h5>Poziom</h5></b-col>
                             </b-row>
                             <b-row v-for="skill in skillsCV" :key="skill">
-                                <b-col cols=6> {{ skill.name }} </b-col>
-                                <b-col cols=6> {{ skill.level }} </b-col>
+                                <b-col cols=6 class="text-center"> {{ skill.name }} </b-col>
+                                <b-col cols=6 class="text-center"> {{ skill.level }} </b-col>
                             </b-row>
                         </b-col>
                     </b-row>                   
