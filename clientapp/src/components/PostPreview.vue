@@ -96,6 +96,28 @@ export default {
                     return "ReactJS"
                 case "VueJS":
                     return "VueJS"
+                case "Django":
+                    return "Django"
+                case "Unity":
+                    return "Unity"
+                case "Bash":
+                    return "Bash"
+                case "Wolfram":
+                    return "Wolfram"
+                case "Hardware":
+                    return "Hardware"
+                case "BazyDanych":
+                    return "Database"
+                case "VisualBasic":
+                    return "VisualBasic"
+                case "Android":
+                    return "Android"
+                case "Software":
+                    return "Software"
+                case "Ios":
+                    return "Ios"
+                case "Ogolne":
+                    return "OtherQuestion"
                 default: 
                     return ""
             }    
