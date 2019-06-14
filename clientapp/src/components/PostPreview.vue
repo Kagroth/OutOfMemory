@@ -10,7 +10,8 @@
                         :key="tag"
                         v-for="tag in postPreview.tags"
                         :src="getImage(tag.tagName)"
-                        @click="getPostsByTag(tag.tagName)">
+                        @click="getPostsByTag(tag.tagName)"
+                        :title="tag.tagName">
                     </b-img>
                 </b-col>
                 <b-col cols=4>
