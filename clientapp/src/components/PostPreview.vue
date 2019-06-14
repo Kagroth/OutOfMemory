@@ -86,6 +86,16 @@ export default {
                     return "Swift"
                 case "C":
                     return "C"
+                case "Angular":
+                    return "Angular"
+                case "Cloud":
+                    return "Cloud"
+                case "NodeJS":
+                    return "NodeJS"
+                case "ReactJS":
+                    return "ReactJS"
+                case "VueJS":
+                    return "VueJS"
                 default: 
                     return ""
             }    
