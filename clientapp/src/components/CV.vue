@@ -95,46 +95,64 @@
             <!-- CV kreator -->
             <div v-if="isCreating">
                 <b-row>
-                    <b-col cols=12>
+                    <b-col cols=10 offset=1>
                         <b-form>
-                            <b-form-group label="Twoje doświadczenie">                        
-                                <div v-for="(exp, index) in experiences" :key="(exp, index)" class="mt-2">
-                                    <b-row>
-                                        <b-col cols=11>
-                                            <span>Wpis nr: {{ index + 1}}</span>
-                                        </b-col>
-                                        <b-col cols=1>
-                                            <b-button variant="danger" size="sm" @click="removeExperience(index)">Usuń</b-button>
-                                        </b-col>
-                                    </b-row>                            
-                                    <b-form-input v-model="exp.startDate" :type="date" placeholder="MM-RRRR"></b-form-input>
-                                    <b-form-input v-model="exp.endDate" :type="date" placeholder="MM-RRRR"></b-form-input>                                
-                                    <b-form-input v-model="exp.company" :type="text" placeholder="Nazwa firmy"></b-form-input>
-                                    <b-form-textarea v-model="exp.description" placeholder="Opisz czym się zajmowałeś"></b-form-textarea>                            
-                                </div>
+                            <b-form-group label="Twoje doświadczenie">
+                                <b-form-row v-for="(exp, index) in experiences" :key="(exp, index)" class="border mt-3 shadow-sm">
+                                    <b-col cols=11 class="mt-2">
+                                        <span>Wpis nr: {{ index + 1}}</span>
+                                    </b-col>
+                                    <b-col cols=1 class="mt-2">
+                                        <b-button variant="danger" size="sm" @click="removeExperience(index)">Usuń</b-button>
+                                    </b-col>
+                                    <b-col cols=12>
+                                        <b-row class="mt-1">
+                                            <b-col cols=3>
+                                                <b-form-input v-model="exp.startDate" :type="date" placeholder="MM-RRRR"></b-form-input>
+                                            </b-col>    
+                                            <b-col cols=3>
+                                                <b-form-input v-model="exp.endDate" :type="date" placeholder="MM-RRRR"></b-form-input>
+                                            </b-col>
+                                            <b-col cols=6>
+                                                <b-form-input v-model="exp.company" :type="date" placeholder="Nazwa firmy"></b-form-input>
+                                            </b-col>                                          
+                                        </b-row>
+                                        <b-row class="mt-2">
+                                            <b-col cols=12>
+                                                <b-form-textarea v-model="exp.description" placeholder="Opisz czym się zajmowałeś" class="mb-3"></b-form-textarea>
+                                            </b-col>
+                                        </b-row>
+                                    </b-col>
+                                </b-form-row>
                                 <b-button variant="primary" size="sm" @click="addNewExperience" class="mt-2">Dodaj nowy wpis</b-button>
                             </b-form-group>
                             <hr>
                             <b-form-group label="Twoje umiejętności:">
-                                <div v-for="(skill, index) in skills" :key="(skill, index)" class="mt-2">
-                                    <b-row>
-                                        <b-col cols=11>
-                                            <span>Wpis nr: {{ index + 1}}</span>
-                                        </b-col>
-                                        <b-col cols=1>
-                                            <b-button variant="danger" size="sm" @click="removeSkill(index)">Usuń</b-button>
-                                        </b-col>                           
-                                    </b-row>
-                                    <b-form-input v-model="skill.name" :type="text"></b-form-input>                        
-                                    <b-form-select v-model="skill.level" :options="levels"></b-form-select>
-                                </div>
+                                <b-form-row v-for="(skill, index) in skills" :key="(skill, index)" class="border mt-3 shadow-sm">
+                                    <b-col cols=11 class="mt-2">
+                                        <span>Wpis nr: {{ index + 1}}</span>
+                                    </b-col>
+                                    <b-col cols=1 class="mt-2">
+                                        <b-button variant="danger" size="sm" @click="removeSkill(index)">Usuń</b-button>
+                                    </b-col>
+                                    <b-col cols=12 class="mt-2 mb-3">
+                                        <b-row>
+                                            <b-col cols=6>
+                                                <b-form-input v-model="skill.name" :type="text"></b-form-input>
+                                            </b-col>
+                                            <b-col cols=6>
+                                                <b-form-select v-model="skill.level" :options="levels"></b-form-select>
+                                            </b-col>
+                                        </b-row>
+                                    </b-col>
+                                </b-form-row>
                                 <b-button variant="primary" size="sm" @click="addNewSkill" class="mt-2">Dodaj nową umiejętność</b-button>
                             </b-form-group>
                         </b-form>
                     </b-col>
                 </b-row>  
                 <b-row>
-                    <b-col>
+                    <b-col cols=10 offset=1>
                         <hr>
                         <b-button variant="success" size="sm" @click="saveCV">Zapisz</b-button>
                     </b-col>
