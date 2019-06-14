@@ -14,7 +14,8 @@ export default new Vuex.Store({
       post_previews: [],
       posts: [],
       postDetails: "",
-      tags: []
+      tags: [],
+      jobOffers: []
     },
   
     mutations: {
@@ -61,6 +62,10 @@ export default new Vuex.Store({
         state.tags = payload
       },
 
+      setJobOffers(state, payload) {
+        state.jobOffers = payload
+      },
+
       logout (state) {
         localStorage.setItem('token', null);
         state.token = null;
@@ -72,9 +77,14 @@ export default new Vuex.Store({
       createUser ({commit}, payload) {
         console.log("Wysylam request rejestracji")
   
-        axios.post(api.getRegisterEndpoint(), payload)
-             .then(response => console.log("Sukces" + response))
+        return new Promise((resolve, reject) => {
+          axios.post(api.getRegisterEndpoint(), payload)
+             .then(response => {
+               console.log("Sukces" + response)
+               resolve(response.data.message)
+              })
              .catch(error => console.log(error.response))
+        }) 
       },
   
       loginUser ({commit}, payload) {
@@ -266,6 +276,21 @@ export default new Vuex.Store({
                   resolve()
                })
                .catch(() => {
+                 reject()
+               })
+        })
+      },
+
+      getAllJobOffers({commit}) {
+        return new Promise((resolve, reject) => {
+          axios.get(api.getJobsEndpoint())
+               .then((response) => {
+                 console.log(response.data)
+                 commit('setJobOffers', response.data)
+                 resolve()
+               })
+               .catch(() => {
+                 alert("Blad pobierania tagow")
                  reject()
                })
         })

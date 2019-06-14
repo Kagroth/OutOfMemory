@@ -31,7 +31,9 @@
         </b-row>
         <b-row class="mt-2">
           <b-col cols=12>
-            <job-preview>
+            <job-preview :key="jobOffer"
+                         v-for="jobOffer in jobOffers"
+                         v-bind:jobOffer="jobOffer">
             </job-preview>
           </b-col>
         </b-row>
@@ -58,6 +60,10 @@
 
       post_previews() {
         return this.$store.state.post_previews;
+      },
+
+      jobOffers() {
+        return this.$store.state.jobOffers;
       }
     },
 
@@ -65,6 +71,8 @@
       this.$store.dispatch('getAllPostPreviews').then(() => {
         console.log("Created")
       });
+
+      this.$store.dispatch('getAllJobOffers')
     }
   };
 </script>

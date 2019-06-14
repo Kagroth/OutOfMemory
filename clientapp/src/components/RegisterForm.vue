@@ -98,7 +98,9 @@ export default {
         return;
       }
 
-      this.$store.dispatch('createUser', this.form);
+      this.$store.dispatch('createUser', this.form).then(message => {
+        alert(message)
+      });
     }
   }
 }

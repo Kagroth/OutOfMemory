@@ -15,7 +15,8 @@ export default {
         postDetails: "post/details/",
         addComment: 'post/comment/new/',
         rateComment: 'post/comment/',
-        tags: 'tag/'        
+        tags: 'tag/',
+        jobs: 'job/',   
     },
 
     getLoginEndpoint() {
@@ -64,5 +65,9 @@ export default {
 
     getTagsEndpoint() {
         return this.baseURL + this.endpoints.tags;
+    },
+
+    getJobsEndpoint() {
+        return this.baseURL + this.endpoints.jobs;
     }
 }
