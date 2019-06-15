@@ -355,11 +355,11 @@ export default new Vuex.Store({
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
-        axios.put(api.getUploadAvatarEndpoint()+payload.avatar.filename,
+        axios.put(api.getUploadAvatarEndpoint()+this.state.username+"Avatar.jpg",
           payload.avatar,
           {
             headers: {
-              'Autorization': authHeader
+              'Authorization': authHeader
             }
           }
         ).then(res => {

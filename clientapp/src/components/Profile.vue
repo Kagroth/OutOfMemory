@@ -134,7 +134,7 @@
         const fd = new FormData();
         fd.append('image',this.selectedImage, this.selectedImage.name)
         this.$store.dispatch('onAvatarUpload', {
-          avatar: fd,
+          avatar: this.selectedImage,
         })
       }
     },
