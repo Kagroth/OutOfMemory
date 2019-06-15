@@ -15,7 +15,8 @@ export default new Vuex.Store({
       posts: [],
       postDetails: "",
       tags: [],
-      jobOffers: []
+      jobOffers: [],
+      jobOfferDetails: ""
     },
   
     mutations: {
@@ -53,6 +54,10 @@ export default new Vuex.Store({
         state.postDetails = payload;
       },
   
+      setJobOfferDetails(state ,payload) {
+        state.jobOfferDetails = payload
+      },
+
       updateCommentOfPostDetails (state, payload) {
         const item = state.postDetails.comments.find(comment => comment.pk === payload.pk)
         Object.assign(item, payload)  // podmienienie komentarza na ten z nową oceną
@@ -77,9 +82,14 @@ export default new Vuex.Store({
       createUser ({commit}, payload) {
         console.log("Wysylam request rejestracji")
   
-        axios.post(api.getRegisterEndpoint(), payload)
-             .then(response => console.log("Sukces" + response))
+        return new Promise((resolve, reject) => {
+          axios.post(api.getRegisterEndpoint(), payload)
+             .then(response => {
+               console.log("Sukces" + response)
+               resolve(response.data.message)
+              })
              .catch(error => console.log(error.response))
+        }) 
       },
   
       loginUser ({commit}, payload) {
@@ -214,11 +224,49 @@ export default new Vuex.Store({
         })
       },
 
+      createJobOffer ({commit}, payload) {
+        console.log("Wysylam request z utworzeniem oferty pracy")
+
+        return new Promise((resolve, reject) => {
+          let authHeader = "Bearer " + this.state.token;
+
+          axios.post(api.getCreateJobOfferEndpoint(), {
+              params: payload },
+            {
+              headers: {
+                'Authorization': authHeader
+              }
+            })
+            .then(response => {
+              console.log(response.data)
+              resolve()
+            })
+            .catch(() => {
+              alert("Nie udalo sie utworzyc oferty pracy")
+              reject()
+            })
+        })
+      },
+
       getPostDetails ({commit}, payload) {
         return new Promise((resolve, reject) => {
           axios.get(api.getPostDetailsEndpoint() + payload)
              .then((response) => {
                 commit('setPostDetails', response.data)                
+                resolve(response.data)
+             })
+             .catch(() => {
+              alert("Blad pobierania posta")
+              reject()
+             })
+        })
+      },
+
+      getJobOfferDetails ({commit}, payload) {
+        return new Promise((resolve, reject) => {
+          axios.get(api.getJobOfferDetailsEndpoint() + payload)
+             .then((response) => {
+                commit('setJobOfferDetails', response.data)                
                 resolve(response.data)
              })
              .catch(() => {

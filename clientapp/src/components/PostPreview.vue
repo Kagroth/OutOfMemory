@@ -7,8 +7,8 @@
             <b-row>
                 <b-col cols=8>
                     <b-img
-                        :key="tag"
-                        v-for="tag in postPreview.tags"
+                        :key="index"
+                        v-for="(tag, index) in postPreview.tags"
                         :src="getImage(tag.tagName)"
                         @click="getPostsByTag(tag.tagName)"
                         :title="tag.tagName">
