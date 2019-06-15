@@ -9,6 +9,20 @@
           {{ profile.user.username }}
         </h3>
       </b-col>
+      <b-col>
+        <b-form>
+          <b-form-group id="input-group-1" label="Wgraj własny avatar:" label-for="input-1">
+            <b-form-file
+              v-model="file"
+              :state="Boolean(file)"
+              placeholder="Choose a file..."
+              drop-placeholder="Drop file here..."
+              @change="onAvatarChange"
+            ></b-form-file>
+          </b-form-group>
+          <b-button @click="onAvatarUpload" size="sm" >Zatwierdź</b-button>
+        </b-form>
+      </b-col>
     </b-row>
     <b-row>
       <b-col cols=5 class="">
@@ -65,6 +79,7 @@
   import PostPreview from './PostPreview'
   import Comment from './Comment'
   import Avatar from 'vue-avatar-component'
+  import axios from 'axios'
 
   export default {
     components: {
@@ -84,7 +99,8 @@
       return {
         description: this.$store.state.currentUser.description,
         isDescriptionEditing: false,
-        editButtonText: "Edytuj"
+        editButtonText: "Edytuj",
+        selectedImage: null,
       }
     },
 
@@ -109,6 +125,17 @@
 
           this.editButtonText = "Edytuj"
         }
+      },
+      onAvatarChange(event){
+        console.log(event)
+        this.selectedImage = event.target.files[0]
+      },
+      onAvatarUpload(){
+        const fd = new FormData();
+        fd.append('image',this.selectedImage, this.selectedImage.name)
+        axios.put(api.getUploadAvatarEndpoint()+this.selectedImage.name, fd).then( res => {
+          console.log(res)
+        })
       }
     },
 

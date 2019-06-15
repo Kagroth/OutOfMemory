@@ -70,7 +70,7 @@ export default new Vuex.Store({
         localStorage.setItem('token', null);
         state.token = null;
         state.isLogged = false;
-      }
+      },
     },
   
     actions: {

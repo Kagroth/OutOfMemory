@@ -59,7 +59,6 @@ class TagView(ListAPIView):
     serializer_class = TagSerializer
 
 
-
 # pobranie profilu zalogowanego uzytkownika, tworzenie uzytkownika
 class ProfileRecordView(APIView):
     permission_classes = (AllowAny,)
@@ -184,6 +183,7 @@ class PostDetailsView(APIView):
         serializedPost = PostSerializer(postToShow)
 
         return Response(serializedPost.data)
+
 
 # filtrowanie/wyszukiwanie postow
 class PostViewFilter(generics.ListAPIView):
@@ -335,7 +335,7 @@ class JobOffersPreviewView(ListAPIView):
 
 # tworzenie oferty pracy
 class JobOfferCreateView(APIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     serializer_class = JobOffersSerializer
 
     # tworzenie ofery pracy
@@ -346,7 +346,8 @@ class JobOfferCreateView(APIView):
         try:
             job = JobOffer.objects.create(user=request.user, title=newJobData['title'],
                                           salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
-                                          description=newJobData['description'], requirements=newJobData['requirements'])
+                                          description=newJobData['description'],
+                                          requirements=newJobData['requirements'])
             job.save()
         except:
             return Response({"message": "Nie udalo sie utworzyc oferty pracy"})
@@ -363,10 +364,14 @@ class JobOfferEditView(APIView):
         newJobData = requestedData['params']
 
         try:
-            job = JobOffer.objects.update(jobOfferId=pk, user=request.user, title=newJobData['title'],
-                                          salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
-                                          description=['description'], requirements=['requiments'])
-            job.save()
+            selectedjob = JobOffer.objects.get(jobOfferID=pk)
+            if selectedjob.user == request.user:
+                job = JobOffer.objects.update(jobOfferId=pk, user=request.user, title=newJobData['title'],
+                                              salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
+                                              description=['description'], requirements=['requiments'])
+                job.save()
+            else:
+                return Response({"message": "Próbujesz edytować cudzą ofertę pracy"})
         except:
             return Response({"message": "Nie udalo sie edytowac oferty pracy"})
         return Response({"message": "Pomyślnie edytowano ofertę pracy"})

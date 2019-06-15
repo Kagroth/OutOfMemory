@@ -17,7 +17,8 @@ export default {
     rateComment: 'post/comment/',
     tags: 'tag/',
     jobs: 'job/',  
-    createJobOffer: "job/new/"
+    createJobOffer: "job/new/",
+    uploadAvatar: "upload/avatar/",
   },
 
   getLoginEndpoint() {
@@ -74,5 +75,8 @@ export default {
 
   getCreateJobOfferEndpoint() {
     return this.baseURL + this.endpoints.createJobOffer;
+  },
+  getUploadAvatarEndpoint() {
+    return this.baseURL + this.endpoints.uploadAvatar;
   }
 }
