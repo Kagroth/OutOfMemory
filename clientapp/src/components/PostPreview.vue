@@ -7,6 +7,8 @@
             <b-row>
                 <b-col cols=8>
                     <b-img
+                        width="48"
+                        height="48"
                         :key="index"
                         v-for="(tag, index) in postPreview.tags"
                         :src="getImage(tag.tagName)"
@@ -70,6 +72,8 @@ export default {
                     return "MATLAB"
                 case "Perl":
                     return "Perl"
+                case "PHP":
+                    return "PHP"
                 case "Python":
                     return "Python"
                 case "R":
