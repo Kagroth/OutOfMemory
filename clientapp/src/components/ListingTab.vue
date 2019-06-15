@@ -13,8 +13,8 @@
         </b-row>
         <b-row class="mt-3">
           <b-col cols=12>
-            <post-preview :key="post_preview"
-                          v-for="post_preview in post_previews"
+            <post-preview :key="index"
+                          v-for="(post_preview, index) in post_previews"
                           v-bind:postPreview="post_preview">
             </post-preview>
           </b-col>
@@ -23,7 +23,6 @@
       <b-tab>
         <template slot="title">
           <strong> Oferty pracy</strong>
-          <b-badge variant="primary" size="sm" to="" v-if="isLogged">new</b-badge>
         </template>
         <b-row class="mt-2" align-h="start">
           <b-col cols=1>
@@ -31,8 +30,8 @@
         </b-row>
         <b-row class="mt-2">
           <b-col cols=12>
-            <job-preview :key="jobOffer"
-                         v-for="jobOffer in jobOffers"
+            <job-preview :key="index"
+                         v-for="(jobOffer, index) in jobOffers"
                          v-bind:jobOffer="jobOffer">
             </job-preview>
           </b-col>

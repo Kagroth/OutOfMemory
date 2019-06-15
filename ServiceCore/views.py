@@ -1,7 +1,8 @@
 from django.shortcuts import render
 import json
 
-from rest_framework.parsers import JSONParser
+from rest_framework.exceptions import ParseError
+from rest_framework.parsers import JSONParser, FileUploadParser
 
 from ServiceCore.serializers import *
 from ServiceCore.models import *
@@ -12,7 +13,7 @@ from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework import generics
 from rest_framework import mixins
-
+from PIL import Image
 
 class CVView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -56,9 +57,11 @@ class TagView(ListAPIView):
     queryset = Tag.objects.all().order_by("tagName")
     serializer_class = TagSerializer
 
-# pobranie wszystkich profili uzytkownikow, tworzenie uzytkownika
+
+
+# pobranie profilu zalogowanego uzytkownika, tworzenie uzytkownika
 class ProfileRecordView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def get(self, request):
         """
@@ -98,11 +101,11 @@ class ProfileRecordView(APIView):
             profile.save()
             print("Uzytkownik zarejestrowany!")
 
-            return Response({"userData": requestedData, "message": "Użytkownik zostal zarejestrowany"})
+            return Response({"message": "Użytkownik zostal zarejestrowany"})
         except Exception as e:
             print(str(e))
 
-            return Response({"userData": requestedData, "message": "Nie udalo sie zarejestrowac uzytkownika"})
+            return Response({"message": "Nie udalo sie zarejestrowac uzytkownika"})
 
         """
         Create a profile record
@@ -130,6 +133,23 @@ class ProfileRecordView(APIView):
         profile.save()
 
         return Response({"message": "Edytowano opis profilu"})
+
+
+class ProfileAvatarUpload(APIView):
+    parser_classes = (FileUploadParser,)
+
+    def put(self, request, filename, format=None):
+        profile = Profile.objects.get(user=request.user)
+        file_obj = request.FILES['file']
+        # https://goodcode.io/articles/django-rest-framework-file-upload/
+        try:
+            img = Image.open(file_obj)
+            img.verify()
+        except:
+            raise ParseError("Unsupported image type")
+        profile.avatar.save(filename, file_obj, save=True)
+        # do some stuff with uploaded file
+        return Response(status=204)
 
 
 # wszystkie posty w formie skroconej (bez komentarzy i tresci)
@@ -163,7 +183,6 @@ class PostDetailsView(APIView):
         serializedPost = PostSerializer(postToShow)
 
         return Response(serializedPost.data)
-
 
 # filtrowanie/wyszukiwanie postow
 class PostViewFilter(generics.ListAPIView):
@@ -211,7 +230,7 @@ class PostCreate(APIView):
         tag = None
         tagsToAdd = []
         print(newPostData)
-        
+
         for tagToAdd in newPostData['tags']:
             try:
                 tag = Tag.objects.get(tagName=tagToAdd['tagName'])
@@ -222,7 +241,6 @@ class PostCreate(APIView):
 
             tagsToAdd.append(tag)
 
-        
         try:
             post = Post.objects.create(author=request.user, viewsCount=0, title=newPostData['title'],
                                        postField=newPostData['postField'])
@@ -237,7 +255,7 @@ class PostCreate(APIView):
                 return Response({"message": "Nie udalo sie dodac wszystkich tagow"})
 
         post.save()
-        
+
         return Response({"message": "Post zostal utworzony"})
 
 
@@ -307,5 +325,65 @@ class RateCommentView(APIView):
 # przeglądanie ofert pracy
 class JobOffersPreviewView(ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
-    queryset = JobOffer.objects.all()
-    serializer_class = JobOffersSerialiser
+    # queryset = JobOffer.objects.all()
+    serializer_class = JobOffersSerializer
+
+    def get_queryset(self):
+        return JobOffer.objects.all()
+
+
+# tworzenie oferty pracy
+class JobOfferCreateView(APIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = JobOffersSerializer
+
+    # tworzenie ofery pracy
+    def post(self, request):
+        requestedData = JSONParser().parse(request)
+        newJobData = requestedData['params']
+
+        try:
+            job = JobOffer.objects.create(user=request.user, title=newJobData['title'],
+                                          salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
+                                          description=newJobData['description'], requirements=newJobData['requirements'])
+            job.save()
+        except:
+            return Response({"message": "Nie udalo sie utworzyc oferty pracy"})
+        return Response({"message": "Pomyślnie utworzono ofertę pracy"})
+
+
+#   Edycja oferty pracy
+class JobOfferEditView(APIView):
+    permission_classes = (IsAuthenticated)
+    serializer_class = JobOffersSerializer
+
+    def put(self, request, pk):
+        requestedData = JSONParser().parse(request)
+        newJobData = requestedData['params']
+
+        try:
+            job = JobOffer.objects.update(jobOfferId=pk, user=request.user, title=newJobData['title'],
+                                          salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
+                                          description=['description'], requirements=['requiments'])
+            job.save()
+        except:
+            return Response({"message": "Nie udalo sie edytowac oferty pracy"})
+        return Response({"message": "Pomyślnie edytowano ofertę pracy"})
+    
+# pobranie konkretnej oferty pracy
+class JobOfferDetailsView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, pk):
+        offerToShow = None
+
+        try:
+            offerToShow = JobOffer.objects.get(pk=pk)
+            offerToShow.viewsCount += 1
+            offerToShow.save()
+        except:
+            return Response({"message": "Nie ma takiej oferty pracy"})
+
+        serializedOffer = JobOffersSerializer(offerToShow)
+
+        return Response(serializedOffer.data)
