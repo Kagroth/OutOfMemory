@@ -27,7 +27,7 @@
       </b-row>
       <b-row class="pl-2">
         <b-col cols=12>
-          <small>Autor: {{jobOffer.author}}</small>
+          <small>Autor: {{jobOffer.user}}</small>
         </b-col>
       </b-row>
       <b-row class="pl-2">
