@@ -59,8 +59,19 @@
           <b-col>Miejscowosc</b-col>
         </b-row>
         <b-row class="mt-2">
-          <b-col cols="12" class="text-center">
-            <b-button squared variant="warning" class="w-100">Aplikuj</b-button>
+          <b-col v-if="isLogged" cols="12" class="text-center">
+            <div v-if="hasCV">
+                <b-button squared variant="warning" class="w-100">Aplikuj</b-button>
+            </div>
+            <div v-else class="shadow-sm border p-2">
+                Aby aplikować, musisz posiadać CV<br>
+                Możesz je utworzyć w panelu zarządzania profilem
+            </div>            
+          </b-col>
+          <b-col v-else cols=12>
+              <div class="text-center shadow-sm border p-1">
+                  Aby aplikować, musisz się zalogować
+              </div>              
           </b-col>
         </b-row>
       </b-col>
@@ -71,10 +82,17 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+        hasCV: ""
+    };
   },
 
-  created() {},
+  created() {
+       this.hasCV = !(this.$store.state.currentUser.user.cv === undefined || // jesli pole cv jest undefined lub null, wtedy hasCV = false
+                       this.$store.state.currentUser.user.cv === null) 
+     
+        console.log(this.hasCV)
+  },
 
   computed: {
     jobOffer() {
