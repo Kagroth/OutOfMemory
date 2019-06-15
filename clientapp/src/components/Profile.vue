@@ -20,7 +20,7 @@
               @change="onAvatarChange"
             ></b-form-file>
           </b-form-group>
-          <b-button @click="onAvatarUpload" size="sm" >Zatwierdź</b-button>
+          <b-button @click="onUpload" size="sm" >Zatwierdź</b-button>
         </b-form>
       </b-col>
     </b-row>
@@ -130,11 +130,11 @@
         console.log(event)
         this.selectedImage = event.target.files[0]
       },
-      onAvatarUpload(){
+      onUpload(){
         const fd = new FormData();
         fd.append('image',this.selectedImage, this.selectedImage.name)
-        axios.put(api.getUploadAvatarEndpoint()+this.selectedImage.name, fd).then( res => {
-          console.log(res)
+        this.$store.dispatch('onAvatarUpload', {
+          avatar: fd,
         })
       }
     },

@@ -18,7 +18,7 @@ export default {
     tags: 'tag/',
     jobs: 'job/',  
     createJobOffer: "job/new/",
-    uploadAvatar: "upload/avatar/",
+    uploadAvatar: "upload/",
   },
 
   getLoginEndpoint() {
