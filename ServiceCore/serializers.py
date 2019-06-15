@@ -108,4 +108,4 @@ class JobOffersSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = JobOffer
-        fields = ('user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements')
+        fields = ('pk', 'user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements')
