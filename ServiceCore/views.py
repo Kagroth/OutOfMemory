@@ -13,7 +13,7 @@ from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework import generics
 from rest_framework import mixins
-#from PIL import Image
+from PIL import Image
 
 
 class CVView(APIView):
