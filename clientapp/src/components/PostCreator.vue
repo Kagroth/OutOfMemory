@@ -19,7 +19,7 @@
             <b-col cols=8>
               <b-form-group label="Tagi:" label-for="postTags">
                 <b-form-select id="postTags" v-model="selectedTag">
-                  <option v-for="tag in tags" :key="tag" :value="tag"> {{ tag.tagName }}</option>
+                  <option v-for="(tag, index) in tags" :key="index" :value="tag"> {{ tag.tagName }}</option>
                 </b-form-select>
               </b-form-group>
             </b-col>
