@@ -69,13 +69,19 @@
         <b-row class="mt-1">
           <b-col>Miejscowosc</b-col>
         </b-row>
+        <b-row class="mt-1">
+          <b-col>{{ jobOffer.user }}</b-col>
+        </b-row>
+        <b-row class="mt-1">
+          <b-col>Data</b-col>
+        </b-row>
         <b-row class="mt-2">
           <b-col v-if="isLogged" cols="12" class="text-center">
             <div v-if="hasCV">
                 <b-button squared variant="warning" class="w-100">Aplikuj</b-button>
             </div>
             <div v-else class="shadow-sm border p-2">
-                Aby aplikować, musisz posiadać CV<br>
+                Aby aplikować, musisz posiadać CV. <br>
                 Możesz je utworzyć w panelu zarządzania profilem
             </div>            
           </b-col>
