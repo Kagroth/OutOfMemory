@@ -7,10 +7,13 @@
             <b-row>
                 <b-col cols=8>
                     <b-img
+                        width="48"
+                        height="48"
                         :key="index"
                         v-for="(tag, index) in postPreview.tags"
                         :src="getImage(tag.tagName)"
-                        @click="getPostsByTag(tag.tagName)">
+                        @click="getPostsByTag(tag.tagName)"
+                        :title="tag.tagName">
                     </b-img>
                 </b-col>
                 <b-col cols=4>
@@ -52,15 +55,73 @@ export default {
         mapTagName(tagName) {
             switch(tagName) {
                 case "Java":
-                    return "icons8-java-48"
+                    return "Java"
                 case "CSS":
-                    return "icons8-css3-48"
-                case "Javascript":
-                    return "icons8-javascript-48"
+                    return "CSS3"
+                case "JavaScript":
+                    return "JavaScript"
                 case "HTML":
-                    return "icons8-html-5-48"
+                    return "HTML5"
                 case "Spring":
-                    return "icons8-spring-logo-48"
+                    return "Spring"
+                case "Cpp":
+                    return "Cpp"
+                case "CSharp":
+                    return "CSharp"
+                case "MATLAB":
+                    return "MATLAB"
+                case "Perl":
+                    return "Perl"
+                case "PHP":
+                    return "PHP"
+                case "Python":
+                    return "Python"
+                case "R":
+                    return "R"
+                case "Ruby":
+                    return "Ruby"
+                case "SQL":
+                    return "SQL"
+                case "JSON":
+                    return "JSON"
+                case "XML":
+                    return "XML"
+                case "Swift":
+                    return "Swift"
+                case "C":
+                    return "C"
+                case "Angular":
+                    return "Angular"
+                case "Cloud":
+                    return "Cloud"
+                case "NodeJS":
+                    return "NodeJS"
+                case "ReactJS":
+                    return "ReactJS"
+                case "VueJS":
+                    return "VueJS"
+                case "Django":
+                    return "Django"
+                case "Unity":
+                    return "Unity"
+                case "Bash":
+                    return "Bash"
+                case "Wolfram":
+                    return "Wolfram"
+                case "Hardware":
+                    return "Hardware"
+                case "BazyDanych":
+                    return "Database"
+                case "VisualBasic":
+                    return "VisualBasic"
+                case "Android":
+                    return "Android"
+                case "Software":
+                    return "Software"
+                case "Ios":
+                    return "Ios"
+                case "Ogolne":
+                    return "OtherQuestion"
                 default: 
                     return ""
             }    
