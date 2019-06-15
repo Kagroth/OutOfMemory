@@ -103,10 +103,13 @@ export default {
                        this.$store.state.currentUser.user.cv === null) 
      
         console.log(this.hasCV)
+        this.$store.dispatch('getJobOfferDetails', this.$route.params.pk)
   },
 
   computed: {
     jobOffer() {
+      return this.$store.state.jobOfferDetails
+
       return this.$store.state.jobOffers.find(job => {
         return job.pk === this.$route.params.pk;
       });

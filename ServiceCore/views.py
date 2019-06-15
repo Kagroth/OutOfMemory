@@ -15,7 +15,6 @@ from rest_framework import generics
 from rest_framework import mixins
 from PIL import Image
 
-
 class CVView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -370,3 +369,21 @@ class JobOfferEditView(APIView):
         except:
             return Response({"message": "Nie udalo sie edytowac oferty pracy"})
         return Response({"message": "Pomyślnie edytowano ofertę pracy"})
+    
+# pobranie konkretnej oferty pracy
+class JobOfferDetailsView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, pk):
+        offerToShow = None
+
+        try:
+            offerToShow = JobOffer.objects.get(pk=pk)
+            offerToShow.viewsCount += 1
+            offerToShow.save()
+        except:
+            return Response({"message": "Nie ma takiej oferty pracy"})
+
+        serializedOffer = JobOffersSerializer(offerToShow)
+
+        return Response(serializedOffer.data)

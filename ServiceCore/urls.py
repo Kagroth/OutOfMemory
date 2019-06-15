@@ -26,6 +26,7 @@ urlpatterns = [
     path('job/', views.JobOffersPreviewView.as_view()),
     path('job/new/', views.JobOfferCreateView.as_view()),
     path('job/<int:pk>', views.JobOfferEditView.as_view()),
+    path('job/details/<int:pk>', views.JobOfferDetailsView.as_view()),
     path('tag/', views.TagView.as_view()),
     url(r'^upload/(?P<filename>[^/]+)$', ProfileAvatarUpload.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

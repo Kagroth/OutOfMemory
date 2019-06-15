@@ -17,7 +17,8 @@ export default {
     rateComment: 'post/comment/',
     tags: 'tag/',
     jobs: 'job/',  
-    createJobOffer: "job/new/"
+    createJobOffer: "job/new/",
+    jobOfferDetails: 'job/details/'
   },
 
   getLoginEndpoint() {
@@ -74,5 +75,9 @@ export default {
 
   getCreateJobOfferEndpoint() {
     return this.baseURL + this.endpoints.createJobOffer;
+  },
+
+  getJobOfferDetailsEndpoint() {
+    return this.baseURL + this.endpoints.jobOfferDetails
   }
 }
