@@ -107,7 +107,12 @@ class JobOffersSerializer(serializers.ModelSerializer):
     A Job offer serializer to return all fields
     """
     user = serializers.StringRelatedField()
-    
+    numberOfApplications = serializers.SerializerMethodField('getNumberOfApplications')
+
     class Meta:
         model = JobOffer
-        fields = ('pk', 'user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements')
+        fields = ('pk', 'viewsCount', 'user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements', 'numberOfApplications')
+
+    def getNumberOfApplications(self, offer):
+        return offer.applications.all().count()
+

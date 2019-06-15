@@ -45,6 +45,17 @@
         <b-row>
           <b-col cols="10" offset="1">{{ jobOffer.requirements }}</b-col>
         </b-row>
+        <b-row>
+          <b-col cols=11 offset=1>
+            <hr>
+          </b-col>
+            <b-col cols=10 offset=1>
+                Liczba wyswietlen: {{ jobOffer.viewsCount }}
+            </b-col>
+            <b-col cols=10 offset=1>
+                Liczba aplikacji: {{ jobOffer.numberOfApplications }}
+            </b-col>
+        </b-row>
       </b-col>
 
       <!-- prawy panel z przyciskiem Aplikuj -->
