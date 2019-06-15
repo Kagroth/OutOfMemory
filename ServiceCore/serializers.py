@@ -106,6 +106,8 @@ class JobOffersSerializer(serializers.ModelSerializer):
     """
     A Job offer serializer to return all fields
     """
+    user = serializers.StringRelatedField()
+    
     class Meta:
         model = JobOffer
         fields = ('pk', 'user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements')
