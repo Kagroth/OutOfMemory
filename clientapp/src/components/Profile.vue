@@ -48,11 +48,11 @@
       <b-col class="mt-5">
         <b-tabs>
           <b-tab title="Posty">
-            <post-preview :key="post_prev" v-for="post_prev in profile.user.posts"
+            <post-preview :key="index" v-for="(post_prev, index) in profile.user.posts"
                           v-bind:postPreview="post_prev"></post-preview>
           </b-tab>
           <b-tab title="Komentarze">
-            <comment :key="comment" v-for="comment in profile.user.comments"
+            <comment :key="index" v-for="(comment, index) in profile.user.comments"
                      v-bind:comment="comment"></comment>
           </b-tab>
         </b-tabs>
