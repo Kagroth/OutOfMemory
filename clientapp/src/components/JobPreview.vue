@@ -2,7 +2,7 @@
   <div class="mb-3">
     <div class="shadow-sm">
       <b-row class="pl-2">
-        <b-col cols=8 class="lead"> {{ jobOffer.title }}</b-col>
+        <b-col cols=8 class="lead" @click="showDetails"> {{ jobOffer.title }}</b-col>
         <b-col cols=4 class="text-right"> Wynagrodzenie od <b>{{ jobOffer.salaryMin }} PLN</b> - <b>{{jobOffer.salaryMax}} PLN</b></b-col>
       </b-row>
       <b-row class="pl-2">
@@ -76,6 +76,15 @@
 
         return require("../assets/" + mappedTag + ".png")
       },
+
+      showDetails (event) {
+            console.log(this.jobOffer.pk)
+            console.log(this.jobOffer)
+            event.preventDefault();
+            let pk = this.jobOffer.pk;
+            console.log("Zmieniam na Job Offer details");
+            this.$router.push({name: 'JobOfferDetails', params: { pk }});
+        },
     }
   }
 </script>
