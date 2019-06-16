@@ -26,6 +26,7 @@
         </template>
         <b-row class="mt-2" align-h="start">
           <b-col cols=1>
+            <b-button variant="primary" size="sm" to="/job/new" v-if="isLogged">Dodaj</b-button>
           </b-col>
         </b-row>
         <b-row class="mt-2">

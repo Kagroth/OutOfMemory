@@ -50,6 +50,24 @@
         ></b-form-textarea>
       </b-form-group>
 
+      <b-form-group id="input-group-6" label="Nazwa firmy:" label-for="input-6">
+        <b-form-input
+          id="input-6"
+          v-model="jobOffer.companyName"
+          required
+          placeholder="Tu wpisz nazwę firmy"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-7" label="Adres firmy:" label-for="input-7">
+        <b-form-input
+          id="input-7"
+          v-model="jobOffer.companyLocation"
+          required
+          placeholder="Tu wpisz adres twojej firmy"
+        ></b-form-input>
+      </b-form-group>
+
       <b-button type="submit" variant="primary">Stwórz ofertę</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
@@ -69,6 +87,8 @@
           salaryMax: "",
           description: "",
           requirements: "",
+          companyName: "",
+          companyLocation: "",
         }
       }
     },
@@ -81,7 +101,9 @@
           || this.jobOffer.salaryMin === ""
           || this.jobOffer.salaryMax === ""
           || this.jobOffer.description === ""
-          || this.jobOffer.requirements === "") {
+          || this.jobOffer.requirements === ""
+          || this.jobOffer.companyName === ""
+          || this.jobOffer.companyLocation === "") {
           alert("Nie wypelniono wszystkich danych");
           return;
         }
