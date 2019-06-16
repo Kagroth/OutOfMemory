@@ -64,16 +64,19 @@
           <b-col>Firma</b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col>{{ jobOffer.title }}</b-col>
+          <b-col>{{ jobOffer.companyName }}</b-col>
         </b-row>
         <b-row class="mt-1">
           <b-col>Miejscowosc</b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col>{{ jobOffer.user }}</b-col>
+          <b-col>{{ jobOffer.companyLocation }}</b-col>
         </b-row>
         <b-row class="mt-1">
           <b-col>Data</b-col>
+        </b-row>
+        <b-row class="mt-1">
+          <b-col>{{ jobOffer.dateofpost }}</b-col>
         </b-row>
         <b-row class="mt-2">
           <b-col v-if="isLogged" cols="12" class="text-center">
