@@ -437,7 +437,7 @@ export default new Vuex.Store({
       })
     },
 
-    onAvatarUpload({ commit }, payload) {
+    onAvatarUpload({ commit, dispatch }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
