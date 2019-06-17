@@ -118,10 +118,6 @@ export default {
   computed: {
     jobOffer() {
       return this.$store.state.jobOfferDetails
-
-      return this.$store.state.jobOffers.find(job => {
-        return job.pk === this.$route.params.pk;
-      });
     },
 
     isLogged() {

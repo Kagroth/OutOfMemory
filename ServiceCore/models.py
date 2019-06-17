@@ -32,7 +32,7 @@ class CV(models.Model):
 class JobOffer(models.Model):
     jobOfferID = models.AutoField(primary_key=True)
     viewsCount = models.IntegerField(default=0)  # liczba wyswietlen
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="jobOffers", on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
     salaryMin = models.IntegerField()
     salaryMax = models.IntegerField()
