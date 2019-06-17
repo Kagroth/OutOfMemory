@@ -15,6 +15,7 @@ from rest_framework import generics
 from rest_framework import mixins
 from PIL import Image
 
+
 class CVView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -344,9 +345,12 @@ class JobOfferCreateView(APIView):
 
         try:
             job = JobOffer.objects.create(user=request.user, title=newJobData['title'],
-                                          salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
+                                          salaryMin=newJobData['salaryMin'],
+                                          salaryMax=newJobData['salaryMax'],
                                           description=newJobData['description'],
-                                          requirements=newJobData['requirements'])
+                                          requirements=newJobData['requirements'],
+                                          companyName=newJobData['companyName'],
+                                          companyLocation=newJobData['companyLocation'])
             job.save()
         except:
             return Response({"message": "Nie udalo sie utworzyc oferty pracy"})
@@ -363,18 +367,24 @@ class JobOfferEditView(APIView):
         newJobData = requestedData['params']
 
         try:
-            selectedjob = JobOffer.objects.get(jobOfferID=pk)
-            if selectedjob.user == request.user:
-                job = JobOffer.objects.update(jobOfferId=pk, user=request.user, title=newJobData['title'],
-                                              salaryMin=newJobData['salaryMin'], salaryMax=newJobData['salaryMax'],
-                                              description=['description'], requirements=['requiments'])
+            user = JobOffer.objects.get(jobOfferID=pk)
+            if user.user == request.user:
+                job = JobOffer.objects.update(jobOfferId=pk, user=request.user,
+                                              title=newJobData['title'],
+                                              salaryMin=newJobData['salaryMin'],
+                                              salaryMax=newJobData['salaryMax'],
+                                              description=['description'],
+                                              requirements=['requiments'],
+                                              companyName=newJobData['companyName'],
+                                              companyLocation=newJobData['companyLocation'])
                 job.save()
             else:
-                return Response({"message": "Próbujesz edytować cudzą ofertę pracy"})
+                Response({"message": "Próbujesz edytować cudzą ofertę pracy"})
         except:
             return Response({"message": "Nie udalo sie edytowac oferty pracy"})
         return Response({"message": "Pomyślnie edytowano ofertę pracy"})
-    
+
+
 # pobranie konkretnej oferty pracy
 class JobOfferDetailsView(APIView):
     permission_classes = (AllowAny,)

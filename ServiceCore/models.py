@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 
 # klasa Profile polaczona 1 do 1 z klasa User 
@@ -15,6 +16,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username + " - profil"
 
+
 # Klasa CV reprezentujaca CV usera
 class CV(models.Model):
     cvID = models.AutoField(primary_key=True)
@@ -25,22 +27,29 @@ class CV(models.Model):
     def __str__(self):
         return self.user.username + " - CV"
 
+
 # Oferta pracy
 class JobOffer(models.Model):
     jobOfferID = models.AutoField(primary_key=True)
-    viewsCount = models.IntegerField(default=0) # liczba wyswietlen
+    viewsCount = models.IntegerField(default=0)  # liczba wyswietlen
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
     salaryMin = models.IntegerField()
     salaryMax = models.IntegerField()
     description = models.CharField(max_length=2048)
     requirements = models.CharField(max_length=2048)
+    numberOfAplications = models.IntegerField(default=0)  # liczba aplikacji
+    companyName = models.CharField(max_length=128)  # details
+    companyLocation = models.CharField(max_length=128)  # details
+    dateofpost = models.DateTimeField(auto_now_add=True)  # details
+
 
 # Klasa przechowuje info jaki uzytkownik zaaplikowal na jakie stanowisko
 class Application(models.Model):
     applicationID = models.AutoField(primary_key=True)
     job = models.ForeignKey(JobOffer, related_name="applications", on_delete=models.CASCADE)
     cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+
 
 class Tag(models.Model):
     tagID = models.AutoField(primary_key=True)
@@ -49,13 +58,14 @@ class Tag(models.Model):
     def __str__(self):
         return self.tagName
 
+
 class Post(models.Model):
     postID = models.AutoField(primary_key=True)
     author = models.ForeignKey(User, related_name="posts", on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     postField = models.CharField(max_length=2048)
     tags = models.ManyToManyField(Tag)
-    viewsCount = models.IntegerField() # liczba wyswietlen
+    viewsCount = models.IntegerField()  # liczba wyswietlen
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
@@ -65,11 +75,12 @@ class Post(models.Model):
         else:
             return self.postField
 
+
 class Comment(models.Model):
     commentID = models.AutoField(primary_key=True)
     post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     author = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
-    commentField = models.CharField(max_length=2048)    
+    commentField = models.CharField(max_length=2048)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
@@ -78,6 +89,7 @@ class Comment(models.Model):
             return self.commentField[0:30] + "..."
         else:
             return self.commentField
+
 
 # Klasa trzymajaca info czy dany uzytkownik ocenil dany komentarz
 class Rating(models.Model):

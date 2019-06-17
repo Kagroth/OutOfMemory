@@ -16,9 +16,10 @@ export default {
     addComment: 'post/comment/new/',
     rateComment: 'post/comment/',
     tags: 'tag/',
-    jobs: 'job/',  
+    jobs: 'job/',
     createJobOffer: "job/new/",
     jobOfferDetails: 'job/details/',
+    jobOfferEdit: 'job/edit/',
     uploadAvatar: "upload/",
   },
 
@@ -69,7 +70,7 @@ export default {
   getTagsEndpoint() {
     return this.baseURL + this.endpoints.tags;
   },
-  
+
   getJobsEndpoint() {
     return this.baseURL + this.endpoints.jobs;
   },
@@ -80,8 +81,11 @@ export default {
 
 
   getJobOfferDetailsEndpoint() {
-    return this.baseURL + this.endpoints.jobOfferDetails
-  
+    return this.baseURL + this.endpoints.jobOfferDetails;
+  },
+
+  getJobOfferEditEndpoint() {
+    return this.baseURL + this.endpoints.jobOfferEdit;  
   },
 
   getUploadAvatarEndpoint() {

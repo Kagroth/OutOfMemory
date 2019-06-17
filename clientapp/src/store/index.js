@@ -184,7 +184,6 @@ export default new Vuex.Store({
     },
 
     getAllTags({ commit }) {
-
       return new Promise((resolve, reject) => {
         let authHeader = "Bearer " + this.state.token;
         axios.get(api.getTagsEndpoint())
@@ -280,15 +279,33 @@ export default new Vuex.Store({
 
     addComment({ commit, dispatch }, payload) {
       let authHeader = "Bearer " + this.state.token;
-      axios.get(api.getPostPreviewsEndpoint())
-        .then((response) => {
-          commit('setPostPreviews', response.data)
-          resolve()
-        })
-        .catch(() => {
-          alert("Blad pobierania postow")
-          reject()
-        })
+
+      return new Promise((resolve, reject) => {
+        axios.post(api.getAddCommentEndpoint(), {
+          params: payload
+        },
+          {
+            headers: {
+              'Authorization': authHeader
+            }
+          })
+          .then(response => {
+            console.log(response)
+            console.log(payload.postPk)
+            dispatch('getPostDetails', payload.postPk)
+              .then(() => {
+                console.log("Udalo sie")
+              })
+              .catch((error) => {
+                console.log(error)
+              });
+            resolve()
+          })
+          .catch(() => {
+            console.log("nie udalo sie dodac komentarza")
+            reject()
+          })
+      })
     },
 
     rateComment({ commit }, payload) {
@@ -353,24 +370,26 @@ export default new Vuex.Store({
       })
     },
 
-    onAvatarUpload({ commit }, payload) {
+    //edycja ofert pracy
+    updateJobOffer({ commit }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
-        axios.put(api.getUploadAvatarEndpoint() + this.state.username + "Avatar.jpg",
-          payload.avatar,
+        axios.put(api.getJobOfferEditEndpoint(), {
+          pk: payload.pk,
+          payload
+        },
           {
             headers: {
               'Authorization': authHeader
             }
-          }
-        ).then(res => {
-          console.log(res)
-          dispatch('getLoggedUserProfile')
-          resolve()
-        }).catch((error) => {
-          reject(error)
-        })
+          })
+          .then(response => {
+            console.log(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
       })
     },
 
@@ -400,7 +419,6 @@ export default new Vuex.Store({
 
     deleteCV({ dispatch }) {
       let authHeader = "Bearer " + this.state.token;
-
       return new Promise((resolve, reject) => {
         axios.delete(api.getCVEndpoint(),
           {
@@ -417,6 +435,27 @@ export default new Vuex.Store({
             reject(error)
           })
       })
-    }
+    },
+
+    onAvatarUpload({ commit }, payload) {
+      let authHeader = "Bearer " + this.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.put(api.getUploadAvatarEndpoint() + this.state.username + "Avatar.jpg",
+          payload.avatar,
+          {
+            headers: {
+              'Authorization': authHeader
+            }
+          }
+        ).then(res => {
+          console.log(res)
+          dispatch('getLoggedUserProfile')
+          resolve()
+        }).catch((error) => {
+          reject(error)
+        })
+      })
+    },
   }
 })

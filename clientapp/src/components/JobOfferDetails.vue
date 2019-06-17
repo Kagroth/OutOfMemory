@@ -61,19 +61,22 @@
       <!-- prawy panel z przyciskiem Aplikuj -->
       <b-col cols="4" class="border-left">
         <b-row class="mt-1">
-          <b-col>Firma</b-col>
+          <b-col>Firma:</b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col>{{ jobOffer.title }}</b-col>
+          <b-col class="pl-5">{{ jobOffer.companyName }}</b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col>Miejscowosc</b-col>
+          <b-col>Miejscowosc:</b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col>{{ jobOffer.user }}</b-col>
+          <b-col class="pl-5">{{ jobOffer.companyLocation }}</b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col>Data</b-col>
+          <b-col>Data:</b-col>
+        </b-row>
+        <b-row class="mt-1">
+          <b-col class="pl-5">{{ jobOffer.dateofpost }}</b-col>
         </b-row>
         <b-row class="mt-2">
           <b-col v-if="isLogged" cols="12" class="text-center">
