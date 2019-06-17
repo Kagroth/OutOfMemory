@@ -8,7 +8,8 @@ import PostCreator from './components/PostCreator.vue'
 import PostDetails from './components/PostDetails.vue'
 import Profile from './components/Profile.vue'
 import CV from './components/CV.vue'
-import JobOfferForm from "./components/JobOfferForm";
+import JobOfferForm from "./components/JobOfferForm"
+import JobOfferDetails from "./components/JobOfferDetails"
 
 export default [
     {path: '/', component: ListingTab},
@@ -18,5 +19,6 @@ export default [
     {path: '/post/:pk', name: 'PostDetails', component: PostDetails},
     {path: '/profile', name: 'Profile', component: Profile},
     {path: '/profile/cv', name: "CV", component: CV },
-    {path: '/job/new', name: "NewJobOffer", component: JobOfferForm }
+    {path: '/job/new', name: "NewJobOffer", component: JobOfferForm },
+    {path: '/job/:pk', name: 'JobOfferDetails', component: JobOfferDetails }
 ]

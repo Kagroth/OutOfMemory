@@ -7,10 +7,13 @@
             <b-row>
                 <b-col cols=8>
                     <b-img
-                        :key="tag"
-                        v-for="tag in postPreview.tags"
+                        width="48"
+                        height="48"
+                        :key="index"
+                        v-for="(tag, index) in postPreview.tags"
                         :src="getImage(tag.tagName)"
-                        @click="getPostsByTag(tag.tagName)">
+                        @click="getPostsByTag(tag.tagName)"
+                        :title="tag.tagName">
                     </b-img>
                 </b-col>
                 <b-col cols=4>
@@ -48,22 +51,9 @@ export default {
     created() {
     },
 
-    methods: {
+   methods: {
         mapTagName(tagName) {
-            switch(tagName) {
-                case "Java":
-                    return "icons8-java-48"
-                case "CSS":
-                    return "icons8-css3-48"
-                case "Javascript":
-                    return "icons8-javascript-48"
-                case "HTML":
-                    return "icons8-html-5-48"
-                case "Spring":
-                    return "icons8-spring-logo-48"
-                default: 
-                    return ""
-            }    
+            return tagName
         },
 
         /*

@@ -28,6 +28,7 @@ class CV(models.Model):
 # Oferta pracy
 class JobOffer(models.Model):
     jobOfferID = models.AutoField(primary_key=True)
+    viewsCount = models.IntegerField(default=0) # liczba wyswietlen
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
     salaryMin = models.IntegerField()
@@ -38,7 +39,7 @@ class JobOffer(models.Model):
 # Klasa przechowuje info jaki uzytkownik zaaplikowal na jakie stanowisko
 class Application(models.Model):
     applicationID = models.AutoField(primary_key=True)
-    job = models.ForeignKey(JobOffer, on_delete=models.CASCADE)
+    job = models.ForeignKey(JobOffer, related_name="applications", on_delete=models.CASCADE)
     cv = models.ForeignKey(CV, on_delete=models.CASCADE)
 
 class Tag(models.Model):

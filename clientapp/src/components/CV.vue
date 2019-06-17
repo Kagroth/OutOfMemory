@@ -86,7 +86,7 @@
                                 <b-col cols=2><h5>Do</h5></b-col>
                                 <b-col cols=8><h5>Firma i opis</h5></b-col>
                             </b-row>
-                            <b-row v-for="experience in experienceCV" :key="experience" class="mt-3">
+                            <b-row v-for="(experience, index) in experienceCV" :key="index" class="mt-3">
                                 <b-col cols=2> {{ experience.startDate }} </b-col>
                                 <b-col cols=2> {{ experience.endDate }} </b-col>
                                 <b-col cols=8> <span class="font-weight-bold">{{ experience.company }} </span><br> {{ experience.description }} </b-col>           
@@ -99,7 +99,7 @@
                                 <b-col cols=6 class="text-center"><h5>Umiejętność</h5></b-col>
                                 <b-col cols=6 class="text-center"><h5>Poziom</h5></b-col>
                             </b-row>
-                            <b-row v-for="skill in skillsCV" :key="skill">
+                            <b-row v-for="(skill, index) in skillsCV" :key="index">
                                 <b-col cols=6 class="text-center"> {{ skill.name }} </b-col>
                                 <b-col cols=6 class="text-center"> {{ skill.level }} </b-col>
                             </b-row>

@@ -1,15 +1,14 @@
 <template>
   <div>
-    <b-row>
-      <b-col class="">
+    <b-row align-v="center">
+      <b-col cols=1>
         <h3>
-
-          <avatar :image="'http://localhost:8000' + profile.avatar" size='300' v-if="profile.avatar != null"></avatar>
-          <avatar :fullname="profile.user.username" size='300' v-else></avatar>
-          {{ profile.user.username }}
+          <avatar :image="'http://localhost:8000' + profile.avatar" size='48' v-if="profile.avatar != null"></avatar>
+          <avatar :fullname="profile.user.username" size='48' v-else></avatar>          
         </h3>
       </b-col>
       <b-col>
+        <!-- Formularz Wojtka do upload'u avatara -->
         <b-form>
           <b-form-group id="input-group-1" label="Wgraj własny avatar:" label-for="input-1">
             <b-form-file
@@ -22,6 +21,8 @@
           </b-form-group>
           <b-button @click="onUpload" size="sm" >Zatwierdź</b-button>
         </b-form>
+        <!-- -->
+        <h4> {{ profile.user.username }} </h4>
       </b-col>
     </b-row>
     <b-row>
@@ -62,11 +63,11 @@
       <b-col class="mt-5">
         <b-tabs>
           <b-tab title="Posty">
-            <post-preview :key="post_prev" v-for="post_prev in profile.user.posts"
+            <post-preview :key="index" v-for="(post_prev, index) in profile.user.posts"
                           v-bind:postPreview="post_prev"></post-preview>
           </b-tab>
           <b-tab title="Komentarze">
-            <comment :key="comment" v-for="comment in profile.user.comments"
+            <comment :key="index" v-for="(comment, index) in profile.user.comments"
                      v-bind:comment="comment"></comment>
           </b-tab>
         </b-tabs>
