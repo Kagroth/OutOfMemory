@@ -79,7 +79,7 @@ export default new Vuex.Store({
   },
 
   actions: {
-    createUser({commit}, payload) {
+    createUser({ commit }, payload) {
       console.log("Wysylam request rejestracji")
 
       return new Promise((resolve, reject) => {
@@ -92,7 +92,7 @@ export default new Vuex.Store({
       })
     },
 
-    loginUser({commit}, payload) {
+    loginUser({ commit }, payload) {
       console.log("Wysylam request logowania");
 
       return new Promise((resolve, reject) => {
@@ -113,7 +113,7 @@ export default new Vuex.Store({
       })
     },
 
-    getLoggedUserProfile({commit}) {
+    getLoggedUserProfile({ commit }) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
@@ -131,7 +131,7 @@ export default new Vuex.Store({
       })
     },
 
-    getAllPostPreviews({commit}, payload) {
+    getAllPostPreviews({ commit }, payload) {
       console.log("Wysylam zadanie wyswietlenia post previews!")
 
       return new Promise((resolve, reject) => {
@@ -148,7 +148,7 @@ export default new Vuex.Store({
       })
     },
 
-    searchPosts({commit}, payload) {
+    searchPosts({ commit }, payload) {
       console.log(payload);
 
       let urlToFilteredPosts = api.getSearchPostEndpoint() + "?param=" + payload;
@@ -167,7 +167,7 @@ export default new Vuex.Store({
       })
     },
 
-    getPostsByTag({commit}, payload) {
+    getPostsByTag({ commit }, payload) {
       let urlToFilterPostsByTag = api.getPostByTagEndpoint() + payload.tagName;
 
       return new Promise((resolve, reject) => {
@@ -183,8 +183,7 @@ export default new Vuex.Store({
       })
     },
 
-    getAllTags({commit}) {
-
+    getAllTags({ commit }) {
       return new Promise((resolve, reject) => {
         let authHeader = "Bearer " + this.state.token;
         axios.get(api.getTagsEndpoint())
@@ -200,15 +199,15 @@ export default new Vuex.Store({
       })
     },
 
-    createPost({commit}, payload) {
+    createPost({ commit }, payload) {
       console.log("Wysylam request z utworzeniem posta")
 
       return new Promise((resolve, reject) => {
         let authHeader = "Bearer " + this.state.token;
 
         axios.post(api.getCreatePostEndpoint(), {
-            params: payload
-          },
+          params: payload
+        },
           {
             headers: {
               'Authorization': authHeader
@@ -225,15 +224,15 @@ export default new Vuex.Store({
       })
     },
 
-    createJobOffer({commit}, payload) {
+    createJobOffer({ commit }, payload) {
       console.log("Wysylam request z utworzeniem oferty pracy")
 
       return new Promise((resolve, reject) => {
         let authHeader = "Bearer " + this.state.token;
 
         axios.post(api.getCreateJobOfferEndpoint(), {
-            params: payload
-          },
+          params: payload
+        },
           {
             headers: {
               'Authorization': authHeader
@@ -250,7 +249,7 @@ export default new Vuex.Store({
       })
     },
 
-    getPostDetails({commit}, payload) {
+    getPostDetails({ commit }, payload) {
       return new Promise((resolve, reject) => {
         axios.get(api.getPostDetailsEndpoint() + payload)
           .then((response) => {
@@ -264,7 +263,7 @@ export default new Vuex.Store({
       })
     },
 
-    getJobOfferDetails({commit}, payload) {
+    getJobOfferDetails({ commit }, payload) {
       return new Promise((resolve, reject) => {
         axios.get(api.getJobOfferDetailsEndpoint() + payload)
           .then((response) => {
@@ -278,13 +277,13 @@ export default new Vuex.Store({
       })
     },
 
-    addComment({commit, dispatch}, payload) {
+    addComment({ commit, dispatch }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
         axios.post(api.getAddCommentEndpoint(), {
-            params: payload
-          },
+          params: payload
+        },
           {
             headers: {
               'Authorization': authHeader
@@ -309,13 +308,13 @@ export default new Vuex.Store({
       })
     },
 
-    rateComment({commit}, payload) {
+    rateComment({ commit }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
         axios.post(api.getRateCommentEndpoint() + payload.commentPk, {
-            rate: payload.rate
-          },
+          rate: payload.rate
+        },
           {
             headers: {
               'Authorization': authHeader
@@ -332,7 +331,7 @@ export default new Vuex.Store({
       })
     },
 
-    getAllJobOffers({commit}) {
+    getAllJobOffers({ commit }) {
       return new Promise((resolve, reject) => {
         axios.get(api.getJobsEndpoint())
           .then((response) => {
@@ -347,14 +346,14 @@ export default new Vuex.Store({
       })
     },
 
-    updateUserDescription({commit, dispatch}, payload) {
+    updateUserDescription({ commit, dispatch }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
         axios.put(api.getProfileEndpoint(), {
-            userPk: payload.userPk,
-            newDescription: payload.description
-          },
+          userPk: payload.userPk,
+          newDescription: payload.description
+        },
           {
             headers: {
               'Authorization': authHeader
@@ -370,15 +369,16 @@ export default new Vuex.Store({
           })
       })
     },
+
     //edycja ofert pracy
-    updateJobOffer({commit}, payload) {
+    updateJobOffer({ commit }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
         axios.put(api.getJobOfferEditEndpoint(), {
-            pk: payload.pk,
-            payload
-          },
+          pk: payload.pk,
+          payload
+        },
           {
             headers: {
               'Authorization': authHeader
@@ -393,14 +393,14 @@ export default new Vuex.Store({
       })
     },
 
-    createCV({dispatch}, payload) {
+    createCV({ dispatch }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
         axios.post(api.getCVEndpoint(), {
-            skills: payload.skills,
-            experience: payload.experiences
-          },
+          skills: payload.skills,
+          experience: payload.experiences
+        },
           {
             headers: {
               'Authorization': authHeader
@@ -417,9 +417,8 @@ export default new Vuex.Store({
       })
     },
 
-    deleteCV({dispatch}) {
+    deleteCV({ dispatch }) {
       let authHeader = "Bearer " + this.state.token;
-
       return new Promise((resolve, reject) => {
         axios.delete(api.getCVEndpoint(),
           {
@@ -436,6 +435,27 @@ export default new Vuex.Store({
             reject(error)
           })
       })
-    }
+    },
+
+    onAvatarUpload({ commit }, payload) {
+      let authHeader = "Bearer " + this.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.put(api.getUploadAvatarEndpoint() + this.state.username + "Avatar.jpg",
+          payload.avatar,
+          {
+            headers: {
+              'Authorization': authHeader
+            }
+          }
+        ).then(res => {
+          console.log(res)
+          dispatch('getLoggedUserProfile')
+          resolve()
+        }).catch((error) => {
+          reject(error)
+        })
+      })
+    },
   }
 })

@@ -19,7 +19,8 @@ export default {
     jobs: 'job/',
     createJobOffer: "job/new/",
     jobOfferDetails: 'job/details/',
-    jobOfferEdit: 'job/edit/'
+    jobOfferEdit: 'job/edit/',
+    uploadAvatar: "upload/",
   },
 
   getLoginEndpoint() {
@@ -78,11 +79,16 @@ export default {
     return this.baseURL + this.endpoints.createJobOffer;
   },
 
+
   getJobOfferDetailsEndpoint() {
     return this.baseURL + this.endpoints.jobOfferDetails;
   },
 
   getJobOfferEditEndpoint() {
-    return this.baseURL + this.endpoints.jobOfferEdit;
+    return this.baseURL + this.endpoints.jobOfferEdit;  
+  },
+
+  getUploadAvatarEndpoint() {
+    return this.baseURL + this.endpoints.uploadAvatar;
   }
 }
