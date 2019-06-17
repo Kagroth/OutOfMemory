@@ -111,7 +111,7 @@ class JobOffersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = JobOffer
-        fields = ('pk', 'viewsCount', 'user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements', 'numberOfApplications','companyName', 'companyLocation', 'dateofpost')
+        fields = ('pk', 'viewsCount', 'user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements', 'numberOfApplications','companyName', 'companyLocation', 'createdAt')
 
     def getNumberOfApplications(self, offer):
         return offer.applications.all().count()

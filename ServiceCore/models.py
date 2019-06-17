@@ -38,10 +38,9 @@ class JobOffer(models.Model):
     salaryMax = models.IntegerField()
     description = models.CharField(max_length=2048)
     requirements = models.CharField(max_length=2048)
-    numberOfAplications = models.IntegerField(default=0)  # liczba aplikacji
-    companyName = models.CharField(max_length=128)  # details
-    companyLocation = models.CharField(max_length=128)  # details
-    dateofpost = models.DateTimeField(auto_now_add=True)  # details
+    companyName = models.CharField(max_length=128)  # nazwa firmy
+    companyLocation = models.CharField(max_length=128)  # miejscowosc/lokalizacja
+    createdAt = models.DateTimeField(auto_now_add=True)  # data utworzenia
 
 
 # Klasa przechowuje info jaki uzytkownik zaaplikowal na jakie stanowisko
