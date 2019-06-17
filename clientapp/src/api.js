@@ -18,7 +18,8 @@ export default {
     tags: 'tag/',
     jobs: 'job/',  
     createJobOffer: "job/new/",
-    jobOfferDetails: 'job/details/'
+    jobOfferDetails: 'job/details/',
+    uploadAvatar: "upload/",
   },
 
   getLoginEndpoint() {
@@ -77,7 +78,13 @@ export default {
     return this.baseURL + this.endpoints.createJobOffer;
   },
 
+
   getJobOfferDetailsEndpoint() {
     return this.baseURL + this.endpoints.jobOfferDetails
+  
+  },
+
+  getUploadAvatarEndpoint() {
+    return this.baseURL + this.endpoints.uploadAvatar;
   }
 }
