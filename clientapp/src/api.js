@@ -88,6 +88,10 @@ export default {
     return this.baseURL + this.endpoints.jobOfferEdit;  
   },
 
+  getApplyForOfferEndpoint(offerPk) {
+    return this.baseURL + this.endpoints.jobs + offerPk + "/applications/"  
+  },
+
   getUploadAvatarEndpoint() {
     return this.baseURL + this.endpoints.uploadAvatar;
   }

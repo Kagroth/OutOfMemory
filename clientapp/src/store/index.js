@@ -103,7 +103,7 @@ export default new Vuex.Store({
               token: response.data.access,
               username: payload.username
             });
-            
+
             dispatch('getLoggedUserProfile')
             resolve()
           })
@@ -391,6 +391,25 @@ export default new Vuex.Store({
           .catch((error) => {
             reject(error)
           })
+      })
+    },
+
+    applyForOffer({ commit }, payload) {
+      let authHeader = "Bearer " + this.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(api.getApplyForOfferEndpoint(payload.offerPk),{}, {
+          headers: {
+            'Authorization': authHeader
+          }
+        }).then( response => {
+          console.log(response)
+          console.log(response.data.message)
+          resolve()
+        }).catch(error => {
+          console.log(error)
+          reject()
+        })
       })
     },
 

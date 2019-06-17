@@ -419,8 +419,13 @@ class ApplicationView(APIView):
         
 
         try:
+            if Application.objects.filter(job=targetJob, cv=cv).exists():
+                return Response({"message": "Juz aplikowales na te oferte"}, status=status.HTTP_200_OK)            
+
             app = Application.objects.create(job=targetJob,
                                              cv=cv)
+            app.save()
+
         except Exception as e:
             print(e)
             return Response({"message": "Nie udalo sie utworzyc aplikacji na oferte pracy"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
