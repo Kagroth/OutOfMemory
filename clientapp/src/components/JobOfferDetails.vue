@@ -108,6 +108,7 @@ export default {
   },
 
   created() {
+    console.log(this.$store.state.currentUser.user.cv)
        this.hasCV = !(this.$store.state.currentUser.user.cv === undefined || // jesli pole cv jest undefined lub null, wtedy hasCV = false
                        this.$store.state.currentUser.user.cv === null) 
      

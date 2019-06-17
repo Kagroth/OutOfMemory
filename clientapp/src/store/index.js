@@ -92,7 +92,7 @@ export default new Vuex.Store({
       })
     },
 
-    loginUser({ commit }, payload) {
+    loginUser({ commit, dispatch }, payload) {
       console.log("Wysylam request logowania");
 
       return new Promise((resolve, reject) => {
@@ -103,7 +103,8 @@ export default new Vuex.Store({
               token: response.data.access,
               username: payload.username
             });
-
+            
+            dispatch('getLoggedUserProfile')
             resolve()
           })
           .catch(error => {
