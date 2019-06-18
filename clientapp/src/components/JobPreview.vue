@@ -33,7 +33,7 @@
       </b-row>
       <b-row class="pl-2">
         <b-col cols=12>
-          <small>{{jobOffer.createdAt.substring(0,10)}}</small>
+         <!-- <small>{{jobOffer.createdAt.substring(0,10)}}</small> -->
         </b-col>
       </b-row>
       <b-row class="pl-2" v-if="jobOffer.user == profile">
