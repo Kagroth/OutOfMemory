@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-row class="mt-1">
-      <b-col offset=1 cols=7><h4>{{ post.title }}</h4></b-col>
-      <b-col offset=1 cols=2 class="text-right">{{ post.author }}<br>{{ post.createdAt.substr(0, 10) }}</b-col>
+      <b-col cols=10><h4>{{ post.title }}</h4></b-col>
+      <b-col cols=2 class="text-right">{{ post.author }}<br>{{ post.createdAt.substr(0, 10) }}</b-col>
     </b-row>
     <b-row>
-      <b-col cols=10 offset="1">
+      <b-col>
         <b-img
           width="25"
           height="25"
@@ -16,35 +16,40 @@
           :title="tag.tagName">
         </b-img>
       </b-col>
-<!--      <b-col offset=1>-->
-<!--        <b-badge variant="primary" class="mr-1" :key="tag" v-for="tag in post.tags"> {{ tag.tagName }}</b-badge>-->
-<!--      </b-col>-->
+      <!--      <b-col offset=1>-->
+      <!--        <b-badge variant="primary" class="mr-1" :key="tag" v-for="tag in post.tags"> {{ tag.tagName }}</b-badge>-->
+      <!--      </b-col>-->
     </b-row>
     <b-row class="mt-3">
-      <b-col cols=10 offset=1 class="text-justify">{{ post.postField }}</b-col>
+      <b-col class="text-justify">{{ post.postField }}</b-col>
     </b-row>
     <div class="commentSection mt-5">
       <b-row>
-        <b-col cols=10 offset=1>
+        <b-col>
           <h5>Odpowiedzi:</h5>
         </b-col>
       </b-row>
       <b-row>
-        <b-col v-if="isLogged" cols=9 offset=1>
-          <b-button v-b-toggle.addCommentFormCollapse variant="info" size="sm" @click="onAddCommentCollapseHandler">{{
+        <b-col v-if="isLogged">
+          <b-button v-b-toggle.addCommentFormCollapse variant="info" class="mb-3" size="sm"
+                    @click="onAddCommentCollapseHandler">{{
             collapseButtonText }}
           </b-button>
-          <b-collapse id="addCommentFormCollapse" class="mt-2">
-            <b-form>
+          <b-collapse id="addCommentFormCollapse">
+            <b-form class="mb-2">
               <b-form-textarea rows="10" v-model="commentField" placeholder="Tresc komentarza"/>
             </b-form>
-            <b-button variant="success" size="sm" class="mt-1" @click="addComment">Wyślij</b-button>
+            <b-button variant="success" size="sm" class="mb-3" @click="addComment">Wyślij</b-button>
           </b-collapse>
         </b-col>
       </b-row>
-      <b-row :key="comment" v-for="comment in post.comments" class="mt-3">
-        <comment v-bind:comment="comment"/>
+
+      <b-row>
+        <b-col cols="12">
+          <comment :key="index" v-for="(comment, index) in post.comments" v-bind:comment="comment"/>
+        </b-col>
       </b-row>
+
     </div>
   </div>
 </template>
