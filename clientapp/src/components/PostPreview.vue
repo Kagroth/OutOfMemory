@@ -42,13 +42,13 @@
             </b-col>
           </b-row>
         </b-col>
-        <b-col class="text-right" v-if="profile == postPreview.author">
-          <b-row class="pr-2">
-            <b-col>
-              <b-button size="sm" @click="editJobOffer">Edytuj</b-button>
-            </b-col>
-          </b-row>
-        </b-col>
+<!--        <b-col class="text-right" v-if="profile == postPreview.author">-->
+<!--          <b-row class="pr-2">-->
+<!--            <b-col>-->
+<!--              <b-button size="sm" @click="editJobOffer">Edytuj</b-button>-->
+<!--            </b-col>-->
+<!--          </b-row>-->
+<!--        </b-col>-->
       </b-row>
     </div>
   </div>
