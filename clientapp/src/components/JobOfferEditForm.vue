@@ -68,19 +68,18 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button @click="updateJobOffer" type="submit" variant="primary">Edytuj ofertę</b-button>
+      <b-button @click="updateJobOffer" variant="primary">Edytuj ofertę</b-button>
     </b-form>
-<!--    <b-card class="mt-3" header="Form Data Result">-->
-<!--      <pre class="m-0">{{ jobOffer }}</pre>-->
-<!--    </b-card>-->
+    <!--    <b-card class="mt-3" header="Form Data Result">-->
+    <!--      <pre class="m-0">{{ jobOffer }}</pre>-->
+    <!--    </b-card>-->
   </div>
 </template>
 
 <script>
   export default {
     data() {
-      return {
-      }
+      return {}
     },
     created() {
       this.$store.dispatch('getJobOfferDetails', this.$route.params.pk)
@@ -102,7 +101,11 @@
         }
 
         this.$store.dispatch('updateJobOffer', this.jobOffer).then(response => {
-          alert("Utworzono ofertę pracy")
+          console.log("Edytowano ofertę pracy")
+          alert("Edytowano ofertę pracy")
+          console.log("wczytuje nowa scieżke")
+          this.$router.push("/job/"+this.jobOffer.pk)
+          alert("nowa sciezka")
         });
       }
     },

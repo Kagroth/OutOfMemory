@@ -112,6 +112,7 @@
 
         this.$store.dispatch('createPost', this.post).then(response => {
           alert("Utworzono post")
+          this.$router.push("/")
         });
       }
     }
