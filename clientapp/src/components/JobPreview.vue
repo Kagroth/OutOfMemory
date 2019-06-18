@@ -37,7 +37,7 @@
         </b-col>
       </b-row>
       <b-row class="px-2">
-        <b-col cols=12>
+        <b-col cols=12 @click="showProfile">
           <small>Autor: {{jobOffer.user}}</small>
         </b-col>
       </b-row>
@@ -103,6 +103,16 @@
         let pk = this.jobOffer.pk;
         console.log("Zmieniam na Job Offer Edit Form");
         this.$router.push({name: 'JobOfferEdit', params: {pk}});
+      },
+      showProfile() {
+        let username = this.jobOffer.user
+
+        if(username === this.$store.state.currentUser.user.username) {
+          this.$router.push("/profile")
+          return
+        }
+
+        this.$router.push({name: 'UserProfile', params: { username }})
       },
     },
     computed: {
