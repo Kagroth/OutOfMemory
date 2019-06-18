@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar variant="primary" fixed="top">
+    <b-navbar type="dark" variant="dark" fixed="top">
       <b-navbar-brand href="#">
         <router-link to="/">OutOfMemory</router-link>
       </b-navbar-brand>
@@ -17,10 +17,11 @@
       <b-navbar-nav class="ml-auto" v-else>
         <b-nav-item-dropdown to="" href="#" id="menuDropdownLink" :text="username" right>
           <b-dropdown-item to="/profile" class="blackText">Profil</b-dropdown-item>
+          <b-dropdown-item to="/profile/settings" class="blackText">Ustawienia</b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item class="blackText" @click="logout">Wyloguj</b-dropdown-item>
         </b-nav-item-dropdown>
-      </b-navbar-nav> 
+      </b-navbar-nav>
     </b-navbar>
   </div>
 </template>

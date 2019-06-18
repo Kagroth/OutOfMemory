@@ -1,14 +1,14 @@
 <template>
     <div class="mb-3">
-        <div class="shadow-sm">            
+        <div class="shadow-lg">
             <b-row class="pl-2">
                 <b-col cols=12 class="lead" @click="showDetails"> {{ postPreview.title }}</b-col>
             </b-row>            
             <b-row>
                 <b-col cols=8>
                     <b-img
-                        width="48"
-                        height="48"
+                        width="25"
+                        height="25"
                         :key="index"
                         v-for="(tag, index) in postPreview.tags"
                         :src="getImage(tag.tagName)"

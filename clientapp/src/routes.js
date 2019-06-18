@@ -11,6 +11,7 @@ import CV from './components/CV.vue'
 import JobOfferForm from "./components/JobOfferForm"
 import JobOfferDetails from "./components/JobOfferDetails"
 import JobOfferEditForm from "./components/JobOfferEditForm";
+import ProfileSettings from "./components/ProfileSettings";
 
 export default [
   {path: '/', component: ListingTab},
@@ -22,5 +23,6 @@ export default [
   {path: '/profile/cv', name: "CV", component: CV},
   {path: '/job/new', name: "NewJobOffer", component: JobOfferForm},
   {path: '/job/:pk', name: 'JobOfferDetails', component: JobOfferDetails},
-  {path: '/job/edit/:pk', name: 'JobOfferEdit', component: JobOfferEditForm}
+  {path: '/job/edit/:pk', name: 'JobOfferEdit', component: JobOfferEditForm},
+  {path: '/profile/settings', name: 'ProfileSettings', component: ProfileSettings},
 ]
