@@ -103,6 +103,7 @@
 
         this.$store.dispatch('updateJobOffer', this.jobOffer).then(response => {
           alert("Utworzono ofertę pracy")
+          this.$router.push("/")
         });
       }
     },

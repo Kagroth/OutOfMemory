@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit="createJobOffer" @reset="">
+    <b-form>
       <b-form-group
         id="input-group-1"
         label="Nazwa stanowiska:"
@@ -68,8 +68,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Stwórz ofertę</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <b-button @click="createJobOffer" variant="primary">Stwórz ofertę</b-button>
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ jobOffer }}</pre>
@@ -110,6 +109,7 @@
 
         this.$store.dispatch('createJobOffer', this.jobOffer).then(response => {
           alert("Utworzono ofertę pracy")
+          this.$router.push("/")
         });
       }
     }
