@@ -38,11 +38,11 @@
                      v-bind:comment="comment"></comment>
           </b-tab>
           <b-tab title="Oferty pracy" v-if="profile.user.jobOffers.length > 0">
-            <job-offer :key="index" v-for="(offer, index) in profile.user.jobOffers" v-bind:jobOffer="offer"></job-offer>
+            <job-preview-apps :key="index" v-for="(offer, index) in profile.user.jobOffers" v-bind:jobOffer="offer"></job-preview-apps>
           </b-tab>
           <b-tab title="Moje zgłoszenia">
             <h5>Oferty na które aplikowałeś:</h5>
-            <job-offer :key="index" v-for="(offer, index) in profile.user.cv.appliedFor" v-bind:jobOffer="offer.job"></job-offer>
+            <job-preview :key="index" v-for="(offer, index) in profile.user.cv.appliedFor" v-bind:jobOffer="offer.job"></job-preview>
           </b-tab>
         </b-tabs>
       </b-col>
@@ -55,13 +55,15 @@
   import Comment from './Comment'
   import Avatar from 'vue-avatar-component'
   import axios from 'axios'
-  import JobPreview from "./JobPreview";
+  import JobPreview from "./JobPreview"
+  import JobPreviewApps from './JobPreviewApps'
 
   export default {
     components: {
       "post-preview": PostPreview,
       "comment": Comment,
-      "job-offer": JobPreview,
+      "job-preview": JobPreview,
+      "job-preview-apps": JobPreviewApps,
       Avatar
     },
 
