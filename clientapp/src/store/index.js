@@ -92,7 +92,7 @@ export default new Vuex.Store({
       })
     },
 
-    loginUser({ commit }, payload) {
+    loginUser({ commit, dispatch }, payload) {
       console.log("Wysylam request logowania");
 
       return new Promise((resolve, reject) => {
@@ -104,6 +104,7 @@ export default new Vuex.Store({
               username: payload.username
             });
 
+            dispatch('getLoggedUserProfile')
             resolve()
           })
           .catch(error => {
@@ -389,6 +390,25 @@ export default new Vuex.Store({
           .catch((error) => {
             reject(error)
           })
+      })
+    },
+
+    applyForOffer({ commit }, payload) {
+      let authHeader = "Bearer " + this.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(api.getApplyForOfferEndpoint(payload.offerPk),{}, {
+          headers: {
+            'Authorization': authHeader
+          }
+        }).then( response => {
+          console.log(response)
+          console.log(response.data.message)
+          resolve(response.data.message)
+        }).catch(error => {
+          console.log(error)
+          reject()
+        })
       })
     },
 

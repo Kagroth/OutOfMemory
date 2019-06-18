@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework import mixins
 from PIL import Image
 
@@ -405,3 +405,32 @@ class JobOfferDetailsView(APIView):
         serializedOffer = JobOffersSerializer(offerToShow)
 
         return Response(serializedOffer.data)
+
+
+class ApplicationView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, pk):
+        cv = request.user.cv
+        targetJob = None
+
+        try:
+            targetJob = JobOffer.objects.get(pk=pk)
+        except Exception as e:
+            print(e)
+            return Response({"message": "Taka oferta pracy nieistnieje"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+        try:
+            if Application.objects.filter(job=targetJob, cv=cv).exists():
+                return Response({"message": "Juz aplikowales na te oferte"}, status=status.HTTP_200_OK)            
+
+            app = Application.objects.create(job=targetJob,
+                                             cv=cv)
+            app.save()
+
+        except Exception as e:
+            print(e)
+            return Response({"message": "Nie udalo sie utworzyc aplikacji na oferte pracy"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response({"message": "Aplikacja na oferte zostala zapisana"})

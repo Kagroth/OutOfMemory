@@ -81,7 +81,10 @@
         <b-row class="mt-2">
           <b-col v-if="isLogged" cols="12" class="text-center">
             <div v-if="hasCV">
-                <b-button squared variant="warning" class="w-100">Aplikuj</b-button>
+                <b-button 
+                  variant="warning" 
+                  class="w-100" 
+                  @click="applyForOffer">Aplikuj</b-button>
             </div>
             <div v-else class="shadow-sm border p-2">
                 Aby aplikować, musisz posiadać CV. <br>
@@ -108,11 +111,21 @@ export default {
   },
 
   created() {
+    console.log(this.$store.state.currentUser.user.cv)
        this.hasCV = !(this.$store.state.currentUser.user.cv === undefined || // jesli pole cv jest undefined lub null, wtedy hasCV = false
                        this.$store.state.currentUser.user.cv === null) 
      
         console.log(this.hasCV)
         this.$store.dispatch('getJobOfferDetails', this.$route.params.pk)
+  },
+
+  methods: {
+    applyForOffer(event) {
+      event.preventDefault();
+      this.$store.dispatch('applyForOffer', {offerPk: this.$route.params.pk}).then(message => {
+        alert(message)
+      })
+    }
   },
 
   computed: {
@@ -124,8 +137,6 @@ export default {
       return this.$store.state.isLogged;
     }
   },
-
-  methods: {}
 };
 </script>
 
