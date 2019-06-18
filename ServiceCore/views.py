@@ -431,11 +431,15 @@ class ApplicationView(APIView):
         except Exception as e:
             print(e)
             return Response({"message": "Taka oferta pracy nieistnieje"}, status=status.HTTP_404_NOT_FOUND)
-        
+        print(request.user)
+        print(targetJob.user.username)
+        print(str(request.user) == str(targetJob.user.username))
+        if str(targetJob.user.username) == str(request.user):
+            return Response({"message": "probojesz aplikować na swoją ofertę pracy!"})
 
         try:
             if Application.objects.filter(job=targetJob, cv=cv).exists():
-                return Response({"message": "Juz aplikowales na te oferte"}, status=status.HTTP_200_OK)            
+                return Response({"message": "Juz aplikowales na te oferte"}, status=status.HTTP_200_OK)
 
             app = Application.objects.create(job=targetJob,
                                              cv=cv)
@@ -443,6 +447,7 @@ class ApplicationView(APIView):
 
         except Exception as e:
             print(e)
-            return Response({"message": "Nie udalo sie utworzyc aplikacji na oferte pracy"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"message": "Nie udalo sie utworzyc aplikacji na oferte pracy"},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response({"message": "Aplikacja na oferte zostala zapisana"})

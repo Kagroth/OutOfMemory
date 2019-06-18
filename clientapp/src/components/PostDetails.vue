@@ -1,102 +1,133 @@
 <template>
-    <div>
-        <b-row class="mt-1">
-            <b-col offset=1 cols=7><h4>{{ post.title }}</h4></b-col>
-            <b-col offset=1 cols=2 class="text-right">{{ post.author }}<br>{{ post.createdAt.substr(0, 10) }}</b-col>
-        </b-row>
-        <b-row>
-            <b-col offset=1>
-                <b-badge variant="primary" class="mr-1" :key="tag" v-for="tag in post.tags"> {{ tag.tagName }} </b-badge>
-            </b-col>
-        </b-row>        
-        <b-row class="mt-3">
-            <b-col cols=10 offset=1 class="text-justify">{{ post.postField }}</b-col>
-        </b-row>
-        <div class="commentSection mt-5">
-            <b-row>
-                <b-col cols=10 offset=1>
-                    <h5>Odpowiedzi:</h5>
-                </b-col>
-            </b-row>
-            <b-row>
-                <b-col v-if="isLogged" cols=9 offset=1>
-                    <b-button v-b-toggle.addCommentFormCollapse variant="info" size="sm" @click="onAddCommentCollapseHandler">{{ collapseButtonText }}</b-button>
-                    <b-collapse id="addCommentFormCollapse" class="mt-2">
-                        <b-form>
-                            <b-form-textarea rows="10" v-model="commentField" placeholder="Tresc komentarza"/>                        
-                        </b-form>
-                        <b-button variant="success" size="sm" class="mt-1" @click="addComment">Wyślij</b-button>
-                    </b-collapse>                    
-                </b-col>
-            </b-row>
-            <b-row :key="comment" v-for="comment in post.comments" class="mt-3">
-                <comment v-bind:comment="comment"/>
-            </b-row>
-        </div>        
-    </div>    
+  <div>
+    <b-row class="mt-1">
+      <b-col cols=10><h4>{{ post.title }}</h4></b-col>
+      <b-col cols=2 class="text-right">{{ post.author }}<br>{{ post.createdAt.substr(0, 10) }}</b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-img
+          width="25"
+          height="25"
+          :key="index"
+          v-for="(tag, index) in post.tags"
+          :src="getImage(tag.tagName)"
+          @click="getPostsByTag(tag.tagName)"
+          :title="tag.tagName">
+        </b-img>
+      </b-col>
+      <!--      <b-col offset=1>-->
+      <!--        <b-badge variant="primary" class="mr-1" :key="tag" v-for="tag in post.tags"> {{ tag.tagName }}</b-badge>-->
+      <!--      </b-col>-->
+    </b-row>
+    <b-row class="mt-3">
+      <b-col class="text-justify">{{ post.postField }}</b-col>
+    </b-row>
+    <div class="commentSection mt-5">
+      <b-row>
+        <b-col>
+          <h5>Odpowiedzi:</h5>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col v-if="isLogged">
+          <b-button v-b-toggle.addCommentFormCollapse variant="info" class="mb-3" size="sm"
+                    @click="onAddCommentCollapseHandler">{{
+            collapseButtonText }}
+          </b-button>
+          <b-collapse id="addCommentFormCollapse">
+            <b-form class="mb-2">
+              <b-form-textarea rows="10" v-model="commentField" placeholder="Tresc komentarza"/>
+            </b-form>
+            <b-button variant="success" size="sm" class="mb-3" @click="addComment">Wyślij</b-button>
+          </b-collapse>
+        </b-col>
+      </b-row>
+
+      <b-row>
+        <b-col cols="12">
+          <comment :key="index" v-for="(comment, index) in post.comments" v-bind:comment="comment"/>
+        </b-col>
+      </b-row>
+
+    </div>
+  </div>
 </template>
 
 <script>
-import Comment from './Comment'
+  import Comment from './Comment'
 
-export default {
+  export default {
     components: {
-        'comment': Comment
+      'comment': Comment
     },
 
-    data () {
-        return {
-            collapseButtonText: "Dodaj komentarz",
-            commentField: ""
-        }
+    data() {
+      return {
+        collapseButtonText: "Dodaj komentarz",
+        commentField: ""
+      }
     },
 
     created() {
-        console.log(this.$route);
-        this.$store.dispatch('getPostDetails', this.$route.params.pk)
-                   .then((responseData) => {
-                       if(responseData.message === "Nie ma takiego posta!") {
-                           alert("Taki post nie istnieje");                            
-                           return;
-                       }       
-                   })
-                   .catch(() => {
-                   });
+      console.log(this.$route);
+      this.$store.dispatch('getPostDetails', this.$route.params.pk)
+        .then((responseData) => {
+          if (responseData.message === "Nie ma takiego posta!") {
+            alert("Taki post nie istnieje");
+            return;
+          }
+        })
+        .catch(() => {
+        });
     },
 
     computed: {
-        post () {
-            return this.$store.state.postDetails;
-        },
+      post() {
+        return this.$store.state.postDetails;
+      },
 
-        isLogged () {
-            return this.$store.state.isLogged;
-        }
+      isLogged() {
+        return this.$store.state.isLogged;
+      }
     },
 
     methods: {
-        onAddCommentCollapseHandler () {
-            if(this.collapseButtonText === "Dodaj komentarz") {
-                this.collapseButtonText = "Ukryj"
-            }
-            else {
-                this.collapseButtonText = "Dodaj komentarz"
-            }
-        },
+      mapTagName(tagName) {
+        return tagName
+      },
 
-        addComment () {
-            this.$store.dispatch('addComment', {
-                postPk: this.post.pk,
-                comment: this.commentField
-            }).then(() => {
-                alert("Komentarz zostal dodany!")
-                this.commentField = "";
-            }).catch(() => {
-                alert("Nie udalo sie dodac komentarza")
-            })
+      /*
+      dynamiczne ladowanie image*/
+      getImage(tagName) {
+        let mappedTag = this.mapTagName(tagName)
+
+        if (mappedTag === "")
+          return null
+
+        return require("../assets/" + mappedTag + ".png")
+      },
+      onAddCommentCollapseHandler() {
+        if (this.collapseButtonText === "Dodaj komentarz") {
+          this.collapseButtonText = "Ukryj"
+        } else {
+          this.collapseButtonText = "Dodaj komentarz"
         }
+      },
+
+      addComment() {
+        this.$store.dispatch('addComment', {
+          postPk: this.post.pk,
+          comment: this.commentField
+        }).then(() => {
+          alert("Komentarz zostal dodany!")
+          this.commentField = "";
+        }).catch(() => {
+          alert("Nie udalo sie dodac komentarza")
+        })
+      }
     }
-}
+  }
 </script>
 
 <style scoped>
