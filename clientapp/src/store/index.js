@@ -405,7 +405,7 @@ export default new Vuex.Store({
         }).then( response => {
           console.log(response)
           console.log(response.data.message)
-          resolve()
+          resolve(response.data.message)
         }).catch(error => {
           console.log(error)
           reject()

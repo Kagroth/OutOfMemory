@@ -122,7 +122,9 @@ export default {
   methods: {
     applyForOffer(event) {
       event.preventDefault();
-      this.$store.dispatch('applyForOffer', {offerPk: this.$route.params.pk})
+      this.$store.dispatch('applyForOffer', {offerPk: this.$route.params.pk}).then(message => {
+        alert(message)
+      })
     }
   },
 
