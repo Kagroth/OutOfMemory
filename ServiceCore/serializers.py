@@ -2,6 +2,7 @@ from rest_framework import serializers
 from ServiceCore.models import *
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
+from django.db.models.query import QuerySet
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -71,6 +72,25 @@ class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
         fields = ('pk', 'job')
+
+class CVRawSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    class Meta:
+        model = CV
+        fields = ('user', 'skills', 'experience')
+
+class ApplicationCVSerializer(serializers.ModelSerializer):
+    cv = CVRawSerializer()
+    class Meta:
+        model = Application
+        fields = ('pk', 'cv')
+
+class JobOfferWithApplicationsSerializer(serializers.ModelSerializer):
+    applications = ApplicationCVSerializer(many=True)
+    class Meta:
+        model = JobOffer
+        fields = ('pk', 'viewsCount', 'user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements', 'companyName', 'companyLocation', 'createdAt', 'applications')
+
 
 class CVSerializer(serializers.ModelSerializer):
     appliedFor = ApplicationSerializer(many=True)
