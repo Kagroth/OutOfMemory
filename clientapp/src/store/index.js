@@ -79,7 +79,7 @@ export default new Vuex.Store({
   },
 
   actions: {
-    createUser({ commit }, payload) {
+    createUser({ }, payload) {
       console.log("Wysylam request rejestracji")
 
       return new Promise((resolve, reject) => {
@@ -144,7 +144,7 @@ export default new Vuex.Store({
       })
     },
 
-    getAllPostPreviews({ commit }, payload) {
+    getAllPostPreviews({ commit }) {
       console.log("Wysylam zadanie wyswietlenia post previews!")
 
       return new Promise((resolve, reject) => {
@@ -212,7 +212,7 @@ export default new Vuex.Store({
       })
     },
 
-    createPost({ commit }, payload) {
+    createPost({}, payload) {
       console.log("Wysylam request z utworzeniem posta")
 
       return new Promise((resolve, reject) => {
@@ -237,7 +237,7 @@ export default new Vuex.Store({
       })
     },
 
-    createJobOffer({ commit }, payload) {
+    createJobOffer({}, payload) {
       console.log("Wysylam request z utworzeniem oferty pracy")
 
       return new Promise((resolve, reject) => {
@@ -290,7 +290,7 @@ export default new Vuex.Store({
       })
     },
 
-    addComment({ commit, dispatch }, payload) {
+    addComment({ dispatch }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
@@ -359,7 +359,7 @@ export default new Vuex.Store({
       })
     },
 
-    updateUserDescription({ commit, dispatch }, payload) {
+    updateUserDescription({ dispatch }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
@@ -384,7 +384,7 @@ export default new Vuex.Store({
     },
 
     //edycja ofert pracy
-    updateJobOffer({ commit }, payload) {
+    updateJobOffer({}, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
@@ -405,7 +405,7 @@ export default new Vuex.Store({
       })
     },
 
-    applyForOffer({ commit }, payload) {
+    applyForOffer({}, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
@@ -468,7 +468,7 @@ export default new Vuex.Store({
       })
     },
 
-    onAvatarUpload({ commit, dispatch }, payload) {
+    onAvatarUpload({ dispatch }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
       return new Promise((resolve, reject) => {
