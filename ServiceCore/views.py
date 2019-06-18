@@ -344,6 +344,27 @@ class JobOffersPreviewView(ListAPIView):
     def get_queryset(self):
         return JobOffer.objects.all()
 
+class JobOfferFilterView(generics.ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    serializer_class = JobOffersSerializer
+
+    def get_queryset(self):
+        searchParam = self.request.query_params.get('param', None)
+        searchParam = searchParam.lower()
+        print(searchParam)
+        offers = JobOffer.objects.all().order_by('-createdAt')
+        print(type(offers))
+        offersFiltered = list()
+
+        for offer in offers:
+            if searchParam in offer.title.lower() or \
+               searchParam in offer.companyName.lower() or \
+               searchParam in offer.companyName.lower() or \
+               searchParam in offer.companyLocation.lower():
+                offersFiltered.append(offer)
+
+        return offersFiltered
+
 
 # tworzenie oferty pracy
 class JobOfferCreateView(APIView):
