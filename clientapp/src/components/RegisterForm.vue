@@ -103,7 +103,7 @@ export default {
         
         if(message === 'Użytkownik zostal zarejestrowany') {
           this.$router.push('/login')
-      });
+      }})
     }
   }
 }
