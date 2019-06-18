@@ -102,7 +102,10 @@
         }
 
         this.$store.dispatch('updateJobOffer', this.jobOffer).then(response => {
-          alert("Utworzono ofertę pracy")
+          console.log("Edytowano ofertę pracy")
+          alert("Edytowano ofertę pracy")
+          console.log("wczytuje nowa scieżke")
+          alert("nowa sciezka")
           this.$router.push("/")
         });
       }
