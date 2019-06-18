@@ -68,11 +68,10 @@
     },
 
     created() {
-      this.$store.dispatch('getAllPostPreviews').then(() => {
-        console.log("Created")
-      });
-
-      this.$store.dispatch('getAllJobOffers')
+      Promise.all([
+        this.$store.dispatch('getAllPostPreviews'),
+        this.$store.dispatch('getAllJobOffers')
+      ])
     }
   };
 </script>
