@@ -23,9 +23,9 @@ export default [
   {path: '/post/:pk', name: 'PostDetails', component: PostDetails},
   {path: '/profile', name: 'Profile', component: Profile},
   {path: '/profile/cv', name: "CV", component: CV},
-  {path: '/profile/:username', name: 'UserProfile', component: UserProfile},
+  {path: '/profile/:username', name: 'UserProfile', component: UserProfile},  
+  {path: '/settings', name: 'ProfileSettings', component: ProfileSettings},
   {path: '/job/new', name: "NewJobOffer", component: JobOfferForm},
   {path: '/job/:pk', name: 'JobOfferDetails', component: JobOfferDetails},
   {path: '/job/edit/:pk', name: 'JobOfferEdit', component: JobOfferEditForm},
-  {path: '/profile/settings', name: 'ProfileSettings', component: ProfileSettings},
 ]

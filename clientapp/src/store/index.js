@@ -180,6 +180,25 @@ export default new Vuex.Store({
       })
     },
 
+    searchJobOffers({ commit }, payload) {
+      console.log(payload);
+
+      let urlToFilteredJobOffers = api.getSearchJobsEndpoint() + "?param=" + payload;
+      console.log(urlToFilteredJobOffers);
+
+      return new Promise((resolve, reject) => {
+        axios.get(urlToFilteredJobOffers)
+          .then((response) => {
+            commit('setJobOffers', response.data)
+            resolve()
+          })
+          .catch(() => {
+            alert("Blad wyszukiwania ofert pracy")
+            reject()
+          })
+      })
+    },
+
     getPostsByTag({ commit }, payload) {
       let urlToFilterPostsByTag = api.getPostByTagEndpoint() + payload.tagName;
 
