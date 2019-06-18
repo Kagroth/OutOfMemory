@@ -272,7 +272,7 @@ export default {
            }).then(() => {
                console.log("CV zostalo zapisane")
                alert("Zapisano CV")
-               this.$router.push("/profile")
+               this.$router.push({name: 'ProfileSettings'})
            }).catch(() => {
                alert("Nie udalo sie zapisac CV")
            })
