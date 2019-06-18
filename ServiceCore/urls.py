@@ -13,6 +13,7 @@ from django.conf import settings
 urlpatterns = [
     path('profile/', views.ProfileRecordView.as_view()),
     path('profile/cv/', views.CVView.as_view()),
+    path('profile/<str:username>/', views.ProfileView.as_view()),
     path('post_preview/', views.PostPreviewView.as_view()),
     path('post/', views.PostView.as_view()),
     path('post/search/', views.PostViewFilter.as_view()),

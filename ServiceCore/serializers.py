@@ -8,26 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
 
-
-class ProfileSerializer(serializers.ModelSerializer):
-    """
-    A  profile serializer to return the user details
-    """
-    user = UserSerializer(required=True)
-    # https://www.youtube.com/watch?v=sD-Bi9QyoH0
-    avatar = serializers.ImageField(max_length=None, use_url=True)
-    class Meta:
-        model = Profile
-        fields = ('user', 'description', 'avatar',)
-
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        user = UserSerializer.create(UserSerializer(), validated_data=user_data)
-        profile, created = Profile.objects.update_or_create(user=user,
-                                                            description=validated_data.pop('description'))
-        return profile
-
-
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
@@ -98,6 +78,15 @@ class CVSerializer(serializers.ModelSerializer):
         model = CV
         fields = ('user', 'skills', 'experience', 'appliedFor')
 
+class UserViewSerializer(serializers.ModelSerializer):
+    posts = PostPreviewSerializer(many=True)
+    comments = CommentSerializer(many=True)
+    jobOffers = JobOffersSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'posts', 'comments', 'jobOffers')
+
 class UserWholeDataSerializer(serializers.ModelSerializer):
     posts = PostPreviewSerializer(many=True)
     comments = CommentSerializer(many=True)
@@ -107,6 +96,24 @@ class UserWholeDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'cv', 'jobOffers')
+
+class ProfileSerializer(serializers.ModelSerializer):
+    """
+    A  profile serializer to return the user details
+    """
+    user = UserViewSerializer(required=True)
+    # https://www.youtube.com/watch?v=sD-Bi9QyoH0
+    avatar = serializers.ImageField(max_length=None, use_url=True)
+    class Meta:
+        model = Profile
+        fields = ('user', 'description', 'avatar')
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user = UserSerializer.create(UserSerializer(), validated_data=user_data)
+        profile, created = Profile.objects.update_or_create(user=user,
+                                                            description=validated_data.pop('description'))
+        return profile
 
 class ProfileSerializerExtended(serializers.ModelSerializer):
     """

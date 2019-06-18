@@ -132,6 +132,18 @@ export default new Vuex.Store({
       })
     },
 
+    getProfile({}, payload) {
+      console.log(payload.username)
+      return new Promise((resolve, reject) => {
+        axios.get(api.getProfileEndpoint() + payload.username).then(response => {
+          console.log(response.data);
+          resolve(response.data)
+        }).catch(() => {
+          reject()
+        })
+      })
+    },
+
     getAllPostPreviews({ commit }, payload) {
       console.log("Wysylam zadanie wyswietlenia post previews!")
 

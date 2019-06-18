@@ -135,6 +135,18 @@ class ProfileRecordView(APIView):
         return Response({"message": "Edytowano opis profilu"})
 
 
+class ProfileView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, username):
+        userToShow = User.objects.filter(username=username)
+        if userToShow.exists() and userToShow.count() == 1:
+            profile = Profile.objects.get(user=User.objects.get(username=username))
+            serializer = ProfileSerializer(profile)
+            return Response(serializer.data)
+        else:
+            return Response({"message": "Uzytkownik o takim nicku nie istnieje"}, status=status.HTTP_404_NOT_FOUND)
+
 class ProfileAvatarUpload(APIView):
     parser_classes = (FileUploadParser,)
 

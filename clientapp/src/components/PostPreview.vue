@@ -30,7 +30,7 @@
                 </b-col>
             </b-row>
             <b-row class="pl-2">
-                <b-col><small>Autor: {{ postPreview.author }}</small></b-col>
+                <b-col @click="showProfile"><small>Autor: {{ postPreview.author }}</small></b-col>
             </b-row>
             <b-row class="pl-2">
                 <b-col><small>{{ postPreview.createdAt.substring(0, 10) }}</small></b-col>
@@ -80,6 +80,17 @@ export default {
             this.$store.dispatch('getPostsByTag', {
                 tagName: tagName
             })
+        },
+
+        showProfile() {
+            let username = this.postPreview.author
+
+            if(username === this.$store.state.currentUser.user.username) {
+                this.$router.push("/profile")
+                return
+            }
+
+            this.$router.push({name: 'UserProfile', params: { username }})
         }
     },
 }
