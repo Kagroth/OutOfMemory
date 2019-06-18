@@ -99,5 +99,9 @@ export default {
 
   getUploadAvatarEndpoint() {
     return this.baseURL + this.endpoints.uploadAvatar;
+  },
+
+  getUserCVEndpoint(username) {
+    return this.baseURL + this.endpoints.profile + username + "/cv"
   }
 }
