@@ -42,7 +42,9 @@
           </b-tab>
           <b-tab title="Moje zgłoszenia">
             <h5>Oferty na które aplikowałeś:</h5>
-            <job-preview :key="index" v-for="(offer, index) in profile.user.cv.appliedFor" v-bind:jobOffer="offer.job"></job-preview>
+            <div v-if="profile.user.cv !== null">
+              <job-preview :key="index" v-for="(offer, index) in profile.user.cv.appliedFor" v-bind:jobOffer="offer.job"></job-preview>
+            </div>        
           </b-tab>
         </b-tabs>
       </b-col>
@@ -70,7 +72,7 @@
     created() {
       this.$store.dispatch('getLoggedUserProfile')
         .then(() => {
-          this.description = this.$store.state.currentUser.description;
+          //this.description = this.$store.state.currentUser.description;
         });
     },
 
