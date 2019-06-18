@@ -113,7 +113,7 @@ class ProfileRecordView(APIView):
             user.save()
             profile = Profile.objects.create(user=user, description="")
             profile.save()
-            print("Uzytkownik zarejestrowany!")
+            print("Uzytkownik zarejestrowany")
 
             return Response({"message": "Użytkownik zostal zarejestrowany"})
         except Exception as e:

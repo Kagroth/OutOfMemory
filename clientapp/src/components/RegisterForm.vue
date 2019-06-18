@@ -100,6 +100,9 @@ export default {
 
       this.$store.dispatch('createUser', this.form).then(message => {
         alert(message)
+        
+        if(message === 'Użytkownik zostal zarejestrowany') {
+          this.$router.push('/login')
       });
     }
   }
