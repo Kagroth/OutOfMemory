@@ -9,7 +9,7 @@
               Wynagrodzenie od <b>{{ jobOffer.salaryMin }} PLN</b> - <b>{{jobOffer.salaryMax}} PLN</b>
             </b-col>
           </b-row>
-          <b-row class="px-2" v-if="jobOffer.user == profile">
+          <b-row v-if="jobOffer.user == profile">
             <b-col cols=12 class="text-right">
               <b-button size="sm" @click="editJobOffer">Edytuj</b-button>
             </b-col>
