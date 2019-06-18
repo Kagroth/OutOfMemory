@@ -47,7 +47,7 @@ class JobOffer(models.Model):
 class Application(models.Model):
     applicationID = models.AutoField(primary_key=True)
     job = models.ForeignKey(JobOffer, related_name="applications", on_delete=models.CASCADE)
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+    cv = models.ForeignKey(CV, related_name="appliedFor", on_delete=models.CASCADE)
 
 
 class Tag(models.Model):

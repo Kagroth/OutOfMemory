@@ -73,6 +73,10 @@
           <b-tab title="Oferty pracy" v-if="profile.user.jobOffers.length > 0">
             <job-offer :key="index" v-for="(offer, index) in profile.user.jobOffers" v-bind:jobOffer="offer"></job-offer>
           </b-tab>
+          <b-tab title="Moje zgłoszenia">
+            <h5>Oferty na które aplikowałeś:</h5>
+            <job-offer :key="index" v-for="(offer, index) in profile.user.cv.appliedFor" v-bind:jobOffer="offer.job"></job-offer>
+          </b-tab>
         </b-tabs>
       </b-col>
     </b-row>
