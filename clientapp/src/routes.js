@@ -12,6 +12,8 @@ import JobOfferForm from "./components/JobOfferForm"
 import JobOfferDetails from "./components/JobOfferDetails"
 import JobOfferEditForm from "./components/JobOfferEditForm"
 import UserProfile from './components/UserProfile'
+import ProfileSettings from "./components/ProfileSettings";
+
 
 export default [
   {path: '/', component: ListingTab},
@@ -24,5 +26,6 @@ export default [
   {path: '/profile/:username', name: 'UserProfile', component: UserProfile},
   {path: '/job/new', name: "NewJobOffer", component: JobOfferForm},
   {path: '/job/:pk', name: 'JobOfferDetails', component: JobOfferDetails},
-  {path: '/job/edit/:pk', name: 'JobOfferEdit', component: JobOfferEditForm}
+  {path: '/job/edit/:pk', name: 'JobOfferEdit', component: JobOfferEditForm},
+  {path: '/profile/settings', name: 'ProfileSettings', component: ProfileSettings},
 ]
