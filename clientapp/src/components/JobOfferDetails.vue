@@ -76,7 +76,11 @@
           <b-col>Data:</b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col><b>{{ jobOffer.createdAt.substring(0,10) }}</b></b-col>
+          <b-col>
+            <!--
+            <b>{{ jobOffer.createdAt.substring(0,10) }}</b>
+            -->
+            </b-col>            
         </b-row>
         <b-row class="mt-2">
           <b-col v-if="isLogged" cols="12" class="text-center">
@@ -111,12 +115,10 @@
       };
     },
 
-    created() {
-      console.log(this.$store.state.currentUser.user.cv)
+    mounted() {
+      console.log(this.$store.state.currentUser.user)
       this.hasCV = !(this.$store.state.currentUser.user.cv === undefined || // jesli pole cv jest undefined lub null, wtedy hasCV = false
         this.$store.state.currentUser.user.cv === null)
-
-      console.log(this.hasCV)
       this.$store.dispatch('getJobOfferDetails', this.$route.params.pk)
     },
 
@@ -131,6 +133,7 @@
 
     computed: {
       jobOffer() {
+        console.log(this.$store.state.jobOfferDetails)
         return this.$store.state.jobOfferDetails
       },
 

@@ -25,6 +25,7 @@ export default new Vuex.Store({
         state.isLogged = (localStorage.getItem('token') !== "null"
           && localStorage.getItem('token') !== undefined)
       state.username = localStorage.getItem('username') || ""
+      state.currentUser = JSON.parse(localStorage.getItem('currentProfile')) || ""
 
     },
 
@@ -41,6 +42,8 @@ export default new Vuex.Store({
     },
 
     setCurrentProfile(state, payload) {
+      localStorage.setItem('currentProfile', JSON.stringify(payload))
+      console.log(localStorage.getItem('currentProfile'))
       state.currentUser = payload;
       console.log(state.currentUser);
     },
