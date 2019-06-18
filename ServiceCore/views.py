@@ -53,6 +53,20 @@ class CVView(APIView):
         return Response({"message": "Usunieto CV"})
 
 
+class UserCVView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, username):
+        user = None
+
+        if User.objects.filter(username=username).exists():
+            user = User.objects.get(username=username)
+            cv = CV.objects.get(user=user)
+
+            serializer = CVRawSerializer(cv)
+
+            return Response(serializer.data)
+
 class TagView(ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Tag.objects.all().order_by("tagName")
@@ -442,6 +456,17 @@ class JobOfferDetailsView(APIView):
 
 class ApplicationView(APIView):
     permission_classes = (IsAuthenticated,)
+
+    def get(self, request, pk):
+        try:    
+            targetJob = JobOffer.objects.get(pk=pk)
+
+            serializerApps = JobOfferWithApplicationsSerializer(targetJob)
+
+            return Response(serializerApps.data)
+        except Exception as e:
+            print(e)
+            return Response({"message": "Nie udalo sie pobrac aplikacji na ta oferte"})
 
     def post(self, request, pk):
         cv = request.user.cv
