@@ -180,9 +180,12 @@ class ProfileAvatarUpload(APIView):
 
 # wszystkie posty w formie skroconej (bez komentarzy i tresci)
 class PostPreviewView(ListAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-    queryset = Post.objects.all().order_by("-createdAt")
+    permission_classes = (AllowAny,)
+    #queryset = Post.objects.all().order_by("-createdAt")
     serializer_class = PostPreviewSerializer
+
+    def get_queryset(self):
+        return Post.objects.all().order_by("-createdAt")
 
 
 # wszystkie posty
@@ -356,7 +359,7 @@ class JobOffersPreviewView(ListAPIView):
     serializer_class = JobOffersSerializer
 
     def get_queryset(self):
-        return JobOffer.objects.all()
+        return JobOffer.objects.all().order_by("-createdAt")
 
 class JobOfferFilterView(generics.ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
