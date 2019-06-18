@@ -70,6 +70,9 @@
             <comment :key="index" v-for="(comment, index) in profile.user.comments"
                      v-bind:comment="comment"></comment>
           </b-tab>
+          <b-tab title="Oferty pracy" v-if="profile.user.jobOffers.length > 0">
+            <job-offer :key="index" v-for="(offer, index) in profile.user.jobOffers" v-bind:jobOffer="offer"></job-offer>
+          </b-tab>
         </b-tabs>
       </b-col>
     </b-row>
@@ -81,11 +84,13 @@
   import Comment from './Comment'
   import Avatar from 'vue-avatar-component'
   import axios from 'axios'
+  import JobPreview from "./JobPreview";
 
   export default {
     components: {
       "post-preview": PostPreview,
       "comment": Comment,
+      "job-offer": JobPreview,
       Avatar
     },
 

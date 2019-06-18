@@ -359,29 +359,32 @@ class JobOfferCreateView(APIView):
 
 #   Edycja oferty pracy
 class JobOfferEditView(APIView):
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
     serializer_class = JobOffersSerializer
 
-    def put(self, request, pk):
+    def put(self, request):
         requestedData = JSONParser().parse(request)
         newJobData = requestedData['params']
-
+        print(requestedData)
         try:
-            user = JobOffer.objects.get(jobOfferID=pk)
-            if user.user == request.user:
-                job = JobOffer.objects.update(jobOfferId=pk, user=request.user,
-                                              title=newJobData['title'],
-                                              salaryMin=newJobData['salaryMin'],
-                                              salaryMax=newJobData['salaryMax'],
-                                              description=['description'],
-                                              requirements=['requiments'],
-                                              companyName=newJobData['companyName'],
-                                              companyLocation=newJobData['companyLocation'])
+            job = JobOffer.objects.get(jobOfferID=newJobData['pk'])
+            if job.user == request.user:
+                job.title = newJobData['title']
+                job.salaryMin = newJobData['salaryMin']
+                job.salaryMax = newJobData['salaryMax']
+                job.description = newJobData['description']
+                job.requirements = newJobData['requirements']
+                job.companyName = newJobData['companyName']
+                job.companyLocation = newJobData['companyLocation']
                 job.save()
             else:
+                print("Próbujesz edytować cudzą ofertę pracy")
                 Response({"message": "Próbujesz edytować cudzą ofertę pracy"})
-        except:
+        except Exception as e:
+            print("error : " + e)
+            print("nie udało sie edytować oferty pracy")
             return Response({"message": "Nie udalo sie edytowac oferty pracy"})
+        print("pomyślnie edytowano ofertę pracy")
         return Response({"message": "Pomyślnie edytowano ofertę pracy"})
 
 

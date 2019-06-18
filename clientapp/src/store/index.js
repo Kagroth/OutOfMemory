@@ -376,8 +376,7 @@ export default new Vuex.Store({
 
       return new Promise((resolve, reject) => {
         axios.put(api.getJobOfferEditEndpoint(), {
-          pk: payload.pk,
-          payload
+          params: payload
         },
           {
             headers: {

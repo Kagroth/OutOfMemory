@@ -3,7 +3,8 @@
     <div class="shadow-sm">
       <b-row class="pl-2">
         <b-col cols=8 class="lead" @click="showDetails"> {{ jobOffer.title }}</b-col>
-        <b-col cols=4 class="text-right"> Wynagrodzenie od <b>{{ jobOffer.salaryMin }} PLN</b> - <b>{{jobOffer.salaryMax}} PLN</b></b-col>
+        <b-col cols=4 class="text-right"> Wynagrodzenie od <b>{{ jobOffer.salaryMin }} PLN</b> - <b>{{jobOffer.salaryMax}}
+          PLN</b></b-col>
       </b-row>
       <b-row class="pl-2">
         <b-col cols=12>
@@ -32,7 +33,12 @@
       </b-row>
       <b-row class="pl-2">
         <b-col cols=12>
-          <small>{{jobOffer.createDate}}</small>
+          <small>{{jobOffer.createdAt.substring(0,10)}}</small>
+        </b-col>
+      </b-row>
+      <b-row class="pl-2" v-if="jobOffer.user == profile">
+        <b-col cols=12>
+          <b-button size="sm" @click="editJobOffer">Edytuj</b-button>
         </b-col>
       </b-row>
     </div>
@@ -44,8 +50,7 @@
     props: ['jobOffer'],
 
     data() {
-      return {        
-      }
+      return {}
     },
 
     methods: {
@@ -77,15 +82,29 @@
         return require("../assets/" + mappedTag + ".png")
       },
 
-      showDetails (event) {
-            console.log(this.jobOffer.pk)
-            console.log(this.jobOffer)
-            event.preventDefault();
-            let pk = this.jobOffer.pk;
-            console.log("Zmieniam na Job Offer details");
-            this.$router.push({name: 'JobOfferDetails', params: { pk }});
-        },
-    }
+      showDetails(event) {
+        console.log(this.jobOffer.pk)
+        console.log(this.jobOffer)
+        event.preventDefault();
+        let pk = this.jobOffer.pk;
+        console.log("Zmieniam na Job Offer details");
+        this.$router.push({name: 'JobOfferDetails', params: {pk}});
+      },
+
+      editJobOffer(event) {
+        console.log(this.jobOffer.pk)
+        console.log(this.jobOffer)
+        event.preventDefault();
+        let pk = this.jobOffer.pk;
+        console.log("Zmieniam na Job Offer Edit Form");
+        this.$router.push({name: 'JobOfferEdit', params: {pk}});
+      },
+    },
+    computed: {
+      profile() {
+        return this.$store.state.username;
+      }
+    },
   }
 </script>
 

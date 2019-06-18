@@ -79,14 +79,30 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ('pk', 'author', 'title', 'postField', 'viewsCount', 'tags', 'createdAt', 'comments')
 
 
+class JobOffersSerializer(serializers.ModelSerializer):
+    """
+    A Job offer serializer to return all fields
+    """
+    user = serializers.StringRelatedField()
+    numberOfApplications = serializers.SerializerMethodField('getNumberOfApplications')
+
+    class Meta:
+        model = JobOffer
+        fields = ('pk', 'viewsCount', 'user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements', 'numberOfApplications','companyName', 'companyLocation', 'createdAt')
+
+    def getNumberOfApplications(self, offer):
+        return offer.applications.all().count()
+
+
 class UserWholeDataSerializer(serializers.ModelSerializer):
     posts = PostPreviewSerializer(many=True)
     comments = CommentSerializer(many=True)
     cv = CVSerializer()
+    jobOffers = JobOffersSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'cv')
+        fields = ('username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'cv', 'jobOffers')
 
 
 class ProfileSerializerExtended(serializers.ModelSerializer):
@@ -102,17 +118,5 @@ class ProfileSerializerExtended(serializers.ModelSerializer):
 
 
 
-class JobOffersSerializer(serializers.ModelSerializer):
-    """
-    A Job offer serializer to return all fields
-    """
-    user = serializers.StringRelatedField()
-    numberOfApplications = serializers.SerializerMethodField('getNumberOfApplications')
 
-    class Meta:
-        model = JobOffer
-        fields = ('pk', 'viewsCount', 'user', 'title', 'salaryMin', 'salaryMax', 'description', 'requirements', 'numberOfApplications','companyName', 'companyLocation', 'createdAt')
-
-    def getNumberOfApplications(self, offer):
-        return offer.applications.all().count()
 

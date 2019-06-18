@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit="createJobOffer" @reset="">
+    <b-form>
       <b-form-group
         id="input-group-1"
         label="Nazwa stanowiska:"
@@ -68,12 +68,11 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Stwórz ofertę</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <b-button @click="updateJobOffer" type="submit" variant="primary">Edytuj ofertę</b-button>
     </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ jobOffer }}</pre>
-    </b-card>
+<!--    <b-card class="mt-3" header="Form Data Result">-->
+<!--      <pre class="m-0">{{ jobOffer }}</pre>-->
+<!--    </b-card>-->
   </div>
 </template>
 
@@ -81,20 +80,14 @@
   export default {
     data() {
       return {
-        jobOffer: {
-          title: "",
-          salaryMin: "",
-          salaryMax: "",
-          description: "",
-          requirements: "",
-          companyName: "",
-          companyLocation: "",
-        }
       }
     },
-    name: "JobOfferForm",
+    created() {
+      this.$store.dispatch('getJobOfferDetails', this.$route.params.pk)
+    },
+
     methods: {
-      createJobOffer() {
+      updateJobOffer() {
         console.log(this.jobOffer);
 
         if (this.jobOffer.title === ""
@@ -108,11 +101,20 @@
           return;
         }
 
-        this.$store.dispatch('createJobOffer', this.jobOffer).then(response => {
+        this.$store.dispatch('updateJobOffer', this.jobOffer).then(response => {
           alert("Utworzono ofertę pracy")
         });
       }
-    }
+    },
+    computed: {
+      jobOffer() {
+        return this.$store.state.jobOfferDetails
+      },
+
+      isLogged() {
+        return this.$store.state.isLogged;
+      }
+    },
   }
 </script>
 
