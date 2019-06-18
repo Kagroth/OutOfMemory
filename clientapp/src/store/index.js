@@ -437,10 +437,11 @@ export default new Vuex.Store({
             }
           })
           .then(response => {
-            console.log(response)
+            console.log(response.data)
+            resolve()
           })
-          .catch((error) => {
-            reject(error)
+          .catch(() => {
+            reject()
           })
       })
     },
