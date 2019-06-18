@@ -77,9 +77,7 @@
         </b-row>
         <b-row class="mt-1">
           <b-col>
-            <!--
             <b>{{ jobOffer.createdAt.substring(0,10) }}</b>
-            -->
             </b-col>            
         </b-row>
         <b-row class="mt-2">

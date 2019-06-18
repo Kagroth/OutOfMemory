@@ -111,7 +111,6 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios.post(api.getLoginEndpoint(), payload)
           .then(response => {
-            console.log(response.data.access);
             commit('setToken', {
               token: response.data.access,
               refreshToken: response.data.refresh,
