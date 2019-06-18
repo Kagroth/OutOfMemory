@@ -83,7 +83,7 @@ export default new Vuex.Store({
       console.log("Wysylam request rejestracji")
 
       return new Promise((resolve, reject) => {
-        axios.post(api.getRegisterEndpoint(), payload)
+        axios.post(api.getProfileEndpoint(), payload)
           .then(response => {
             console.log("Sukces" + response)
             resolve(response.data.message)
@@ -309,6 +309,24 @@ export default new Vuex.Store({
       })
     },
 
+    getJobOfferDetailsWithApps({commit}, payload) {
+      let authHeader = "Bearer " + this.state.token;
+      return new Promise((resolve, reject) => {
+        axios.get(api.getApplyForOfferEndpoint(payload.offerPk), {}, { 
+          headers: {
+            'Authorization': authHeader
+        }})
+          .then((response) => {
+            commit('setJobOfferDetails', response.data)
+            resolve(response.data)
+          })
+          .catch(() => {
+            alert("Blad pobierania posta")
+            reject()
+          })
+      })
+    },
+
     addComment({ dispatch }, payload) {
       let authHeader = "Bearer " + this.state.token;
 
@@ -507,5 +525,25 @@ export default new Vuex.Store({
         })
       })
     },
+
+    getUserCV({}, payload) {
+      let authHeader = "Bearer " + this.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.get(api.getUserCVEndpoint(payload.username), {},
+          {
+            headers: {
+              'Authorization': authHeader
+            }
+          })
+          .then(response => {
+            console.log(response)
+            resolve(response.data)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
   }
 })
