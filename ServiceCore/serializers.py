@@ -3,13 +3,6 @@ from ServiceCore.models import *
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 
-
-class CVSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CV
-        fields = ('user', 'skills', 'experience')
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -93,6 +86,17 @@ class JobOffersSerializer(serializers.ModelSerializer):
     def getNumberOfApplications(self, offer):
         return offer.applications.all().count()
 
+class ApplicationSerializer(serializers.ModelSerializer):
+    job = JobOffersSerializer()
+    class Meta:
+        model = Application
+        fields = ('pk', 'job')
+
+class CVSerializer(serializers.ModelSerializer):
+    appliedFor = ApplicationSerializer(many=True)
+    class Meta:
+        model = CV
+        fields = ('user', 'skills', 'experience', 'appliedFor')
 
 class UserWholeDataSerializer(serializers.ModelSerializer):
     posts = PostPreviewSerializer(many=True)
@@ -104,7 +108,6 @@ class UserWholeDataSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'cv', 'jobOffers')
 
-
 class ProfileSerializerExtended(serializers.ModelSerializer):
     """
     A  profile serializer to return the user details
@@ -115,8 +118,6 @@ class ProfileSerializerExtended(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('user', 'description', 'avatar')
-
-
 
 
 
