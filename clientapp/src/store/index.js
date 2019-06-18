@@ -43,7 +43,6 @@ export default new Vuex.Store({
 
     setCurrentProfile(state, payload) {
       localStorage.setItem('currentProfile', JSON.stringify(payload))
-      console.log(localStorage.getItem('currentProfile'))
       state.currentUser = payload;
       console.log(state.currentUser);
     },
@@ -152,13 +151,14 @@ export default new Vuex.Store({
 
       return new Promise((resolve, reject) => {
         let authHeader = "Bearer " + this.state.token;
-        axios.get(api.getPostPreviewsEndpoint())
+        axios.get(api.getPostPreviewsEndpoint(), {})
           .then((response) => {
             commit('setPostPreviews', response.data)
             resolve()
           })
-          .catch(() => {
-            alert("Blad pobierania postow")
+          .catch((error) => {
+            console.log(error)
+            //alert("Blad pobierania postow")
             reject()
           })
       })
