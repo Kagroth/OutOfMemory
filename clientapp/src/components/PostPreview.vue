@@ -4,7 +4,7 @@
             <b-row class="pl-2">
                 <b-col cols=12 class="lead" @click="showDetails"> {{ postPreview.title }}</b-col>
             </b-row>            
-            <b-row>
+            <b-row class="pl-1">
                 <b-col cols=8>
                     <b-img
                         width="25"
