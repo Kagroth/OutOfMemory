@@ -26,11 +26,22 @@ export default new Vuex.Store({
           && localStorage.getItem('token') !== undefined)
       state.username = localStorage.getItem('username') || ""
       state.currentUser = JSON.parse(localStorage.getItem('currentProfile')) || ""
+    },
 
+    clear(state) {
+      console.log("Usuwam")
+      localStorage.removeItem('token')
+      localStorage.removeItem('username')
+      localStorage.removeItem('currentProfile')
+      state.token = ""
+      state.isLogged = false
+      state.username = ""
+      state.currentUser = ""
     },
 
     setToken(state, payload) {
       localStorage.setItem('token', payload.token);
+      localStorage.setItem('refreshToken', payload.refreshToken)
       localStorage.setItem('username', payload.username);
       state.token = localStorage.getItem('token');
       state.isLogged = (localStorage.getItem('token') != null);
@@ -103,6 +114,7 @@ export default new Vuex.Store({
             console.log(response.data.access);
             commit('setToken', {
               token: response.data.access,
+              refreshToken: response.data.refresh,
               username: payload.username
             });
 
@@ -314,6 +326,7 @@ export default new Vuex.Store({
 
     getJobOfferDetailsWithApps({commit}, payload) {
       let authHeader = "Bearer " + this.state.token;
+      console.log(authHeader)
       return new Promise((resolve, reject) => {
         axios.get(api.getApplyForOfferEndpoint(payload.offerPk), {}, { 
           headers: {
@@ -323,8 +336,9 @@ export default new Vuex.Store({
             commit('setJobOfferDetails', response.data)
             resolve(response.data)
           })
-          .catch(() => {
+          .catch((error) => {
             alert("Blad pobierania posta")
+            console.log(error)
             reject()
           })
       })

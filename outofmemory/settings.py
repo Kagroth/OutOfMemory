@@ -130,10 +130,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CORS_ORIGIN_WHITELIST = (
-    # 'localhost:8080',
-    # 'localhost:8000',
-    'http://localhost:8080',
-    'http://localhost:8000',
+    'localhost:8080',
+    'localhost:8000'
 )
 
 REST_FRAMEWORK = {
@@ -147,7 +145,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
 }
 
 # miejsce zapisywania avatarów na serwerze

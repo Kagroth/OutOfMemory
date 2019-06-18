@@ -75,9 +75,14 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
 class CVRawSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+    email = serializers.SerializerMethodField()
+
     class Meta:
         model = CV
-        fields = ('user', 'skills', 'experience')
+        fields = ('user', 'skills', 'experience', 'email')
+
+    def get_email(self, cv):
+        return cv.user.email
 
 class ApplicationCVSerializer(serializers.ModelSerializer):
     cv = CVRawSerializer()

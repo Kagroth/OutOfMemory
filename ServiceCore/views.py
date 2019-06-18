@@ -54,7 +54,7 @@ class CVView(APIView):
 
 
 class UserCVView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, username):
         user = None
@@ -458,7 +458,7 @@ class JobOfferDetailsView(APIView):
 
 
 class ApplicationView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, pk):
         try:    
@@ -480,10 +480,11 @@ class ApplicationView(APIView):
         except Exception as e:
             print(e)
             return Response({"message": "Taka oferta pracy nieistnieje"}, status=status.HTTP_404_NOT_FOUND)
+        
         print(request.user)
         print(targetJob.user.username)
-        print(str(request.user) == str(targetJob.user.username))
-        if str(targetJob.user.username) == str(request.user):
+        #print(str(request.user) == str(targetJob.user.username))
+        if targetJob.user.username == request.user.username:
             return Response({"message": "probojesz aplikować na swoją ofertę pracy!"})
 
         try:
@@ -492,7 +493,7 @@ class ApplicationView(APIView):
 
             app = Application.objects.create(job=targetJob,
                                              cv=cv)
-            app.save()
+            #app.save()
 
         except Exception as e:
             print(e)

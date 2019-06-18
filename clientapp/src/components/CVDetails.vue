@@ -6,6 +6,11 @@
                 <b-row>
                     <b-col><h3>CV użytkownika {{ cv.user }}</h3></b-col>
                 </b-row>
+                <b-row>
+                    <b-col>
+                        Kontakt: {{ cv.email }}
+                    </b-col>
+                </b-row>
                 <hr>
                 <div>
                     <b-row>

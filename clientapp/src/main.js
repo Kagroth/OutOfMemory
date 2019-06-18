@@ -23,5 +23,5 @@ new Vue({
 
   created () {
     this.$store.commit('init')
-  }
+  },
 })
