@@ -1,0 +1,17 @@
+Wymagania:
+-Python
+-NodeJS
+
+Wymagane biblioteki - Python:
+-django - pip install django
+-djangorestframework - pip install djangorestframework
+-djangorestframework_simplejwt - pip install djangorestframework_simplejwt
+-django-cors-headers - pip install django-cors-headers
+-pillow - pip install Pillow
+
+Wymagane biblioteki - JavaScript:
+-vue - npm install vue
+-bootstrap-vue npm install bootstrap-vue
+-vue-avatar-component npm install vue-avatar-component
+-axios - npm install axios
+-vuex - npm install vuex
