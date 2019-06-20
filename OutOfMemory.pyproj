@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7cf567cd-7621-4eed-986e-5b50251d77db}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>manage.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Django launcher</LaunchProvider>
+    <InterpreterId>Global|PythonCore|3.6</InterpreterId>
+    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <DjangoSettingsModule>outofmemory.settings</DjangoSettingsModule>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="manage.py" />
+    <Compile Include="outofmemory\settings.py" />
+    <Compile Include="outofmemory\urls.py" />
+    <Compile Include="outofmemory\wsgi.py" />
+    <Compile Include="outofmemory\__init__.py" />
+    <Compile Include="ServiceCore\admin.py" />
+    <Compile Include="ServiceCore\apps.py" />
+    <Compile Include="ServiceCore\migrations\0001_initial.py" />
+    <Compile Include="ServiceCore\migrations\0002_auto_20190425_1430.py" />
+    <Compile Include="ServiceCore\migrations\__init__.py" />
+    <Compile Include="ServiceCore\models.py" />
+    <Compile Include="ServiceCore\serializers.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceCore\tests.py" />
+    <Compile Include="ServiceCore\urls.py" />
+    <Compile Include="ServiceCore\views.py" />
+    <Compile Include="ServiceCore\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="clientapp\index.html" />
+    <Content Include="clientapp\src\api.js" />
+    <Content Include="clientapp\src\assets\logo.png" />
+    <Content Include="clientapp\src\main.js" />
+    <Content Include="clientapp\src\routes.js" />
+    <Content Include="clientapp\webpack.config.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="clientapp" />
+    <Folder Include="clientapp\src" />
+    <Folder Include="clientapp\src\assets" />
+    <Folder Include="outofmemory" />
+    <Folder Include="ServiceCore" />
+    <Folder Include="ServiceCore\migrations" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.6" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
